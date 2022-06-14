@@ -8,6 +8,7 @@ import {
   AddNewFromCommunityScreen,
   AddNewOriginalStep1Screen,
   AddNewOriginalStep2Screen,
+  AddNewSelectLocationScreen,
   AddScreen,
   ExploreScreen,
   HomeScreen,
@@ -126,6 +127,11 @@ const AddStackComponent = () => {
         name="AddNewFromCommunityScreen"
         component={AddNewFromCommunityScreen}
         options={{ headerShown: false }}
+      />
+      <AddStack.Screen
+        name="AddNewSelectLocationScreen"
+        component={AddNewSelectLocationScreen}
+        options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid }}
       />
     </AddStack.Navigator>
   )

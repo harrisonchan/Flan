@@ -1,7 +1,7 @@
 import { useTheme } from '@shopify/restyle'
 import { isUndefined } from 'lodash'
 import React from 'react'
-import { TouchableOpacity, ViewStyle, RegisteredStyle, TouchableOpacityProps, View } from 'react-native'
+import { TouchableOpacity, ViewStyle, RegisteredStyle, TouchableOpacityProps, View, StyleProp } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { moderateScale } from 'react-native-size-matters'
 import { IconProps } from 'react-native-vector-icons/Icon'
@@ -12,7 +12,8 @@ import Text from './Text'
 interface ButtonProps {
   onPress?: () => void
   label?: string
-  style?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
+  style?: StyleProp<ViewStyle>
+  containerStyle?: StyleProp<ViewStyle>
   // variant?: 'default' | 'smallIcon' | undefined
   mode?: 'default' | 'small'
   icon?: IconProps
@@ -20,40 +21,42 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = (props) => {
   const { colors, spacing, themeConstants, shadows } = useTheme<Theme>()
+  const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
   return (
-    <TouchableOpacity
+    <AnimatedTouchableOpacity
       onPress={() => {
         props.onPress && props.onPress()
-      }}>
-      <Animated.View
-        style={[
-          { justifyContent: 'center', alignItems: 'center' },
-          props.icon
-            ? {
-                width: moderateScale(33),
-                height: moderateScale(33),
-                borderRadius: 5,
-                backgroundColor: colors.lightColor,
-                ...shadows.secondary,
-              }
-            : props.mode && props.mode == 'small'
-            ? {
-                width: themeConstants.componentWidthS,
-                paddingTop: spacing.s,
-                paddingBottom: spacing.s,
-                borderRadius: 10,
-                backgroundColor: colors.buttonBackground,
-              }
-            : {
-                alignSelf: 'center',
-                width: themeConstants.componentWidthXL,
-                paddingTop: spacing.m,
-                paddingBottom: spacing.m,
-                borderRadius: 10,
-                backgroundColor: colors.buttonBackground,
-              },
-          props.style,
-        ]}>
+      }}
+      style={[
+        props.icon
+          ? {
+              width: moderateScale(33),
+              height: moderateScale(33),
+              borderRadius: 5,
+              backgroundColor: colors.lightColor,
+              ...shadows.secondary,
+            }
+          : props.mode && props.mode == 'small'
+          ? {
+              minWidth: themeConstants.componentWidthS,
+              maxWidth: themeConstants.componentWidthM,
+              // paddingTop: spacing.m,
+              // paddingBottom: spacing.m,
+              padding: spacing.s,
+              borderRadius: 10,
+              backgroundColor: colors.buttonBackground,
+            }
+          : {
+              alignSelf: 'center',
+              width: themeConstants.componentWidthXL,
+              paddingTop: spacing.m,
+              paddingBottom: spacing.m,
+              borderRadius: 10,
+              backgroundColor: colors.buttonBackground,
+            },
+        props.style,
+      ]}>
+      <View style={[{ justifyContent: 'center', alignItems: 'center' }, props.containerStyle]}>
         {props.icon ? (
           <Icon size={themeConstants.iconSize} color={colors.primaryColor} {...props.icon} />
         ) : (
@@ -61,8 +64,8 @@ const Button: React.FC<ButtonProps> = (props) => {
             {props.label}
           </Text>
         )}
-      </Animated.View>
-    </TouchableOpacity>
+      </View>
+    </AnimatedTouchableOpacity>
   )
 }
 

@@ -6,7 +6,7 @@ import { useTheme } from '@shopify/restyle'
 import { theme, Theme } from '../../theme'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FlatList, View } from 'react-native'
-import MapView from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import dayjs from 'dayjs'
 import { PlanScreenNavigationProps } from '../../types'
 
@@ -93,6 +93,8 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
               Location
             </Text>
             <MapView
+              provider={PROVIDER_GOOGLE}
+              liteMode
               style={{
                 height: themeConstants.componentHeightL,
                 width: themeConstants.componentWidthXL,

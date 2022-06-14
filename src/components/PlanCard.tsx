@@ -109,7 +109,7 @@ const PlanCard: React.FC<PlanCardProps> = (props) => {
         <Text variant="tertiary" color="darkSecondaryColor">
           {props.location}
         </Text>
-        <Box flexDirection="row" marginBottom="m">
+        {/* <Box flexDirection="row" marginBottom="m">
           <Icon
             name="people-outline"
             size={themeConstants.smallIconSize}
@@ -119,7 +119,7 @@ const PlanCard: React.FC<PlanCardProps> = (props) => {
           <Text variant="tertiary" color="tertiaryColor">
             {props.numPeople.attending}
           </Text>
-        </Box>
+        </Box> */}
       </TouchableOpacity>
     )
   }

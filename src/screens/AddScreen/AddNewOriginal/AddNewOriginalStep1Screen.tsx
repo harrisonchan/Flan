@@ -36,7 +36,15 @@ const AddNewOriginalStep1Screen = ({ route, navigation }: AddStackNavigationProp
               Add A Location
             </Text>
             <Text variant="secondary">Location skipped for now...</Text>
-            <Button label="Skip" mode="small" onPress={() => setLocation(null)} />
+            <Box flexDirection="row">
+              <Button
+                label="Add Location"
+                mode="small"
+                onPress={() => navigation.navigate('AddNewSelectLocationScreen')}
+                style={{ backgroundColor: colors.lightGreen }}
+              />
+              <Button label="Skip" mode="small" onPress={() => setLocation(null)} />
+            </Box>
             <Text variant="secondary" color="primaryColor">
               Add Activities
             </Text>

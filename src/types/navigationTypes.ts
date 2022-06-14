@@ -58,10 +58,15 @@ export type AddStackParamList = {
   AddNewOriginalStep1Screen: undefined
   AddNewOriginalStep2Screen: undefined
   AddNewFromCommunityScreen: undefined
+  AddNewSelectLocationScreen: undefined
 }
 export type AddStackNavigationProps = StackScreenProps<
   AddStackParamList,
-  'AddScreen' | 'AddNewOriginalStep1Screen' | 'AddNewOriginalStep2Screen' | 'AddNewFromCommunityScreen'
+  | 'AddScreen'
+  | 'AddNewOriginalStep1Screen'
+  | 'AddNewOriginalStep2Screen'
+  | 'AddNewFromCommunityScreen'
+  | 'AddNewSelectLocationScreen'
 >
 
 // export type PlanStackParamList = {

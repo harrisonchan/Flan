@@ -8,6 +8,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated'
+import { ColorType } from '../types'
 
 const SCREEN_WIDTH = Dimensions.get('screen').width
 const SCREEN_HEIGHT = Dimensions.get('screen').height
@@ -42,9 +43,9 @@ const SkeletonItem: React.FC<SkeletonItemProps> = (props) => {
 }
 
 interface SkeletonScreenProps {
-  type: 'ParallaxScrollView'
+  type: 'ParallaxScrollView' | 'LargeMapView'
   color: ColorValue
-  backgroundColor: ColorValue
+  backgroundColor: ColorType
 }
 
 const SkeletonScreen: React.FC<SkeletonScreenProps> = (props) => {
@@ -52,13 +53,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = (props) => {
     switch (props.type) {
       case 'ParallaxScrollView':
         return (
-          <View
-            style={{
-              width: SCREEN_WIDTH,
-              height: SCREEN_HEIGHT,
-              alignItems: 'center',
-              backgroundColor: props.backgroundColor,
-            }}>
+          <>
             <SkeletonItem color={props.color} style={{ width: '100%', height: '35%', marginBottom: 10 }} />
             <SkeletonItem
               color={props.color}
@@ -82,11 +77,27 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = (props) => {
               }}
             />
             <SkeletonItem color={props.color} style={{ width: '90%', height: '30%', marginBottom: 10 }} />
-          </View>
+          </>
+        )
+      case 'LargeMapView':
+        return (
+          <>
+            <SkeletonItem color={props.color} style={{ width: '100%', height: '100%' }} />
+          </>
         )
     }
   }
-  return <>{renderSkeletonScreen()}</>
+  return (
+    <View
+      style={{
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
+        alignItems: 'center',
+        backgroundColor: props.backgroundColor,
+      }}>
+      {renderSkeletonScreen()}
+    </View>
+  )
 }
 
 export default SkeletonScreen
