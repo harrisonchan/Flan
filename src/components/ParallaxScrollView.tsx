@@ -1,6 +1,14 @@
 import { useTheme } from '@shopify/restyle'
 import { transform } from 'lodash'
-import React, { ComponentType, JSXElementConstructor, ReactElement, useState } from 'react'
+import React, {
+  ComponentType,
+  JSXElementConstructor,
+  ReactElement,
+  SyntheticEvent,
+  useEffect,
+  useState,
+  VoidFunctionComponent,
+} from 'react'
 import { ColorValue, FlatList, RegisteredStyle, TouchableOpacity, View, ViewStyle, SectionList } from 'react-native'
 import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import { Theme } from '../theme'
@@ -8,6 +16,8 @@ import Box from './Box'
 import Text from './Text'
 import StatusBarPadding from './StatusBarPadding'
 import Icon from 'react-native-vector-icons/Ionicons'
+import dayjs from 'dayjs'
+import SkeletonScreen from './SkeletonScreen'
 
 interface ParallaxScrollViewProps {
   containerStyle?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
@@ -32,11 +42,15 @@ interface ParallaxScrollViewProps {
   headerLeftIconOnPress?: () => void
   headerRightIconOnPress?: () => void
   headerTitle?: string
+  disableAnimation?: boolean
+  onLayout?: (event: SyntheticEvent) => void
+  skeletonLoadingTime?: number
 }
 
 const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
   const [foregroundHeight, setForegroundHeight] = useState(0)
   const [headerHeight, setHeaderHeight] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const AnimatedText = Animated.createAnimatedComponent(Text)
   const scrollYSharedValue = useSharedValue(0)
@@ -96,8 +110,8 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
       <Animated.View
         style={[
           { position: 'absolute', width: '100%' },
-          backgroundTranslateYAnimatedStyle,
-          backgroundOpacityAnimatedStyle,
+          !props.disableAnimation && backgroundTranslateYAnimatedStyle,
+          !props.disableAnimation && backgroundOpacityAnimatedStyle,
           props.backgroundStyle,
         ]}>
         {props.background}
@@ -107,7 +121,7 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
   const renderForeground = () => {
     return (
       <View
-        style={[foregroundAnimatedStyle, props.foregroundStyle]}
+        style={[!props.disableAnimation && foregroundAnimatedStyle, props.foregroundStyle]}
         onLayout={(e) => setForegroundHeight(e.nativeEvent.layout.height)}>
         {props.foreground}
       </View>
@@ -116,9 +130,10 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
   const renderMainContent = () => {
     return (
       <Animated.View
+        onLayout={(e) => props.onLayout && props.onLayout(e)}
         style={[
           { minHeight: themeConstants.screenHeight - foregroundHeight - headerHeight },
-          props.mainContentRoundedTopBorders && mainContentBorderRadiusAnimatedStyle,
+          props.mainContentRoundedTopBorders && !props.disableAnimation && mainContentBorderRadiusAnimatedStyle,
           props.mainContentStyle,
         ]}>
         {props.mainContent}
@@ -131,7 +146,7 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
         onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}
         style={[
           { position: 'absolute', width: '100%' },
-          !props.headerShownOnScroll0 && headerDelayedOpacityAnimatedStyle,
+          !props.headerShownOnScroll0 && !props.disableAnimation && headerDelayedOpacityAnimatedStyle,
         ]}>
         <Animated.View
           style={[
@@ -141,7 +156,7 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
               height: '100%',
               backgroundColor: props.headerBackgroundColor ? props.headerBackgroundColor : colors.primaryColor,
             },
-            headerDelayedOpacityAnimatedStyle,
+            !props.disableAnimation && headerDelayedOpacityAnimatedStyle,
           ]}
         />
         <Box
@@ -159,7 +174,9 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
             </TouchableOpacity>
           )}
           {props.headerTitle && (
-            <AnimatedText style={headerDelayedOpacityAnimatedStyle}>{props.headerTitle}</AnimatedText>
+            <AnimatedText style={[!props.disableAnimation && headerDelayedOpacityAnimatedStyle]}>
+              {props.headerTitle}
+            </AnimatedText>
           )}
           {props.headerRightIcon && (
             <TouchableOpacity onPress={() => props.headerRightIconOnPress && props.headerRightIconOnPress()}>
@@ -168,6 +185,18 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
           )}
         </Box>
       </Animated.View>
+    )
+  }
+  useEffect(() => {
+    if (props.skeletonLoadingTime) {
+      setTimeout(() => {
+        setIsLoading(false)
+      }, props.skeletonLoadingTime)
+    }
+  }, [])
+  if (isLoading && props.skeletonLoadingTime) {
+    return (
+      <SkeletonScreen type="ParallaxScrollView" backgroundColor={colors.lightColor} color={colors.mainBackground} />
     )
   }
   return (

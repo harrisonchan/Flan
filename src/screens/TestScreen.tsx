@@ -1,10 +1,19 @@
+import { useTheme } from '@shopify/restyle'
 import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useState } from 'react'
 import { FlatList, View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Chat } from '../components'
+import { useDispatch } from 'react-redux'
+import { Button, Chat, StatusBarPadding } from '../components'
+import { RootTabsNavigationProps } from '../navigationTypes'
+import { useAppSelector } from '../redux'
+import { appActions } from '../redux/features'
+import { Theme } from '../theme'
 
-const TestScreen = () => {
+const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
+  const dispatch = useDispatch()
+  const colorScheme = useAppSelector((state) => state.utilityReducer.colorScheme)
+  const { colors } = useTheme<Theme>()
   const renderItem = () => {
     const arr = Array(100).fill('hello')
     return (
@@ -14,7 +23,8 @@ const TestScreen = () => {
     )
   }
   return (
-    <View>
+    <View style={{ backgroundColor: colors.mainBackground, flex: 1 }}>
+      <StatusBarPadding />
       {/* <Icon name="add-circle-outline" size={40} />
       <View style={{ backgroundColor: 'red' }}>
         <Text>hello world</Text>
@@ -27,6 +37,10 @@ const TestScreen = () => {
             message: 'hello sexy!',
           },
         ]}
+      />
+      <Button
+        label="switch theme"
+        onPress={() => dispatch(appActions.utilityActions.setColorScheme(colorScheme == 'light' ? 'dark' : 'light'))}
       />
     </View>
   )

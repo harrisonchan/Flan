@@ -8,5 +8,5 @@
 // const appStyles = { shadow, spacing, spacingStyles, styles, colors, typography, styleUtilities }
 
 // export { default as theme } from './theme'
-export { colorPalette, default as theme } from './theme'
+export { colorPalette, darkTheme, default as theme } from './theme'
 export type { Theme } from './theme'

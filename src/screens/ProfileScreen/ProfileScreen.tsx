@@ -6,8 +6,9 @@ import { Box, Illustration, PlanCard, StatusBarPadding, Text } from '../../compo
 import { useAppSelector } from '../../redux'
 import { Theme } from '../../theme'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { ProfileStackNavigationProps } from '../../navigationTypes'
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const user = useAppSelector((state) => state.userReducer.user)
   return (
@@ -35,7 +36,7 @@ const ProfileScreen = () => {
               width="30%"
               justifyContent="center"
               alignItems="center"
-              backgroundColor="light"
+              backgroundColor="lightColor"
               borderRadius={20}
               padding="s">
               <Text>5</Text>
@@ -45,7 +46,7 @@ const ProfileScreen = () => {
               width="30%"
               justifyContent="center"
               alignItems="center"
-              backgroundColor="light"
+              backgroundColor="lightColor"
               borderRadius={20}
               padding="s"
               marginLeft="m"
@@ -71,7 +72,7 @@ const ProfileScreen = () => {
           </Box>
           <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
             <Text color="primaryColor">My Flans</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ProfilePersonalFlans')}>
               <Text variant="secondary">See All</Text>
             </TouchableOpacity>
           </Box>

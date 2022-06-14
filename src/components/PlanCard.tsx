@@ -5,8 +5,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { moderateScale } from 'react-native-size-matters'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Theme } from '../theme'
+import { generateRandomColorFromPalette } from '../utilities/Colors'
 import Box from './Box'
-import Illustration from './Illustration'
+import Illustration, { illustrationType, illustrationTypeArray } from './Illustration'
 import TagList from './TagList'
 import Text from './Text'
 
@@ -21,18 +22,36 @@ interface PlanCardProps {
   progress?: { current: number; total: number }
   style?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
   //   randomColoredCategories?: boolean
+  illustration?: illustrationType
 }
 
 const PlanCard: React.FC<PlanCardProps> = (props) => {
   const { colors, spacing, themeConstants, shadows } = useTheme<Theme>()
+  const renderIllustration = () => {
+    return (
+      <Box position="absolute" right={moderateScale(10)} bottom={moderateScale(10)} opacity={0.5}>
+        <Illustration
+          illustration={
+            props.illustration
+              ? props.illustration
+              : illustrationTypeArray[Math.floor(Math.random() * illustrationTypeArray.length)]
+          }
+          height={props.mode == 'small' ? themeConstants.smallIllustrationSize : themeConstants.illustrationSize}
+          width={props.mode == 'small' ? themeConstants.smallIllustrationSize : themeConstants.illustrationSize}
+          // fill={Object.keys(colors)[Math.floor(Math.random() * Object.keys(colors).length)]}
+          fill={generateRandomColorFromPalette()}
+        />
+      </Box>
+    )
+  }
   const renderDefault = () => {
     return (
       <TouchableOpacity
         style={[
           {
-            width: themeConstants.largeComponentWidth,
-            height: themeConstants.largeComponentHeight,
-            backgroundColor: colors.light,
+            width: themeConstants.componentWidthXL,
+            height: themeConstants.componentHeightL,
+            backgroundColor: colors.lightColor,
             borderRadius: 20,
             padding: spacing.m,
           },
@@ -41,15 +60,8 @@ const PlanCard: React.FC<PlanCardProps> = (props) => {
         onPress={() => {
           props.onPress && props.onPress()
         }}>
-        <Box position="absolute" right={moderateScale(10)} bottom={moderateScale(10)} opacity={0.5}>
-          <Illustration
-            illustration="illustration-hangout"
-            height={themeConstants.illustrationSize}
-            width={themeConstants.illustrationSize}
-            fill={colors.secondaryColor}
-          />
-        </Box>
-        <Box>
+        {renderIllustration()}
+        <Box width="60%">
           <Text variant="header3">{props.title}</Text>
           {props.location && (
             <Text variant="secondary" marginBottom="xs" color="darkSecondaryColor">
@@ -71,7 +83,7 @@ const PlanCard: React.FC<PlanCardProps> = (props) => {
             </Text>
           </Box>
           <View onStartShouldSetResponder={() => true}></View>
-          <TagList tags={['Music', 'Fun', 'Animals', 'Gorillas', 'Zebras', 'Penguins']} />
+          {/* <TagList tags={['Music', 'Fun', 'Animals', 'Gorillas', 'Zebras', 'Penguins']} /> */}
         </Box>
       </TouchableOpacity>
     )
@@ -81,22 +93,15 @@ const PlanCard: React.FC<PlanCardProps> = (props) => {
       <TouchableOpacity
         style={[
           {
-            width: themeConstants.smallComponentWidth,
-            height: themeConstants.smallComponentHeight,
-            backgroundColor: colors.light,
+            width: themeConstants.componentWidthM,
+            height: themeConstants.componentHeightM,
+            backgroundColor: colors.lightColor,
             borderRadius: 20,
             padding: spacing.m,
           },
           props.style,
         ]}>
-        <Box position="absolute" right={moderateScale(10)} bottom={moderateScale(10)} opacity={0.5}>
-          <Illustration
-            illustration="illustration-hangout"
-            height={themeConstants.smallIllustrationSize}
-            width={themeConstants.smallIllustrationSize}
-            fill={colors.secondaryColor}
-          />
-        </Box>
+        {renderIllustration()}
         <Text variant="secondary" color="neutralText">
           {props.title}
         </Text>

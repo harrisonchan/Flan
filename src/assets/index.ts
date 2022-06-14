@@ -1,1 +1,1 @@
-export * from './illustrations'
+export { default as Illustrations } from './illustrations'

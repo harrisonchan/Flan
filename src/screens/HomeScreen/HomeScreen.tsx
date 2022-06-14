@@ -10,6 +10,7 @@ import dayjs from 'dayjs'
 import localeData from 'dayjs/plugin/localeData'
 import { HomeStackNavigationProps } from '../../navigationTypes'
 import { SharedElement } from 'react-navigation-shared-element'
+import { illustrationTypeArray } from '../../components/Illustration'
 
 dayjs.extend(localeData)
 
@@ -53,7 +54,9 @@ const HomeScreen = ({ route, navigation }: HomeStackNavigationProps) => {
               location="Harrison's House, Taipei, Taiwan"
               numPeople={{ attending: 10 }}
               style={{ marginBottom: spacing.l }}
-              onPress={() => navigation.navigate('PlanScreen', { planId: '0' })}
+              onPress={() => {
+                navigation.navigate('PlanScreen', { planId: '0' })
+              }}
             />
           </SharedElement>
           <Text variant="body" marginBottom="s" color="primaryColor">

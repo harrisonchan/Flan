@@ -22,6 +22,7 @@ export const colorPalette = {
   dark: '#333944',
   lightGrey: '#F1F4F9',
   grey: '#BEBFBF',
+  darkGrey: '#4A5363',
   light: '#FFFFFF',
 }
 
@@ -42,6 +43,11 @@ const theme = createTheme({
     tertiaryColor: colorPalette.green,
     darkTertiaryColor: colorPalette.darkGreen,
     mainBackground: colorPalette.lightGrey,
+    lightColor: colorPalette.light,
+    darkColor: colorPalette.dark,
+    lightGreyColor: colorPalette.lightGrey,
+    greyColor: colorPalette.grey,
+    darkGreyColor: colorPalette.darkGrey,
     cardPrimaryBackground: colorPalette.red,
     buttonBackground: colorPalette.red,
     buttonText: colorPalette.lightGrey,
@@ -67,10 +73,16 @@ const theme = createTheme({
     screenWidth: SCREEN_WIDTH,
     screenHeight: SCREEN_HEIGHT,
     containerWidth: SCREEN_WIDTH * 0.9,
-    largeComponentWidth: SCREEN_WIDTH * 0.9,
-    smallComponentWidth: SCREEN_WIDTH * 0.4,
-    largeComponentHeight: SCREEN_HEIGHT * 0.35,
-    smallComponentHeight: SCREEN_HEIGHT * 0.2,
+    componentWidthXL: SCREEN_WIDTH * 0.9,
+    componentWidthL: SCREEN_WIDTH * 0.7,
+    componentWidthM: SCREEN_WIDTH * 0.4,
+    componentWidthS: SCREEN_WIDTH * 0.2,
+    componentWidthXS: SCREEN_WIDTH * 0.1,
+    componentHeightL: SCREEN_HEIGHT * 0.3,
+    componentHeightM: SCREEN_HEIGHT * 0.2,
+    componentHeightS: SCREEN_HEIGHT * 0.1,
+    componentHeightXS: SCREEN_HEIGHT * 0.05,
+    componentHeightXXS: SCREEN_HEIGHT * 0.025,
     iconSize: moderateScale(25),
     smallIconSize: moderateScale(20),
     headerIconSize: moderateScale(35),
@@ -162,4 +174,28 @@ const theme = createTheme({
 })
 
 export type Theme = typeof theme
+
+export const darkTheme: Theme = {
+  ...theme,
+  colors: {
+    ...theme.colors,
+    neutralText: colorPalette.light,
+    lightPrimaryColor: colorPalette.darkRed,
+    primaryColor: colorPalette.red,
+    darkPrimaryColor: colorPalette.lightRed,
+    lightSecondaryColor: colorPalette.darkSand,
+    secondaryColor: colorPalette.sand,
+    darkSecondaryColor: colorPalette.lightSand,
+    lightTertiaryColor: colorPalette.darkGreen,
+    tertiaryColor: colorPalette.green,
+    darkTertiaryColor: colorPalette.lightGreen,
+    mainBackground: colorPalette.dark,
+    lightColor: colorPalette.darkGrey,
+    darkColor: colorPalette.light,
+    lightGreyColor: colorPalette.darkGrey,
+    darkGreyColor: colorPalette.lightGrey,
+    buttonText: colorPalette.dark,
+  },
+}
+
 export default theme
