@@ -6,7 +6,8 @@ import { Box, Illustration, PlanCard, StatusBarPadding, Text } from '../../compo
 import { useAppSelector } from '../../redux'
 import { Theme } from '../../theme'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ProfileStackNavigationProps } from '../../navigationTypes'
+import { ProfileStackNavigationProps } from '../../types'
+import NavigationHeader from '../../components/NavigationHeader'
 
 const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
@@ -16,10 +17,10 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
       <StatusBarPadding />
       <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: colors.mainBackground }}>
         <Box width={themeConstants.containerWidth} alignSelf="center" marginTop="xl" marginBottom="xl">
-          <TouchableOpacity style={{ marginBottom: spacing.m }}>
-            <Icon name="settings-outline" size={themeConstants.iconSize} />
-          </TouchableOpacity>
-          <Box flexDirection="row" alignItems="center">
+          <NavigationHeader
+            leftIconProps={{ name: 'settings-outline', size: themeConstants.iconSize, color: colors.primaryColor }}
+          />
+          <Box flexDirection="row" alignItems="center" marginTop="m">
             <Box borderRadius={100} backgroundColor="primaryColor" overflow="hidden" marginRight="m">
               <Illustration
                 illustration="illustration-wear-a-mask"
@@ -31,7 +32,7 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
               {user.userFirstName} {user.userLastName}
             </Text>
           </Box>
-          <Box flexDirection="row" justifyContent="space-between" marginTop="l">
+          {/* <Box flexDirection="row" justifyContent="space-between" marginTop="l">
             <Box
               width="30%"
               justifyContent="center"
@@ -69,7 +70,7 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
                 <Text>Friends</Text>
               </TouchableOpacity>
             </Box>
-          </Box>
+          </Box> */}
           <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
             <Text color="primaryColor">My Flans</Text>
             <TouchableOpacity onPress={() => navigation.navigate('ProfilePersonalFlans')}>
@@ -84,7 +85,19 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
           />
           <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
             <Text color="primaryColor">Saved Flans</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ProfileSavedFlans')}>
+              <Text variant="secondary">See All</Text>
+            </TouchableOpacity>
+          </Box>
+          <PlanCard
+            title="Go to the zoo"
+            author="Joey Lo"
+            location="Harrison's House, Taipei, Taiwan"
+            numPeople={{ attending: 10 }}
+          />
+          <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
+            <Text color="primaryColor">Previous Flans</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('ProfileSavedFlans')}>
               <Text variant="secondary">See All</Text>
             </TouchableOpacity>
           </Box>

@@ -4,13 +4,14 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { ColorValue, FlatList, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '@shopify/restyle'
 import { Theme } from '../../../theme'
-import { AddStackNavigationProps } from '../../../navigationTypes'
+import { AddStackNavigationProps } from '../../../types'
 import { illustrationType, illustrationTypeArray } from '../../../components/Illustration'
 import { interpolate, useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated'
 import { generateRandomColorFromPalette } from '../../../utilities'
 import { random } from 'lodash'
+import NavigationHeader from '../../../components/NavigationHeader'
 
-const AddNewOriginalScreen = ({ route, navigation }: AddStackNavigationProps) => {
+const AddNewOriginalStep2Screen = ({ route, navigation }: AddStackNavigationProps) => {
   const [illustrationsArray, setIllustrationsArray] = useState<illustrationType[]>([
     'illustration-animal',
     'illustration-bored',
@@ -100,9 +101,10 @@ const AddNewOriginalScreen = ({ route, navigation }: AddStackNavigationProps) =>
       <Box flex={1} backgroundColor="mainBackground">
         <Box width={themeConstants.containerWidth} alignSelf="center" flex={1}>
           <Box flex={1}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Icon name="chevron-back" size={themeConstants.headerIconSize} />
-            </TouchableOpacity>
+            <NavigationHeader
+              leftIconProps={{ name: 'chevron-back', size: themeConstants.headerIconSize, color: colors.darkColor }}
+              leftIconOnPress={() => navigation.goBack()}
+            />
             <Text>Pick An Illustration For Your Flan</Text>
             <FlatList
               onMomentumScrollBegin={() => {
@@ -144,4 +146,4 @@ const AddNewOriginalScreen = ({ route, navigation }: AddStackNavigationProps) =>
   )
 }
 
-export default AddNewOriginalScreen
+export default AddNewOriginalStep2Screen

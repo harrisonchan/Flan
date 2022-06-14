@@ -2,8 +2,9 @@ import { useTheme } from '@shopify/restyle'
 import React from 'react'
 import { FlatList } from 'react-native'
 import { Box, PlanCard, StatusBarPadding, Text } from '../../components'
-import { ProfileStackNavigationProps } from '../../navigationTypes'
+import { ProfileStackNavigationProps } from '../../types'
 import { Theme } from '../../theme'
+import NavigationHeader from '../../components/NavigationHeader'
 
 const ProfilePersonalFlans = ({ route, navigation }: ProfileStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
@@ -24,11 +25,20 @@ const ProfilePersonalFlans = ({ route, navigation }: ProfileStackNavigationProps
   return (
     <>
       <StatusBarPadding />
-      <Box width={themeConstants.containerWidth} alignSelf="center">
-        <Text variant="header3" marginTop="xl">
+      <Box width={themeConstants.containerWidth} alignSelf="center" marginTop="xl" flex={1}>
+        <NavigationHeader
+          leftIconProps={{ name: 'chevron-back', size: themeConstants.headerIconSize, color: colors.darkColor }}
+          leftIconOnPress={() => navigation.goBack()}
+        />
+        <Text variant="header3" marginTop="m">
           My Flans
         </Text>
-        <FlatList data={[{}]} renderItem={renderPersonalFlans} />
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingTop: spacing.s }}
+          data={[{}, {}, {}]}
+          renderItem={renderPersonalFlans}
+        />
       </Box>
     </>
   )

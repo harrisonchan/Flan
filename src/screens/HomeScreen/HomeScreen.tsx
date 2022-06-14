@@ -8,7 +8,7 @@ import { Theme } from '../../theme'
 import Icon from 'react-native-vector-icons/Ionicons'
 import dayjs from 'dayjs'
 import localeData from 'dayjs/plugin/localeData'
-import { HomeStackNavigationProps } from '../../navigationTypes'
+import { HomeStackNavigationProps } from '../../types'
 import { SharedElement } from 'react-navigation-shared-element'
 import { illustrationTypeArray } from '../../components/Illustration'
 

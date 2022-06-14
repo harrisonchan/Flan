@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { SharedElement } from 'react-navigation-shared-element'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Box, Illustration, ParallaxScrollView, StatusBarPadding, Text } from '../../components'
-import { PlanScreenNavigationProps } from '../../navigationTypes'
 import { useTheme } from '@shopify/restyle'
 import { theme, Theme } from '../../theme'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FlatList, View } from 'react-native'
 import MapView from 'react-native-maps'
 import dayjs from 'dayjs'
+import { PlanScreenNavigationProps } from '../../types'
 
 const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
@@ -31,8 +31,7 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
         headerShownOnScroll0
         headerBackgroundColor={colors.mainBackground}
         headerTitle="Go To The Park"
-        headerLeftIcon={{ name: 'chevron-back', size: themeConstants.headerIconSize }}
-        headerRightIcon={{ name: 'chevron-forward', size: themeConstants.headerIconSize }}
+        headerLeftIconProps={{ name: 'chevron-back', size: themeConstants.headerIconSize, color: colors.darkColor }}
         headerLeftIconOnPress={() => navigation.goBack()}
         backgroundStyle={{ height: themeConstants.screenHeight * 0.35 }}
         background={

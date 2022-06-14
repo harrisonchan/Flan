@@ -26,7 +26,7 @@ import {
   HomeStackParamList,
   ProfileStackParamList,
   RootTabsParamList,
-} from './navigationTypes'
+} from './types'
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import { ThemeProvider, useTheme } from '@shopify/restyle'
 import { darkTheme, Theme, theme } from './theme'

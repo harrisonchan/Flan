@@ -4,9 +4,10 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { ScrollView, TouchableOpacity } from 'react-native'
 import { useTheme } from '@shopify/restyle'
 import { Theme } from '../../../theme'
-import { AddStackNavigationProps } from '../../../navigationTypes'
+import { AddStackNavigationProps } from '../../../types'
+import NavigationHeader from '../../../components/NavigationHeader'
 
-const AddNewOriginalScreen = ({ route, navigation }: AddStackNavigationProps) => {
+const AddNewOriginalStep1Screen = ({ route, navigation }: AddStackNavigationProps) => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState<{} | null>({})
@@ -17,9 +18,10 @@ const AddNewOriginalScreen = ({ route, navigation }: AddStackNavigationProps) =>
       <StatusBarPadding />
       <Box flex={1} backgroundColor="mainBackground">
         <Box width={themeConstants.containerWidth} alignSelf="center" flex={1}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="chevron-back" size={themeConstants.headerIconSize} />
-          </TouchableOpacity>
+          <NavigationHeader
+            leftIconProps={{ name: 'chevron-back', size: themeConstants.headerIconSize, color: colors.darkColor }}
+            leftIconOnPress={() => navigation.goBack()}
+          />
           <ScrollView>
             <Text>Create Your Own Flan</Text>
             <Text variant="secondary" color="primaryColor">
@@ -48,4 +50,4 @@ const AddNewOriginalScreen = ({ route, navigation }: AddStackNavigationProps) =>
   )
 }
 
-export default AddNewOriginalScreen
+export default AddNewOriginalStep1Screen

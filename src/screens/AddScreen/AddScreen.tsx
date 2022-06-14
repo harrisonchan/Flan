@@ -4,7 +4,7 @@ import { ColorValue, RegisteredStyle, TouchableOpacity, View, ViewStyle } from '
 import { Box, Button, Illustration, StatusBarPadding, Text } from '../../components'
 import { Theme } from '../../theme'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { AddStackNavigationProps } from '../../navigationTypes'
+import { AddStackNavigationProps } from '../../types'
 
 interface SelectNewFlanTypeButtonProps {
   onPress: () => void

@@ -18,6 +18,7 @@ import StatusBarPadding from './StatusBarPadding'
 import Icon from 'react-native-vector-icons/Ionicons'
 import dayjs from 'dayjs'
 import SkeletonScreen from './SkeletonScreen'
+import { IconProps } from 'react-native-vector-icons/Icon'
 
 interface ParallaxScrollViewProps {
   containerStyle?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
@@ -37,8 +38,8 @@ interface ParallaxScrollViewProps {
   header?: boolean
   headerBackgroundColor?: ColorValue
   headerShownOnScroll0?: boolean
-  headerLeftIcon?: { name: string; size: number }
-  headerRightIcon?: { name: string; size: number }
+  headerLeftIconProps?: IconProps
+  headerRightIconProps?: IconProps
   headerLeftIconOnPress?: () => void
   headerRightIconOnPress?: () => void
   headerTitle?: string
@@ -160,7 +161,7 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
           ]}
         />
         <Box
-          justifyContent="space-between"
+          // justifyContent="space-between"
           alignItems="center"
           width="100%"
           flexDirection="row"
@@ -168,21 +169,27 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
           paddingRight="m"
           paddingTop="s"
           paddingBottom="s">
-          {props.headerLeftIcon && (
-            <TouchableOpacity onPress={() => props.headerLeftIconOnPress && props.headerLeftIconOnPress()}>
-              <Icon name={props.headerLeftIcon.name} size={props.headerLeftIcon.size} />
-            </TouchableOpacity>
-          )}
-          {props.headerTitle && (
-            <AnimatedText style={[!props.disableAnimation && headerDelayedOpacityAnimatedStyle]}>
-              {props.headerTitle}
-            </AnimatedText>
-          )}
-          {props.headerRightIcon && (
-            <TouchableOpacity onPress={() => props.headerRightIconOnPress && props.headerRightIconOnPress()}>
-              <Icon name={props.headerRightIcon.name} size={props.headerRightIcon.size} />
-            </TouchableOpacity>
-          )}
+          <View style={{ width: '20%', alignItems: 'flex-start' }}>
+            {props.headerLeftIconProps && (
+              <TouchableOpacity onPress={() => props.headerLeftIconOnPress && props.headerLeftIconOnPress()}>
+                <Icon {...props.headerLeftIconProps} />
+              </TouchableOpacity>
+            )}
+          </View>
+          <View style={{ width: '60%', alignItems: 'center' }}>
+            {props.headerTitle && (
+              <AnimatedText style={[!props.disableAnimation && headerDelayedOpacityAnimatedStyle]}>
+                {props.headerTitle}
+              </AnimatedText>
+            )}
+          </View>
+          <View style={{ width: '20%', alignItems: 'flex-end' }}>
+            {props.headerRightIconProps && (
+              <TouchableOpacity onPress={() => props.headerRightIconOnPress && props.headerRightIconOnPress()}>
+                <Icon {...props.headerRightIconProps} />
+              </TouchableOpacity>
+            )}
+          </View>
         </Box>
       </Animated.View>
     )
