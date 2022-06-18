@@ -10,52 +10,55 @@ import { interpolate, useAnimatedStyle, useSharedValue, withDelay, withTiming } 
 import { generateRandomColorFromPalette } from '../../../utilities'
 import { random } from 'lodash'
 import NavigationHeader from '../../../components/NavigationHeader'
+import { useDispatch } from 'react-redux'
+import { appActions } from '../../../redux/features'
 
 const AddNewOriginalStep2Screen = ({ route, navigation }: AddStackNavigationProps) => {
-  const [illustrationsArray, setIllustrationsArray] = useState<illustrationType[]>([
-    'illustration-animal',
-    'illustration-bored',
-    'illustration-business-plan',
-    'illustration-business-travel',
-    'illustration-car-drifting',
-    'illustration-come-back-later',
-    'illustration-cool-guy',
-    'illustration-couple',
-    'illustration-delete-confirmation',
-    'illustration-delivery',
-    'illustration-explore',
-    'illustration-failure',
-    'illustration-family',
-    'illustration-fashion',
-    'illustration-finances',
-    'illustration-food',
-    'illustration-freedom',
-    'illustration-friends',
-    'illustration-globe',
-    'illustration-growth',
-    'illustration-hangout',
-    'illustration-health-research',
-    'illustration-landscape',
-    'illustration-location',
-    'illustration-message-sent',
-    'illustration-message-sent',
-    'illustration-music',
-    'illustration-news',
-    'illustration-painter',
-    'illustration-portrait',
-    'illustration-relationship',
-    'illustration-relax',
-    'illustration-run',
-    'illustration-science',
-    'illustration-sports',
-    'illustration-tasks',
-    'illustration-technology',
-    'illustration-travel',
-    'illustration-wear-a-mask',
-    'illustration-welcome',
-    'illustration-work-from-home',
-    'illustration-writing',
-  ])
+  // const [illustrationsArray, setIllustrationsArray] = useState<illustrationType[]>([
+  //   'illustration-animal',
+  //   'illustration-bored',
+  //   'illustration-business-plan',
+  //   'illustration-business-travel',
+  //   'illustration-car-drifting',
+  //   'illustration-come-back-later',
+  //   'illustration-cool-guy',
+  //   'illustration-couple',
+  //   'illustration-delete-confirmation',
+  //   'illustration-delivery',
+  //   'illustration-explore',
+  //   'illustration-failure',
+  //   'illustration-family',
+  //   'illustration-fashion',
+  //   'illustration-finances',
+  //   'illustration-food',
+  //   'illustration-freedom',
+  //   'illustration-friends',
+  //   'illustration-globe',
+  //   'illustration-growth',
+  //   'illustration-hangout',
+  //   'illustration-health-research',
+  //   'illustration-landscape',
+  //   'illustration-location',
+  //   'illustration-message-sent',
+  //   'illustration-message-sent',
+  //   'illustration-music',
+  //   'illustration-news',
+  //   'illustration-painter',
+  //   'illustration-portrait',
+  //   'illustration-relationship',
+  //   'illustration-relax',
+  //   'illustration-run',
+  //   'illustration-science',
+  //   'illustration-sports',
+  //   'illustration-tasks',
+  //   'illustration-technology',
+  //   'illustration-travel',
+  //   'illustration-wear-a-mask',
+  //   'illustration-welcome',
+  //   'illustration-work-from-home',
+  //   'illustration-writing',
+  // ])
+  const [illustrationsArray, setIllustrationsArray] = useState(illustrationTypeArray)
   const [randomColorArray, setRandomColorArray] = useState<ColorValue[]>([])
   const [selectedIllustration, setSelectedIllustration] = useState<null | number>(null)
   const [pickIllustrationButtonHeight, setPickIllustrationButtonHeight] = useState(100)
@@ -95,6 +98,10 @@ const AddNewOriginalStep2Screen = ({ route, navigation }: AddStackNavigationProp
       </TouchableOpacity>
     )
   }
+  const dispatch = useDispatch()
+  useEffect(() => {
+    console.log(route.params)
+  }, [])
   return (
     <>
       <StatusBarPadding />
@@ -138,7 +145,26 @@ const AddNewOriginalStep2Screen = ({ route, navigation }: AddStackNavigationProp
           <View
             onLayout={(e) => setPickIllustrationButtonHeight(e.nativeEvent.layout.height)}
             style={{ position: 'absolute', bottom: spacing.m }}>
-            <Button label="Pick Illustration" style={[buttonAnimatedStyle]} />
+            <Button
+              label="Pick Illustration"
+              style={[buttonAnimatedStyle]}
+              onPress={() => {
+                if (selectedIllustration !== null) {
+                  dispatch(
+                    appActions.userActions.createFlan({
+                      id: Math.floor(Math.random() * 100),
+                      title: route.params?.title,
+                      description: route.params?.description,
+                      illustration: selectedIllustration,
+                      location: route.params?.location,
+                      activities: route.params?.activities,
+                    })
+                  )
+                  navigation.navigate('AddScreen')
+                  navigation.navigate('ProfileStack')
+                }
+              }}
+            />
           </View>
         </Box>
       </Box>

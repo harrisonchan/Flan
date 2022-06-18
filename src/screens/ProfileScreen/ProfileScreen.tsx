@@ -8,10 +8,12 @@ import { Theme } from '../../theme'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ProfileStackNavigationProps } from '../../types'
 import NavigationHeader from '../../components/NavigationHeader'
+import { illustrationTypeArray } from '../../components/Illustration'
 
 const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const user = useAppSelector((state) => state.userReducer.user)
+  const { createdFlans, savedFlans, attendedFlans } = user
   return (
     <>
       <StatusBarPadding />
@@ -77,12 +79,18 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
               <Text variant="secondary">See All</Text>
             </TouchableOpacity>
           </Box>
-          <PlanCard
-            title="Go to the zoo"
-            author="Joey Lo"
-            location="Harrison's House, Taipei, Taiwan"
-            numPeople={{ attending: 10 }}
-          />
+          {createdFlans.length > 0 ? (
+            <PlanCard
+              title={createdFlans[0].title}
+              author="Joey Lo"
+              location={createdFlans[0].location?.address}
+              numPeople={{ attending: 10 }}
+              onPress={() => navigation.navigate('PlanScreen', { planId: createdFlans[0].id, planType: 'created' })}
+              illustration={illustrationTypeArray[createdFlans[0].illustration]}
+            />
+          ) : (
+            <Text variant="secondary">Looks Like There Are No Flans Here Yet :(</Text>
+          )}
           <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
             <Text color="primaryColor">Saved Flans</Text>
             <TouchableOpacity onPress={() => navigation.navigate('ProfileSavedFlans')}>

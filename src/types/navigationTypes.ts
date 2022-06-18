@@ -1,6 +1,7 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { CompositeScreenProps } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
+import { ActivityType, FlanType, LocationType } from '../redux/features/userSlice'
 
 export type RootTabsParamList = {
   HomeStack: undefined
@@ -23,15 +24,20 @@ export type AuthenticationStackNavigationProps = StackScreenProps<
   'Login' | 'ForgotPassword'
 >
 
+export type PlanScreenParamsType = {
+  planId: string | number
+  planType: 'created' | 'saved' | 'attended'
+}
+
 export type HomeStackParamList = {
   HomeScreen: undefined
-  PlanScreen: { planId: string }
+  PlanScreen: PlanScreenParamsType
 }
 export type HomeStackNavigationProps = StackScreenProps<HomeStackParamList, 'HomeScreen' | 'PlanScreen'>
 
 export type ExploreStackParamList = {
   ExploreScreen: undefined
-  PlanScreen: undefined
+  PlanScreen: PlanScreenParamsType
 }
 export type ExploreStackNavigationProps = StackScreenProps<ExploreStackParamList, 'ExploreScreen' | 'PlanScreen'>
 
@@ -45,7 +51,7 @@ export type ProfileStackParamList = {
   ProfileScreen: undefined
   ProfilePersonalFlans: undefined
   ProfileSavedFlans: undefined
-  PlanScreen: undefined
+  PlanScreen: PlanScreenParamsType
 }
 export type ProfileStackNavigationProps = StackScreenProps<
   ProfileStackParamList,
@@ -55,8 +61,8 @@ export type ProfileStackNavigationProps = StackScreenProps<
 
 export type AddStackParamList = {
   AddScreen: undefined
-  AddNewOriginalStep1Screen: undefined
-  AddNewOriginalStep2Screen: undefined
+  AddNewOriginalStep1Screen: FlanType
+  AddNewOriginalStep2Screen: FlanType
   AddNewFromCommunityScreen: undefined
   AddNewSelectLocationScreen: undefined
 }

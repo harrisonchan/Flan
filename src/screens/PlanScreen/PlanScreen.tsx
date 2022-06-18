@@ -6,12 +6,37 @@ import { useTheme } from '@shopify/restyle'
 import { theme, Theme } from '../../theme'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FlatList, View } from 'react-native'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import dayjs from 'dayjs'
 import { PlanScreenNavigationProps } from '../../types'
+import { useAppSelector } from '../../redux'
+import { FlanType } from '../../redux/features/userSlice'
+import { useDispatch } from 'react-redux'
+import { appActions } from '../../redux/features'
+import { illustrationTypeArray } from '../../components/Illustration'
 
 const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
+  const [flan, setFlan] = useState<FlanType | undefined>(undefined)
+  const user = useAppSelector((state) => state.userReducer.user)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (route.params) {
+      let copy = []
+      if (route.params.planType == 'created') {
+        copy = user.createdFlans
+      } else if (route.params.planType == 'saved') {
+        copy = user.savedFlans
+      } else {
+        copy = user.attendedFlans
+      }
+      copy.forEach((flan) => {
+        if (route.params?.planId == flan.id) {
+          setFlan(flan)
+        }
+      })
+    }
+  }, [])
   return (
     <View style={{ backgroundColor: colors.mainBackground, flex: 1 }}>
       <StatusBarPadding />
@@ -36,18 +61,14 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
         backgroundStyle={{ height: themeConstants.screenHeight * 0.35 }}
         background={
           <Box alignItems="center" opacity={0.5}>
-            <Illustration
-              illustration="illustration-hangout"
-              height={themeConstants.screenHeight * 0.35}
-              width={themeConstants.screenHeight * 0.35}
-              fill={colors.secondaryColor}
-            />
-            {/* <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Icon name="chevron-back" size={themeConstants.iconSize} />
-              </TouchableOpacity>
-              <Box>
-                <Text>This is the plan screen</Text>
-              </Box> */}
+            {flan?.illustration && (
+              <Illustration
+                illustration={illustrationTypeArray[flan?.illustration]}
+                height={themeConstants.screenHeight * 0.35}
+                width={themeConstants.screenHeight * 0.35}
+                fill={colors.secondaryColor}
+              />
+            )}
           </Box>
         }
         foregroundStyle={{ height: themeConstants.screenHeight * 0.35 }}
@@ -56,7 +77,10 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
         mainContent={
           <Box width={themeConstants.containerWidth} alignSelf="center" paddingTop="l" paddingBottom="l">
             <Text variant="header3" marginBottom="s">
-              Go To The Park
+              {flan?.title}
+            </Text>
+            <Text variant="secondary" marginBottom="m">
+              {flan?.description}
             </Text>
             <Box
               width={themeConstants.componentWidthXL}
@@ -92,32 +116,37 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
             <Text marginTop="m" marginBottom="s">
               Location
             </Text>
-            <MapView
-              provider={PROVIDER_GOOGLE}
-              liteMode
-              style={{
-                height: themeConstants.componentHeightL,
-                width: themeConstants.componentWidthXL,
-                borderRadius: 20,
-              }}
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            />
+            <Text variant="secondary" marginBottom="s">
+              {flan?.location?.address}
+            </Text>
+            {flan?.location?.coordinate && (
+              <MapView
+                provider={PROVIDER_GOOGLE}
+                scrollEnabled={false}
+                liteMode
+                style={{
+                  height: themeConstants.componentHeightL,
+                  width: themeConstants.componentWidthXL,
+                  borderRadius: 20,
+                }}
+                camera={{ center: flan?.location?.coordinate, altitude: 1000, heading: 0, pitch: 0, zoom: 18 }}>
+                <Marker coordinate={flan.location.coordinate} />
+              </MapView>
+            )}
             <Text marginTop="m" marginBottom="s">
               Activities
             </Text>
             <FlatList
               listKey="ActivitiesList"
-              data={[
-                { title: 'Feed Pigeons', description: 'Feed the pigeons with breadcrumbs' },
-                { title: 'Drink Tea', description: "Drink tea next to Williamsfords' statue" },
-                { title: 'Play Games', description: 'Play games on phone at the benches' },
-                { title: 'Hopscotch', description: 'Play hopscotch in the central square' },
-              ]}
+              data={
+                // [
+                //   { title: 'Feed Pigeons', description: 'Feed the pigeons with breadcrumbs' },
+                //   { title: 'Drink Tea', description: "Drink tea next to Williamsfords' statue" },
+                //   { title: 'Play Games', description: 'Play games on phone at the benches' },
+                //   { title: 'Hopscotch', description: 'Play hopscotch in the central square' },
+                // ]
+                flan?.activities
+              }
               renderItem={({ item }) => (
                 <Box
                   width={themeConstants.componentWidthXL}
@@ -139,7 +168,10 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
             </Text>
             <FlatList
               listKey="PollsList"
-              data={['Drink Coffee or Not?', 'Eat Ice Cream?', 'BYOB?']}
+              data={
+                // ['Drink Coffee or Not?', 'Eat Ice Cream?', 'BYOB?']
+                flan?.polls
+              }
               renderItem={({ item }) => (
                 <TouchableOpacity
                   style={{

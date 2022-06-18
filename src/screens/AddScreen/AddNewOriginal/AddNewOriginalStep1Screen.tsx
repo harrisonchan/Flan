@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, StatusBarPadding, Text, TextInput } from '../../../components'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ScrollView, TouchableOpacity } from 'react-native'
@@ -6,12 +6,22 @@ import { useTheme } from '@shopify/restyle'
 import { Theme } from '../../../theme'
 import { AddStackNavigationProps } from '../../../types'
 import NavigationHeader from '../../../components/NavigationHeader'
+import { ActivityType, LocationType } from '../../../redux/features/userSlice'
 
 const AddNewOriginalStep1Screen = ({ route, navigation }: AddStackNavigationProps) => {
-  const [name, setName] = useState('')
+  const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [location, setLocation] = useState<{} | null>({})
-  const [activities, setActivities] = useState<[] | null>([])
+  const [location, setLocation] = useState<LocationType | undefined>(undefined)
+  const [activities, setActivities] = useState<ActivityType[] | undefined>(undefined)
+
+  useEffect(() => {
+    if (route.params) {
+      if (route.params.location) {
+        setLocation(route.params.location)
+      }
+    }
+  }, [route])
+
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   return (
     <>
@@ -27,15 +37,20 @@ const AddNewOriginalStep1Screen = ({ route, navigation }: AddStackNavigationProp
             <Text variant="secondary" color="primaryColor">
               Name Your Flan
             </Text>
-            <TextInput placeholder="Name Your Flan!" label="Flan Name" />
+            <TextInput placeholder="Name Your Flan!" label="Flan Name" onChangeText={(input) => setTitle(input)} />
             <Text variant="secondary" color="primaryColor">
               Describe Your Flan
             </Text>
-            <TextInput placeholder="Describe Your Flan!" label="Flan Description" />
+            <TextInput
+              placeholder="Describe Your Flan!"
+              label="Flan Description"
+              onChangeText={(input) => setDescription(input)}
+            />
             <Text variant="secondary" color="primaryColor">
               Add A Location
             </Text>
             <Text variant="secondary">Location skipped for now...</Text>
+            <Text variant="secondary">{route.params?.location?.address}</Text>
             <Box flexDirection="row">
               <Button
                 label="Add Location"
@@ -43,14 +58,19 @@ const AddNewOriginalStep1Screen = ({ route, navigation }: AddStackNavigationProp
                 onPress={() => navigation.navigate('AddNewSelectLocationScreen')}
                 style={{ backgroundColor: colors.lightGreen }}
               />
-              <Button label="Skip" mode="small" onPress={() => setLocation(null)} />
+              <Button label="Skip" mode="small" onPress={() => setLocation(undefined)} />
             </Box>
             <Text variant="secondary" color="primaryColor">
               Add Activities
             </Text>
             <Text variant="secondary">Adding activities skipped for now...</Text>
-            <Button label="Skip" mode="small" onPress={() => setActivities(null)} />
-            <Button label="Pick An Illustration" onPress={() => navigation.navigate('AddNewOriginalStep2Screen')} />
+            <Button label="Skip" mode="small" onPress={() => setActivities(undefined)} />
+            <Button
+              label="Pick An Illustration"
+              onPress={() => {
+                navigation.navigate('AddNewOriginalStep2Screen', { title, description, location, activities })
+              }}
+            />
           </ScrollView>
         </Box>
       </Box>

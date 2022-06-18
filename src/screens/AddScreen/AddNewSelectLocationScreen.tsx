@@ -130,6 +130,11 @@ const AddNewSelectLocationScreen = ({ route, navigation }: AddStackNavigationPro
                     mode="small"
                     label="Select Location"
                     style={{ backgroundColor: colors.lightGreen, marginBottom: spacing.s }}
+                    onPress={() => {
+                      navigation.navigate('AddNewOriginalStep1Screen', {
+                        location: { address: flanLocation, coordinate: markerCoordinate },
+                      })
+                    }}
                   />
                   <Button
                     mode="small"
