@@ -8,7 +8,7 @@ import { AddStackNavigationProps } from '../../../types'
 import NavigationHeader from '../../../components/NavigationHeader'
 import { ActivityType, LocationType } from '../../../redux/features/userSlice'
 
-const AddNewOriginalStep1Screen = ({ route, navigation }: AddStackNavigationProps) => {
+const AddNewOriginalInputFieldsScreen = ({ route, navigation }: AddStackNavigationProps) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState<LocationType | undefined>(undefined)
@@ -68,7 +68,12 @@ const AddNewOriginalStep1Screen = ({ route, navigation }: AddStackNavigationProp
             <Button
               label="Pick An Illustration"
               onPress={() => {
-                navigation.navigate('AddNewOriginalStep2Screen', { title, description, location, activities })
+                navigation.navigate('AddNewOriginalPickIllustrationScreen', {
+                  title,
+                  description,
+                  location,
+                  activities,
+                })
               }}
             />
           </ScrollView>
@@ -78,4 +83,4 @@ const AddNewOriginalStep1Screen = ({ route, navigation }: AddStackNavigationProp
   )
 }
 
-export default AddNewOriginalStep1Screen
+export default AddNewOriginalInputFieldsScreen

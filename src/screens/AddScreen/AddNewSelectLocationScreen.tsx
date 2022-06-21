@@ -131,7 +131,7 @@ const AddNewSelectLocationScreen = ({ route, navigation }: AddStackNavigationPro
                     label="Select Location"
                     style={{ backgroundColor: colors.lightGreen, marginBottom: spacing.s }}
                     onPress={() => {
-                      navigation.navigate('AddNewOriginalStep1Screen', {
+                      navigation.navigate('AddNewOriginalInputFieldsScreen', {
                         location: { address: flanLocation, coordinate: markerCoordinate },
                       })
                     }}

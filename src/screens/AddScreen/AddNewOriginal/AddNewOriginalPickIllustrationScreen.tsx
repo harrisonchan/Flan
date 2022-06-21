@@ -13,51 +13,7 @@ import NavigationHeader from '../../../components/NavigationHeader'
 import { useDispatch } from 'react-redux'
 import { appActions } from '../../../redux/features'
 
-const AddNewOriginalStep2Screen = ({ route, navigation }: AddStackNavigationProps) => {
-  // const [illustrationsArray, setIllustrationsArray] = useState<illustrationType[]>([
-  //   'illustration-animal',
-  //   'illustration-bored',
-  //   'illustration-business-plan',
-  //   'illustration-business-travel',
-  //   'illustration-car-drifting',
-  //   'illustration-come-back-later',
-  //   'illustration-cool-guy',
-  //   'illustration-couple',
-  //   'illustration-delete-confirmation',
-  //   'illustration-delivery',
-  //   'illustration-explore',
-  //   'illustration-failure',
-  //   'illustration-family',
-  //   'illustration-fashion',
-  //   'illustration-finances',
-  //   'illustration-food',
-  //   'illustration-freedom',
-  //   'illustration-friends',
-  //   'illustration-globe',
-  //   'illustration-growth',
-  //   'illustration-hangout',
-  //   'illustration-health-research',
-  //   'illustration-landscape',
-  //   'illustration-location',
-  //   'illustration-message-sent',
-  //   'illustration-message-sent',
-  //   'illustration-music',
-  //   'illustration-news',
-  //   'illustration-painter',
-  //   'illustration-portrait',
-  //   'illustration-relationship',
-  //   'illustration-relax',
-  //   'illustration-run',
-  //   'illustration-science',
-  //   'illustration-sports',
-  //   'illustration-tasks',
-  //   'illustration-technology',
-  //   'illustration-travel',
-  //   'illustration-wear-a-mask',
-  //   'illustration-welcome',
-  //   'illustration-work-from-home',
-  //   'illustration-writing',
-  // ])
+const AddNewOriginalPickIllustrationScreen = ({ route, navigation }: AddStackNavigationProps) => {
   const [illustrationsArray, setIllustrationsArray] = useState(illustrationTypeArray)
   const [randomColorArray, setRandomColorArray] = useState<ColorValue[]>([])
   const [selectedIllustration, setSelectedIllustration] = useState<null | number>(null)
@@ -172,4 +128,4 @@ const AddNewOriginalStep2Screen = ({ route, navigation }: AddStackNavigationProp
   )
 }
 
-export default AddNewOriginalStep2Screen
+export default AddNewOriginalPickIllustrationScreen

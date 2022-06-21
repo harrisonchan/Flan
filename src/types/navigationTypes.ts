@@ -61,16 +61,16 @@ export type ProfileStackNavigationProps = StackScreenProps<
 
 export type AddStackParamList = {
   AddScreen: undefined
-  AddNewOriginalStep1Screen: FlanType
-  AddNewOriginalStep2Screen: FlanType
+  AddNewOriginalInputFieldsScreen: FlanType
+  AddNewOriginalPickIllustrationScreen: FlanType
   AddNewFromCommunityScreen: undefined
   AddNewSelectLocationScreen: undefined
 }
 export type AddStackNavigationProps = StackScreenProps<
   AddStackParamList,
   | 'AddScreen'
-  | 'AddNewOriginalStep1Screen'
-  | 'AddNewOriginalStep2Screen'
+  | 'AddNewOriginalInputFieldsScreen'
+  | 'AddNewOriginalPickIllustrationScreen'
   | 'AddNewFromCommunityScreen'
   | 'AddNewSelectLocationScreen'
 >

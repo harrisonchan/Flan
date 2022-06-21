@@ -71,7 +71,7 @@ const AddScreen = ({ route, navigation }: AddStackNavigationProps) => {
             title="Create Your Own"
             subtitle="Create Your Own Flan To Have Fun With Friends"
             onPress={() => {
-              navigation.navigate('AddNewOriginalStep1Screen')
+              navigation.navigate('AddNewOriginalInputFieldsScreen')
             }}
             style={{ marginBottom: spacing.l }}
           />

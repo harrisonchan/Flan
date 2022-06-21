@@ -6,8 +6,8 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { store, useAppSelector } from './redux'
 import {
   AddNewFromCommunityScreen,
-  AddNewOriginalStep1Screen,
-  AddNewOriginalStep2Screen,
+  AddNewOriginalInputFieldsScreen,
+  AddNewOriginalPickIllustrationScreen,
   AddNewSelectLocationScreen,
   AddScreen,
   ExploreScreen,
@@ -114,13 +114,13 @@ const AddStackComponent = () => {
     <AddStack.Navigator>
       <AddStack.Screen name="AddScreen" component={AddScreen} options={{ headerShown: false }} />
       <AddStack.Screen
-        name="AddNewOriginalStep1Screen"
-        component={AddNewOriginalStep1Screen}
+        name="AddNewOriginalInputFieldsScreen"
+        component={AddNewOriginalInputFieldsScreen}
         options={{ headerShown: false }}
       />
       <AddStack.Screen
-        name="AddNewOriginalStep2Screen"
-        component={AddNewOriginalStep2Screen}
+        name="AddNewOriginalPickIllustrationScreen"
+        component={AddNewOriginalPickIllustrationScreen}
         options={{ headerShown: false }}
       />
       <AddStack.Screen
