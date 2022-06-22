@@ -12,6 +12,7 @@ import {
   AddScreen,
   ExploreScreen,
   HomeScreen,
+  LoginScreen,
   PlanScreen,
   ProfilePersonalFlans,
   ProfileSavedFlans,
@@ -229,7 +230,7 @@ const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'ligh
         </RootTabs.Navigator>
       ) : (
         <AuthenticationStack.Navigator>
-          <AuthenticationStack.Screen name="Login" component={TestScreen} options={{ headerShown: true }} />
+          <AuthenticationStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         </AuthenticationStack.Navigator>
       )}
     </NavigationContainer>

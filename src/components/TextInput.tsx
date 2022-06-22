@@ -1,109 +1,74 @@
 import { useTheme } from '@shopify/restyle'
-import React, { useEffect, useState } from 'react'
-import {
-  View,
-  TextInput as RNTextInput,
-  TextInputProps as RNTextInputProps,
-  ViewStyle,
-  RegisteredStyle,
-  ColorValue,
-} from 'react-native'
+import React, { RefObject, useEffect, useRef, useState } from 'react'
+import { TextInputProps as RNTextInputProps, TextInput as RNTextInput } from 'react-native'
 import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { Theme } from '../theme'
-import Icon from 'react-native-vector-icons/Ionicons'
+import { ColorType, TextStyleType, ViewStyleType } from '../types'
+import Box from './Box'
 import Text from './Text'
 
 interface TextInputProps {
   onChangeText?: (input: string) => void
   placeholder?: string
-  backgroundColors?: ColorValue
-  containerStyle?: ViewStyle | ViewStyle[] | RegisteredStyle<ViewStyle> | RegisteredStyle<ViewStyle>[]
-  // mode?: 'default'
+  placeholderStyle?: TextStyleType
+  placeholderColor?: ColorType
+  backgroundColors?: ColorType
+  containerStyle?: ViewStyleType
   label?: string
-  labelColor?: ColorValue
-  labelAnimationDuration?: number
+  labelStyle?: TextStyleType
+  labelColor?: ColorType
   textInputProps?: RNTextInputProps
-  // leftIconProps?: IconProps
-  // rightIconProps?: IconProps
+  textInputRef?: RefObject<RNTextInput>
+  innerLabel?: boolean
 }
 
 const TextInput: React.FC<TextInputProps> = (props) => {
-  const [input, setInput] = useState('')
-  const [isFocused, setIsFocused] = useState(false)
   const [labelHeight, setLabelHeight] = useState(0)
-  const ANIMATION_DURATION = props.labelAnimationDuration ? props.labelAnimationDuration : 300
-  const { colors, textVariants, spacing, themeConstants } = useTheme<Theme>()
-  useEffect(() => {
-    props.onChangeText && props.onChangeText(input)
-
-    // Animation
-    if (input != '' && labelTranslateYSharedValue.value != 1) {
-      labelTranslateYSharedValue.value = withTiming(1, { duration: ANIMATION_DURATION, easing: Easing.elastic(1.5) })
-      textInputTranslateYSharedValue.value = withTiming(1, {
-        duration: ANIMATION_DURATION,
-        easing: Easing.elastic(1.5),
-      })
-      labelOpacitySharedValue.value = withTiming(1, { duration: ANIMATION_DURATION / 2, easing: Easing.ease })
-    } else if (input == '' && labelTranslateYSharedValue.value != 0) {
-      labelTranslateYSharedValue.value = withTiming(0, { duration: ANIMATION_DURATION })
-      textInputTranslateYSharedValue.value = withTiming(0, { duration: ANIMATION_DURATION })
-      labelOpacitySharedValue.value = withTiming(0, { duration: ANIMATION_DURATION / 2, easing: Easing.elastic(1) })
-    }
-  }, [input])
-  const labelTranslateYSharedValue = useSharedValue(0)
-  const textInputTranslateYSharedValue = useSharedValue(0)
-  const labelOpacitySharedValue = useSharedValue(0)
-  const labelAnimatedStyle = useAnimatedStyle(() => {
-    const translateY = interpolate(labelTranslateYSharedValue.value, [0, 1], [0, -labelHeight / 2])
-    const opacity = interpolate(labelOpacitySharedValue.value, [0, 1], [0, 1])
-    return { opacity, transform: [{ translateY: translateY }] }
-  })
-  const textInputTranslateYAnimatedStyle = useAnimatedStyle(() => {
-    const translateY = interpolate(labelTranslateYSharedValue.value, [0, 1], [0, labelHeight / 2])
-    return { transform: [{ translateY: translateY }] }
-  })
-  const AnimatedText = Animated.createAnimatedComponent(Text)
+  const { textVariants } = useTheme<Theme>()
+  const { color, ...secondaryTextVariant } = textVariants.secondary
   return (
-    <View
-      style={[
-        {
-          width: themeConstants.componentWidthXL,
-          // height: themeConstants.componentHeightS,
-          backgroundColor: props.backgroundColors ? props.backgroundColors : colors.lightColor,
+    <Box
+      {...(props.innerLabel && {
+        borderRadius: 10,
+        backgroundColor: 'lightColor',
+        padding: 's',
+        paddingLeft: 'm',
+        paddingRight: 'm',
+      })}
+      style={props.containerStyle}>
+      {props.label && (
+        <Text
+          variant="secondary"
+          {...(!props.innerLabel && { marginBottom: 's' })}
+          style={[{ color: props.labelColor }, props.labelStyle]}
+          onLayout={(e) => {
+            if (props.innerLabel) {
+              setLabelHeight(e.nativeEvent.layout.height)
+            }
+          }}>
+          {props.label}
+        </Text>
+      )}
+      <Box
+        {...(!props.innerLabel && {
           borderRadius: 10,
-        },
-        { flexDirection: 'row', alignItems: 'center', padding: spacing.l },
-        props.containerStyle,
-      ]}>
-      {/* {props.leftIconProps && <Icon {...props.leftIconProps} />} */}
-      <View style={[{ flex: 1, marginLeft: spacing.xs, marginRight: spacing.xs }]}>
-        {props.label && (
-          <AnimatedText
-            onLayout={(e) => setLabelHeight(e.nativeEvent.layout.height)}
-            variant="tertiary"
-            style={[
-              { position: 'absolute', color: props.labelColor ? props.labelColor : colors.neutralText },
-              labelAnimatedStyle,
-            ]}>
-            {props.label}
-          </AnimatedText>
-        )}
-        <Animated.View style={[textInputTranslateYAnimatedStyle]}>
-          <RNTextInput
-            placeholder={props.placeholder}
-            placeholderTextColor={colors.subduedText}
-            onChangeText={(e) => {
-              setInput(e)
-            }}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            // style={textVariants.secondary}
-            {...props.textInputProps}
-          />
-        </Animated.View>
-      </View>
-      {/* {props.rightIconProps && <Icon {...props.rightIconProps} />} */}
-    </View>
+          backgroundColor: 'lightColor',
+          padding: 'm',
+          paddingLeft: 'm',
+          paddingRight: 'm',
+        })}>
+        <RNTextInput
+          ref={props.textInputRef}
+          placeholder={props.placeholder}
+          placeholderTextColor={props.placeholderColor}
+          style={[secondaryTextVariant, props.placeholderStyle]}
+          onChangeText={(input) => {
+            props.onChangeText && props.onChangeText(input)
+          }}
+          {...props.textInputProps}
+        />
+      </Box>
+    </Box>
   )
 }
 
