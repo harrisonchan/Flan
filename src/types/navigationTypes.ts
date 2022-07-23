@@ -15,13 +15,25 @@ export type RootTabsNavigationProps = BottomTabScreenProps<
   'HomeStack' | 'ExploreStack' | 'ProfileStack' | 'AddStack' | 'Test'
 >
 
+export type PreLoginTabsParamList = {
+  ExploreStack: undefined
+  SettingsStack: undefined
+  Test: { testProp: any }
+  AuthenticationStack: undefined
+}
+export type PreLoginTabsNavigationProps = BottomTabScreenProps<
+  PreLoginTabsParamList,
+  'ExploreStack' | 'SettingsStack' | 'AuthenticationStack' | 'Test'
+>
+
 export type AuthenticationStackParamList = {
-  Login: undefined
-  ForgotPassword: undefined
+  LoginScreen: undefined
+  SignUpScreen: undefined
+  ForgotPasswordScreen: undefined
 }
 export type AuthenticationStackNavigationProps = StackScreenProps<
   AuthenticationStackParamList,
-  'Login' | 'ForgotPassword'
+  'LoginScreen' | 'SignUpScreen' | 'ForgotPasswordScreen'
 >
 
 export type PlanScreenParamsType = {
@@ -86,3 +98,11 @@ export type AddStackNavigationProps = StackScreenProps<
 // >
 // export type PlanStackNavigationProp = PlanStackNavigationProps['navigation']
 // export type PlanStackRouteProp = PlanStackNavigationProps['route']
+
+export type IntrodutionStackParamList = AuthenticationStackParamList & {
+  IntroductionScreen: undefined
+}
+export type IntrodutionStackNavigationProps = StackScreenProps<
+  IntrodutionStackParamList,
+  'IntroductionScreen' | 'LoginScreen' | 'SignUpScreen' | 'ForgotPasswordScreen'
+>

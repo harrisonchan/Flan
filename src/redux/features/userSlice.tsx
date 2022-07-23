@@ -41,13 +41,16 @@ const initialState = {
     savedFlans: [],
     attendedFlans: [],
   },
-  isLoggedIn: true,
+  isLoggedIn: false,
 } as UserState
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    registerUser(state, action: PayloadAction<{ email: string; username: string; password: string }>) {
+      console.log('registerUser')
+    },
     loginUser(state, action: PayloadAction<UserType>) {
       state.isLoggedIn = true
       state.user = action.payload

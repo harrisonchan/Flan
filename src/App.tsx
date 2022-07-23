@@ -17,6 +17,7 @@ import {
   ProfilePersonalFlans,
   ProfileSavedFlans,
   ProfileScreen,
+  SignUpScreen,
   TestScreen,
 } from './screens'
 // //Put this in '../index.js' as well???
@@ -26,6 +27,8 @@ import {
   AuthenticationStackParamList,
   ExploreStackParamList,
   HomeStackParamList,
+  IntrodutionStackParamList,
+  PreLoginTabsParamList,
   ProfileStackParamList,
   RootTabsParamList,
 } from './types'
@@ -34,14 +37,19 @@ import { ThemeProvider, useTheme } from '@shopify/restyle'
 import { darkTheme, Theme, theme } from './theme'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Box } from './components'
+import { SettingsScreen } from './screens/SettingsScreen'
+import { IntroductionScreen } from './screens/IntroductionScreen'
 
 export const RootTabs = createBottomTabNavigator<RootTabsParamList>()
+export const PreLoginTabs = createBottomTabNavigator<PreLoginTabsParamList>()
+
 export const AuthenticationStack = createStackNavigator<AuthenticationStackParamList>()
 // export const HomeStack = createSharedElementStackNavigator<HomeStackParamList>()
 export const HomeStack = createStackNavigator<HomeStackParamList>()
 export const ExploreStack = createSharedElementStackNavigator<ExploreStackParamList>()
 export const ProfileStack = createStackNavigator<ProfileStackParamList>()
 export const AddStack = createStackNavigator<AddStackParamList>()
+export const IntroductionStack = createStackNavigator<IntrodutionStackParamList>()
 
 const HomeStackComponent = () => {
   return (
@@ -138,9 +146,33 @@ const AddStackComponent = () => {
   )
 }
 
+const AuthenticationStackComponent = () => {
+  return (
+    <AuthenticationStack.Navigator>
+      <AuthenticationStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+      <AuthenticationStack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }} />
+    </AuthenticationStack.Navigator>
+  )
+}
+
+const IntrouctionStackComponent = () => {
+  return (
+    <IntroductionStack.Navigator>
+      <IntroductionStack.Screen
+        name="IntroductionScreen"
+        component={IntroductionScreen}
+        options={{ headerShown: false }}
+      />
+      <AuthenticationStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+      <AuthenticationStack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }} />
+    </IntroductionStack.Navigator>
+  )
+}
+
 const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'light' | 'dark') => void }) => {
   const isLoggedIn = useAppSelector((state) => state.userReducer.isLoggedIn)
   const colorScheme = useAppSelector((state) => state.utilityReducer.colorScheme)
+  const hasPassedIntroduction = useAppSelector((state) => state.utilityReducer.hasPassedIntroduction)
   useEffect(() => {
     onChangeColorScheme && onChangeColorScheme(colorScheme)
   }, [colorScheme])
@@ -158,7 +190,9 @@ const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'ligh
           notification: colors.secondaryColor,
         },
       }}>
-      {isLoggedIn ? (
+      {!hasPassedIntroduction ? (
+        <IntrouctionStackComponent />
+      ) : isLoggedIn ? (
         <RootTabs.Navigator
           screenOptions={{ tabBarStyle: { backgroundColor: colors.lightColor }, tabBarShowLabel: false }}>
           <RootTabs.Screen
@@ -229,9 +263,36 @@ const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'ligh
           />
         </RootTabs.Navigator>
       ) : (
-        <AuthenticationStack.Navigator>
-          <AuthenticationStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        </AuthenticationStack.Navigator>
+        <PreLoginTabs.Navigator
+          screenOptions={{
+            tabBarStyle: { backgroundColor: colors.lightColor },
+            tabBarShowLabel: false,
+          }}>
+          <PreLoginTabs.Screen
+            name="ExploreStack"
+            component={ExploreStackComponent}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color }) => <Icon name="home" size={themeConstants.iconSize} color={color} />,
+            }}
+          />
+          <PreLoginTabs.Screen
+            name="SettingsStack"
+            component={SettingsScreen}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color }) => <Icon name="cog" size={themeConstants.iconSize} color={color} />,
+            }}
+          />
+          <PreLoginTabs.Screen
+            name="Test"
+            component={TestScreen}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color }) => <Icon name="cog" size={themeConstants.iconSize} color={color} />,
+            }}
+          />
+        </PreLoginTabs.Navigator>
       )}
     </NavigationContainer>
   )
