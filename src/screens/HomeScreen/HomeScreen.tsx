@@ -2,7 +2,7 @@ import { useTheme } from '@shopify/restyle'
 import React, { useState } from 'react'
 import { ScrollView, TouchableOpacity, View, Text as RNText } from 'react-native'
 import { moderateScale } from 'react-native-size-matters'
-import { Box, Button, ParallaxScrollView, PlanCard, StatusBarPadding, Text } from '../../components'
+import { Box, Button, ParallaxScrollView, FlanCard, StatusBarPadding, Text } from '../../components'
 import { useAppSelector } from '../../redux'
 import { Theme } from '../../theme'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -48,21 +48,21 @@ const HomeScreen = ({ route, navigation }: HomeStackNavigationProps) => {
             Today
           </Text>
           <SharedElement id="0">
-            <PlanCard
+            <FlanCard
               title="Go to the zoo"
               author="Joey Lo"
               location="Harrison's House, Taipei, Taiwan"
               numPeople={{ attending: 10 }}
               style={{ marginBottom: spacing.l }}
               onPress={() => {
-                navigation.navigate('PlanScreen', { planId: '0' })
+                navigation.navigate('FlanScreen', { flanId: '0' })
               }}
             />
           </SharedElement>
           <Text variant="body" marginBottom="s" color="primaryColor">
             Upcoming
           </Text>
-          <PlanCard
+          <FlanCard
             title="Go to the zoo"
             author="Joey Lo"
             location="Harrison's House, Taipei, Taiwan"

@@ -191,7 +191,7 @@ const Illustration: React.FC<IllustrationProps> = (props) => {
       case 'illustration-bored':
         return <Illustrations.IllustrationBored {...illustrationProps} />
       case 'illustration-business-plan':
-        return <Illustrations.IllustrationBusinessPlan {...illustrationProps} />
+        return <Illustrations.IllustrationBusinessFlan {...illustrationProps} />
       case 'illustration-business-travel':
         return <Illustrations.IllustrationBusinessTravel {...illustrationProps} />
       case 'illustration-car-drifting':

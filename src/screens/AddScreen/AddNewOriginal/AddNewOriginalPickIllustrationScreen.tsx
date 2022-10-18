@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Illustration, StatusBarPadding, Text, TextInput } from '../../../components'
+import { Box, Button, Illustration, NavigationHeader, StatusBarPadding, Text, TextInput } from '../../../components'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ColorValue, FlatList, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '@shopify/restyle'
 import { Theme } from '../../../theme'
 import { AddStackNavigationProps } from '../../../types'
 import { illustrationType, illustrationTypeArray } from '../../../components/Illustration'
-import { interpolate, useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated'
+import Animated, { interpolate, useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated'
 import { generateRandomColorFromPalette } from '../../../utilities'
 import { random } from 'lodash'
-import NavigationHeader from '../../../components/NavigationHeader'
 import { useDispatch } from 'react-redux'
 import { appActions } from '../../../redux/features'
 
 const AddNewOriginalPickIllustrationScreen = ({ route, navigation }: AddStackNavigationProps) => {
-  const [illustrationsArray, setIllustrationsArray] = useState(illustrationTypeArray)
+  console.log('AddNewOriginalPickIllustrationScreen route params: ', route.params)
   const [randomColorArray, setRandomColorArray] = useState<ColorValue[]>([])
   const [selectedIllustration, setSelectedIllustration] = useState<null | number>(null)
   const [pickIllustrationButtonHeight, setPickIllustrationButtonHeight] = useState(100)
   useEffect(() => {
     const tempArr: ColorValue[] = []
-    illustrationsArray.forEach(() => {
+    illustrationTypeArray.forEach(() => {
       tempArr.push(generateRandomColorFromPalette())
     })
     setRandomColorArray(tempArr)
@@ -68,7 +67,7 @@ const AddNewOriginalPickIllustrationScreen = ({ route, navigation }: AddStackNav
               leftIconProps={{ name: 'chevron-back', size: themeConstants.headerIconSize, color: colors.darkColor }}
               leftIconOnPress={() => navigation.goBack()}
             />
-            <Text>Pick An Illustration For Your Flan</Text>
+            <Text marginBottom="m">Pick An Illustration For Your Flan</Text>
             <FlatList
               onMomentumScrollBegin={() => {
                 animSharedValue.value = withTiming(0, { duration: 500 })
@@ -82,7 +81,7 @@ const AddNewOriginalPickIllustrationScreen = ({ route, navigation }: AddStackNav
               updateCellsBatchingPeriod={1}
               // extraData={pickIllustrationButtonHeight}
               initialNumToRender={1}
-              data={illustrationsArray}
+              data={illustrationTypeArray}
               contentContainerStyle={{ justifyContent: 'space-between' }}
               keyExtractor={(item, index) => item.toString() + index.toString()}
               renderItem={({ item, index }) => {
@@ -98,9 +97,10 @@ const AddNewOriginalPickIllustrationScreen = ({ route, navigation }: AddStackNav
               )}
             />
           </Box>
-          <View
-            onLayout={(e) => setPickIllustrationButtonHeight(e.nativeEvent.layout.height)}
-            style={{ position: 'absolute', bottom: spacing.m }}>
+          <Box
+            // onLayout={(e) => setPickIllustrationButtonHeight(e.nativeEvent.layout.height)}
+            position="absolute"
+            bottom={spacing.m}>
             <Button
               label="Pick Illustration"
               style={[buttonAnimatedStyle]}
@@ -118,10 +118,11 @@ const AddNewOriginalPickIllustrationScreen = ({ route, navigation }: AddStackNav
                   )
                   navigation.navigate('AddScreen')
                   navigation.navigate('ProfileStack')
+                  navigation.popToTop()
                 }
               }}
             />
-          </View>
+          </Box>
         </Box>
       </Box>
     </>

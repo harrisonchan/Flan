@@ -3,7 +3,7 @@ import localeData from 'dayjs/plugin/localeData'
 import React from 'react'
 import { Text, View } from 'react-native'
 import { SharedElement } from 'react-navigation-shared-element'
-import { Icon, ParallaxScrollView, PlanCard, PlanList, StatusBarPadding } from '../../components'
+import { Icon, ParallaxScrollView, FlanCard, FlanList, StatusBarPadding } from '../../components'
 import { HomeStackNavigationProps } from '../../navigationTypes'
 import { useAppSelector } from '../../redux'
 import appStyles from '../../theme'
@@ -59,13 +59,13 @@ const HomeScreen = (props: HomeStackNavigationProps) => {
           <>
             <Text style={[appStyles.typography.body, appStyles.spacingStyles.marginBottomXXS]}>Today's Flans</Text>
             <SharedElement id={'0'}>
-              <PlanCard
+              <FlanCard
                 title="Champaign Bar Crawl"
                 author="Joey Lo"
                 numPeople={{ attending: 20 }}
                 categories={['Alcohol', 'Music', 'Sexy Time', 'Test1', 'Test2']}
                 // randomColoredCategories
-                onPress={() => props.navigation.navigate('PlanScreen', { planId: '0' })}
+                onPress={() => props.navigation.navigate('FlanScreen', { flanId: '0' })}
               />
             </SharedElement>
             <Text
@@ -76,14 +76,14 @@ const HomeScreen = (props: HomeStackNavigationProps) => {
               ]}>
               Upcoming
             </Text>
-            <PlanList
-              plans={[
+            <FlanList
+              flans={[
                 { title: 'Date with Joey', date: currentTime, numPeople: { attending: 2 } },
-                { title: 'Plan 2', date: currentTime.add(2, 'day'), numPeople: { attending: 2 } },
-                { title: 'Plan 3', date: currentTime.add(3, 'day'), numPeople: { attending: 2 } },
-                { title: 'Plan 4', date: currentTime.add(4, 'day'), numPeople: { attending: 2 } },
-                { title: 'Plan 5', date: currentTime.add(5, 'day'), numPeople: { attending: 2 } },
-                { title: 'Plan 6', date: currentTime.add(6, 'day'), numPeople: { attending: 2 } },
+                { title: 'Flan 2', date: currentTime.add(2, 'day'), numPeople: { attending: 2 } },
+                { title: 'Flan 3', date: currentTime.add(3, 'day'), numPeople: { attending: 2 } },
+                { title: 'Flan 4', date: currentTime.add(4, 'day'), numPeople: { attending: 2 } },
+                { title: 'Flan 5', date: currentTime.add(5, 'day'), numPeople: { attending: 2 } },
+                { title: 'Flan 6', date: currentTime.add(6, 'day'), numPeople: { attending: 2 } },
               ]}
             />
           </>

@@ -18,7 +18,7 @@ const IntroductionScreen = ({ navigation }: IntrodutionStackNavigationProps) => 
     },
     {
       illustration: 'illustration-business-travel',
-      title: 'Plan Events with Friends',
+      title: 'Flan Events with Friends',
       description:
         'A childhood friend of his suddenly appears at the same subway stop and has chosen to help this homeless man',
       color: colors.lightSecondaryColor,

@@ -23,7 +23,7 @@ const GooglePlacesInput: React.FC<GooglePlacesInputProps> = (props) => {
     <GooglePlacesAutocomplete
       fetchDetails
       ref={ref}
-      placeholder="Search"
+      placeholder="Search for a Location"
       onPress={(data, details = null) => {
         // 'details' is provided when fetchDetails = true
         props.onPress && props.onPress(data, details)

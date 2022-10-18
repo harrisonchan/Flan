@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { SharedElement } from 'react-navigation-shared-element'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Box, Illustration, ParallaxScrollView, StatusBarPadding, Text } from '../../components'
+import { Box, Button, Illustration, ParallaxScrollView, StatusBarPadding, Text } from '../../components'
 import { useTheme } from '@shopify/restyle'
 import { theme, Theme } from '../../theme'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FlatList, View } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import dayjs from 'dayjs'
-import { PlanScreenNavigationProps } from '../../types'
+import { FlanScreenNavigationProps } from '../../types'
 import { useAppSelector } from '../../redux'
-import { FlanType } from '../../redux/features/userSlice'
 import { useDispatch } from 'react-redux'
 import { appActions } from '../../redux/features'
 import { illustrationTypeArray } from '../../components/Illustration'
+import { FlanType } from '../../redux/features/flanSlice'
 
-const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
+const FlanScreen = ({ route, navigation }: FlanScreenNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const [flan, setFlan] = useState<FlanType | undefined>(undefined)
   const user = useAppSelector((state) => state.userReducer.user)
@@ -23,15 +23,15 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
   useEffect(() => {
     if (route.params) {
       let copy = []
-      if (route.params.planType == 'created') {
+      if (route.params.flanType == 'created') {
         copy = user.createdFlans
-      } else if (route.params.planType == 'saved') {
+      } else if (route.params.flanType == 'saved') {
         copy = user.savedFlans
       } else {
         copy = user.attendedFlans
       }
       copy.forEach((flan) => {
-        if (route.params?.planId == flan.id) {
+        if (route.params?.flanId == flan.id) {
           setFlan(flan)
         }
       })
@@ -40,7 +40,7 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
   return (
     <View style={{ backgroundColor: colors.mainBackground, flex: 1 }}>
       <StatusBarPadding />
-      {/* <SharedElement id={route.params ? route.params.planId : ''} style={{ flex: 1 }}> */}
+      {/* <SharedElement id={route.params ? route.params.flanId : ''} style={{ flex: 1 }}> */}
       <ParallaxScrollView
         // disableAnimation
         // onLayout={(e) => setPageLoaded(true)}
@@ -58,6 +58,7 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
         headerTitle="Go To The Park"
         headerLeftIconProps={{ name: 'chevron-back', size: themeConstants.headerIconSize, color: colors.darkColor }}
         headerLeftIconOnPress={() => navigation.goBack()}
+        headerRightIconProps={{ name: 'pencil', size: themeConstants.iconSize, color: colors.darkColor }}
         backgroundStyle={{ height: themeConstants.screenHeight * 0.35 }}
         background={
           <Box alignItems="center" opacity={0.5}>
@@ -83,7 +84,7 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
               {flan?.description}
             </Text>
             <Box
-              width={themeConstants.componentWidthXL}
+              width={themeConstants.containerWidth}
               alignSelf="center"
               backgroundColor="mainBackground"
               padding="m"
@@ -191,9 +192,35 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
                 </TouchableOpacity>
               )}
             />
-            <Text marginTop="m" marginBottom="s">
+            <Text marginTop="m" marginBottom="m">
               Chat
             </Text>
+            <Button
+              label="Delete Flan"
+              style={{ marginBottom: spacing.m }}
+              onPress={() =>
+                dispatch(
+                  appActions.utilityActions.showAlert({
+                    title: 'Delete Confirmation',
+                    message: 'Are you sure you want to delete this Flan?',
+                    positiveActionProps: {
+                      message: 'Yes',
+                      action: () => {
+                        dispatch(appActions.userActions.deleteFlan(route.params?.flanId))
+                        dispatch(appActions.utilityActions.hideAlert())
+                        navigation.pop()
+                      },
+                    },
+                    negativeActionProps: {
+                      message: 'No',
+                      action: () => {
+                        dispatch(appActions.utilityActions.hideAlert())
+                      },
+                    },
+                  })
+                )
+              }
+            />
           </Box>
         }
       />
@@ -202,4 +229,4 @@ const PlanScreen = ({ route, navigation }: PlanScreenNavigationProps) => {
   )
 }
 
-export default PlanScreen
+export default FlanScreen

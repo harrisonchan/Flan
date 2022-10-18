@@ -2,7 +2,7 @@
 import IllustrationAnimal from './illustration_animal.svg'
 import IllustrationBadGateway from './illustration_bad_gateway.svg'
 import IllustrationBored from './illustration_bored.svg'
-import IllustrationBusinessPlan from './illustration_business_plan.svg'
+import IllustrationBusinessFlan from './illustration_business_plan.svg'
 import IllustrationBusinessTravel from './illustration_business_travel.svg'
 import IllustrationCarDrifting from './illustration_car_drifting.svg'
 import IllustrationComeBackLater from './illustration_come_back_later.svg'
@@ -79,7 +79,7 @@ const Illustrations = {
   IllustrationAnimal,
   IllustrationBadGateway,
   IllustrationBored,
-  IllustrationBusinessPlan,
+  IllustrationBusinessFlan,
   IllustrationBusinessTravel,
   IllustrationCarDrifting,
   IllustrationComeBackLater,

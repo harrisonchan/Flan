@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { Theme } from '../theme'
 import Text from './Text'
 
-interface ButtonProps {
+export interface ButtonProps {
   onPress?: () => void
   label?: string
   style?: StyleProp<ViewStyle>

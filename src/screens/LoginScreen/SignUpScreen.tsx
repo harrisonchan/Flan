@@ -21,7 +21,7 @@ const SignUpScreen = ({ navigation }: IntrodutionStackNavigationProps) => {
   const [username, setUsername] = useState('')
   const dispatch = useDispatch()
   const { colors, spacing, themeConstants } = useTheme<Theme>()
-  const handleLogin = () => {
+  const handleSignUp = () => {
     dispatch(appActions.userActions.registerUser(formik.values))
   }
   const formik = useFormik({
@@ -31,7 +31,7 @@ const SignUpScreen = ({ navigation }: IntrodutionStackNavigationProps) => {
       password: '',
     },
     validationSchema: signupValidationSchema,
-    onSubmit: () => {},
+    onSubmit: () => handleSignUp(),
   })
   useEffect(() => {
     console.log(formik.values)
@@ -58,10 +58,11 @@ const SignUpScreen = ({ navigation }: IntrodutionStackNavigationProps) => {
                 onBlur={formik.handleBlur('email')}
                 useValidation={{
                   isValid: !isString(formik.errors.email),
-                  showsIcon: formik.touched.email,
+                  showValidationIcon: formik.touched.email,
                   invalidInputMessage: formik.touched.email ? formik.errors.email : undefined,
                 }}
                 containerStyle={{ marginBottom: spacing.l }}
+                textInputProps={{ autoCapitalize: 'none', spellCheck: false }}
               />
               <TextInput
                 innerLabel
@@ -73,9 +74,10 @@ const SignUpScreen = ({ navigation }: IntrodutionStackNavigationProps) => {
                 containerStyle={{ marginBottom: spacing.l }}
                 useValidation={{
                   isValid: !isString(formik.errors.username),
-                  showsIcon: formik.touched.username,
+                  showValidationIcon: formik.touched.username,
                   invalidInputMessage: formik.touched.username ? formik.errors.username : undefined,
                 }}
+                textInputProps={{ autoCapitalize: 'none', spellCheck: false }}
               />
               <TextInput
                 innerLabel
@@ -87,23 +89,27 @@ const SignUpScreen = ({ navigation }: IntrodutionStackNavigationProps) => {
                 containerStyle={{ marginBottom: spacing.l }}
                 useValidation={{
                   isValid: !isString(formik.errors.password),
-                  showsIcon: formik.touched.password,
+                  showValidationIcon: false,
                   invalidInputMessage: formik.touched.password ? formik.errors.password : undefined,
                 }}
                 secureTextEntry
                 secureTextEntryShowHideIcon
+                textInputProps={{ autoCapitalize: 'none', spellCheck: false }}
               />
-              <Button label="Sign Up" onPress={handleLogin} />
-              <TouchableOpacity
-                style={{ alignSelf: 'center', marginTop: spacing.s }}
-                onPress={() => navigation.navigate('LoginScreen')}>
-                <Text variant="tertiary">
-                  Already have an account?{' '}
+              <Button label="Sign Up" onPress={formik.submitForm} />
+              <Box justifyContent="center" alignItems="center" flexDirection="row" marginTop="s">
+                <Text variant="tertiary">Already have an account? </Text>
+                <TouchableOpacity
+                  style={{
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                  }}
+                  onPress={() => navigation.navigate('LoginScreen')}>
                   <Text variant="tertiary" color="tertiaryColor">
                     Login here
                   </Text>
-                </Text>
-              </TouchableOpacity>
+                </TouchableOpacity>
+              </Box>
             </Box>
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>

@@ -1,12 +1,20 @@
 import { useTheme } from '@shopify/restyle'
 import React, { useState } from 'react'
-import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, View } from 'react-native'
+import {
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  View,
+  TouchableOpacity,
+} from 'react-native'
 import { useDispatch } from 'react-redux'
-import { Box, Button, StatusBarPadding, Text, TextInput } from '../../components'
+import { Box, Button, NavigationHeader, StatusBarPadding, Text, TextInput } from '../../components'
 import { appActions } from '../../redux/features'
 import { Theme } from '../../theme'
+import { AuthenticationStackNavigationProps } from '../../types'
 
-const LoginScreen = () => {
+const LoginScreen = ({ route, navigation }: AuthenticationStackNavigationProps) => {
   const [username, setUsername] = useState('')
   const dispatch = useDispatch()
   const { colors, spacing, themeConstants } = useTheme<Theme>()
@@ -42,9 +50,27 @@ const LoginScreen = () => {
                 containerStyle={{ marginBottom: spacing.l }}
               />
               <Button label="Login" onPress={handleLogin} />
+              <Box justifyContent="center" alignItems="center" flexDirection="row" marginTop="s">
+                <Text variant="tertiary">Forgot your password? </Text>
+                <TouchableOpacity
+                  style={{
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                  }}
+                  onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+                  <Text variant="tertiary" color="tertiaryColor">
+                    Reset password here
+                  </Text>
+                </TouchableOpacity>
+              </Box>
             </Box>
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
+        <NavigationHeader
+          leftIconProps={{ name: 'chevron-back', size: themeConstants.headerIconSize, color: colors.darkColor }}
+          leftIconOnPress={() => navigation.goBack()}
+          style={{ position: 'absolute' }}
+        />
       </Box>
     </>
   )

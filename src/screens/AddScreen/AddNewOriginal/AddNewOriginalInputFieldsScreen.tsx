@@ -7,6 +7,9 @@ import { Theme } from '../../../theme'
 import { AddStackNavigationProps } from '../../../types'
 import NavigationHeader from '../../../components/NavigationHeader'
 import { ActivityType, LocationType } from '../../../redux/features/userSlice'
+import { useFormik } from 'formik'
+import { addNewOriginalValidationSchema } from '../../../utilities'
+import { isString } from 'lodash'
 
 const AddNewOriginalInputFieldsScreen = ({ route, navigation }: AddStackNavigationProps) => {
   const [title, setTitle] = useState('')
@@ -23,6 +26,24 @@ const AddNewOriginalInputFieldsScreen = ({ route, navigation }: AddStackNavigati
   }, [route])
 
   const { colors, spacing, themeConstants } = useTheme<Theme>()
+  const formik = useFormik({
+    initialValues: {
+      id: (Math.random() * 100 * Math.PI).toString(),
+      title: '',
+      description: '',
+      // location: { address: '', coordinate: { latitude: 0, longitude: 0 } },
+    },
+    validationSchema: addNewOriginalValidationSchema,
+    onSubmit: (values) => navigation.navigate('AddNewOriginalPickIllustrationScreen', { ...values }),
+  })
+  useEffect(() => {
+    if (route.params?.location) {
+      console.log(route.params.location)
+      formik.setFieldValue('location', route.params.location).then(() => {
+        console.log(formik.values)
+      })
+    }
+  }, [route])
   return (
     <>
       <StatusBarPadding />
@@ -34,17 +55,31 @@ const AddNewOriginalInputFieldsScreen = ({ route, navigation }: AddStackNavigati
           />
           <ScrollView>
             <Text>Create Your Own Flan</Text>
-            <Text variant="secondary" color="primaryColor">
-              Name Your Flan
-            </Text>
-            <TextInput placeholder="Name Your Flan!" label="Flan Name" onChangeText={(input) => setTitle(input)} />
-            <Text variant="secondary" color="primaryColor">
-              Describe Your Flan
-            </Text>
+            <TextInput
+              placeholder="Name Your Flan!"
+              label="Flan Name"
+              labelColor={colors.primaryColor}
+              onChangeText={formik.handleChange('title')}
+              onBlur={formik.handleBlur('title')}
+              containerStyle={{ marginBottom: spacing.l }}
+              useValidation={{
+                isValid: !isString(formik.errors.title),
+                showValidationIcon: formik.touched.title,
+                invalidInputMessage: formik.touched.title ? formik.errors.title : undefined,
+              }}
+            />
             <TextInput
               placeholder="Describe Your Flan!"
               label="Flan Description"
-              onChangeText={(input) => setDescription(input)}
+              labelColor={colors.primaryColor}
+              onChangeText={formik.handleChange('description')}
+              onBlur={formik.handleBlur('description')}
+              containerStyle={{ marginBottom: spacing.l }}
+              useValidation={{
+                isValid: !isString(formik.errors.description),
+                showValidationIcon: formik.touched.description,
+                invalidInputMessage: formik.touched.description ? formik.errors.description : undefined,
+              }}
             />
             <Text variant="secondary" color="primaryColor">
               Add A Location
@@ -65,17 +100,7 @@ const AddNewOriginalInputFieldsScreen = ({ route, navigation }: AddStackNavigati
             </Text>
             <Text variant="secondary">Adding activities skipped for now...</Text>
             <Button label="Skip" mode="small" onPress={() => setActivities(undefined)} />
-            <Button
-              label="Pick An Illustration"
-              onPress={() => {
-                navigation.navigate('AddNewOriginalPickIllustrationScreen', {
-                  title,
-                  description,
-                  location,
-                  activities,
-                })
-              }}
-            />
+            <Button label="Pick An Illustration" onPress={() => formik.submitForm()} />
           </ScrollView>
         </Box>
       </Box>

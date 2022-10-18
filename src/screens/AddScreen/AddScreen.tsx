@@ -19,7 +19,7 @@ const SelectNewFlanTypeButton: React.FC<SelectNewFlanTypeButtonProps> = (props) 
   return (
     <TouchableOpacity onPress={props.onPress}>
       <Box
-        width={themeConstants.componentWidthXL}
+        width={themeConstants.containerWidth}
         height={themeConstants.componentHeightM * 0.6}
         flexDirection="row"
         justifyContent="space-around"

@@ -3,17 +3,17 @@ import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { SharedElement } from 'react-navigation-shared-element'
-import { Button, Icon, ParallaxScrollView, PlanList, PlanListItem, StatusBarPadding } from '../../components'
-import { HomeStackNavigationProps, PlanScreenNavigationProps } from '../../navigationTypes'
+import { Button, Icon, ParallaxScrollView, FlanList, FlanListItem, StatusBarPadding } from '../../components'
+import { HomeStackNavigationProps, FlanScreenNavigationProps } from '../../navigationTypes'
 import appStyles from '../../theme'
 
-const PlanScreen = ({ route, navigation }: HomeStackNavigationProps) => {
+const FlanScreen = ({ route, navigation }: HomeStackNavigationProps) => {
   const [bannerHeight, setBannerHeight] = useState(0)
-  const [planInfoBlockHeight, setPlanInfoBlockHeight] = useState(0)
+  const [flanInfoBlockHeight, setFlanInfoBlockHeight] = useState(0)
   return (
     <>
       <StatusBarPadding />
-      <SharedElement id={route.params ? route.params.planId : ''} style={{ flex: 1 }}>
+      <SharedElement id={route.params ? route.params.flanId : ''} style={{ flex: 1 }}>
         <ParallaxScrollView
           style={{ flex: 1, backgroundColor: appStyles.colors.primaryLight }}
           backgroundParallaxAnimationTranslateYForegroundPercentage={-0.1}
@@ -152,15 +152,15 @@ const PlanScreen = ({ route, navigation }: HomeStackNavigationProps) => {
               </View>
               <View style={[appStyles.spacingStyles.marginTopXS]}>
                 <Text style={[appStyles.spacingStyles.marginBottomXXS, appStyles.typography.body]}>Activities</Text>
-                <PlanList
+                <FlanList
                   // style={{ height: '100%' }}
-                  plans={[
+                  flans={[
                     { title: 'Date with Joey', date: dayjs(), numPeople: { attending: 2 } },
-                    // { title: 'Plan 2', date: dayjs().add(2, 'day'), numPeople: { attending: 2 } },
-                    // { title: 'Plan 3', date: dayjs().add(3, 'day'), numPeople: { attending: 2 } },
-                    // { title: 'Plan 4', date: dayjs().add(4, 'day'), numPeople: { attending: 2 } },
-                    // { title: 'Plan 5', date: dayjs().add(5, 'day'), numPeople: { attending: 2 } },
-                    // { title: 'Plan 6', date: dayjs().add(6, 'day'), numPeople: { attending: 2 } },
+                    // { title: 'Flan 2', date: dayjs().add(2, 'day'), numPeople: { attending: 2 } },
+                    // { title: 'Flan 3', date: dayjs().add(3, 'day'), numPeople: { attending: 2 } },
+                    // { title: 'Flan 4', date: dayjs().add(4, 'day'), numPeople: { attending: 2 } },
+                    // { title: 'Flan 5', date: dayjs().add(5, 'day'), numPeople: { attending: 2 } },
+                    // { title: 'Flan 6', date: dayjs().add(6, 'day'), numPeople: { attending: 2 } },
                   ]}
                 />
               </View>
@@ -195,7 +195,7 @@ const PlanScreen = ({ route, navigation }: HomeStackNavigationProps) => {
   )
 }
 
-// PlanScreen.sharedElements = () => {
+// FlanScreen.sharedElements = () => {
 //   return [
 //     {
 //       id: 'barCrawl',
@@ -205,4 +205,4 @@ const PlanScreen = ({ route, navigation }: HomeStackNavigationProps) => {
 //   ]
 // }
 
-export default PlanScreen
+export default FlanScreen

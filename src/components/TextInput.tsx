@@ -1,4 +1,4 @@
-import { useTheme } from '@shopify/restyle'
+import { spacing, useTheme } from '@shopify/restyle'
 import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { TextInputProps as RNTextInputProps, TextInput as RNTextInput, TouchableOpacity } from 'react-native'
 import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
@@ -8,7 +8,7 @@ import Box from './Box'
 import Text from './Text'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-interface TextInputProps {
+export interface TextInputProps {
   onChangeText?: (input: string) => void
   onBlur?: (e: any) => void
   placeholder?: string
@@ -22,7 +22,7 @@ interface TextInputProps {
   textInputProps?: RNTextInputProps
   textInputRef?: RefObject<RNTextInput>
   innerLabel?: boolean
-  useValidation?: { isValid?: boolean; showsIcon?: boolean; invalidInputMessage?: string }
+  useValidation?: { isValid?: boolean; showValidationIcon?: boolean; invalidInputMessage?: string }
   secureTextEntry?: boolean
   secureTextEntryShowHideIcon?: boolean
 }
@@ -68,7 +68,7 @@ const TextInput: React.FC<TextInputProps> = (props) => {
             ref={props.textInputRef}
             placeholder={props.placeholder}
             placeholderTextColor={props.placeholderColor ? props.placeholderColor : colors.subduedText}
-            style={[{ flex: 1 }, secondaryTextVariant, props.placeholderStyle]}
+            style={[{ flex: 1, color: colors.darkColor }, secondaryTextVariant, props.placeholderStyle]}
             onChangeText={(input) => {
               props.onChangeText && props.onChangeText(input)
             }}
@@ -80,10 +80,14 @@ const TextInput: React.FC<TextInputProps> = (props) => {
           />
           {props.secureTextEntryShowHideIcon && (
             <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)}>
-              <Icon name="eye" size={themeConstants.smallIconSize} color={colors.subduedText} />
+              <Icon
+                name={secureTextEntry ? 'eye' : 'eye-off-outline'}
+                size={themeConstants.smallIconSize}
+                color={colors.subduedText}
+              />
             </TouchableOpacity>
           )}
-          {props.useValidation && props.useValidation.showsIcon && (
+          {props.useValidation && props.useValidation.showValidationIcon && (
             <>
               {props.useValidation.isValid ? (
                 <Icon name="checkmark" size={themeConstants.smallIconSize} color={colors.green} />

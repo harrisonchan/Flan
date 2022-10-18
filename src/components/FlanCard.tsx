@@ -6,12 +6,13 @@ import { moderateScale } from 'react-native-size-matters'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Theme } from '../theme'
 import { generateRandomColorFromPalette } from '../utilities/Colors'
+import AnimatedIcon from './AnimatedIcon'
 import Box from './Box'
 import Illustration, { illustrationType, illustrationTypeArray } from './Illustration'
 import TagList from './TagList'
 import Text from './Text'
 
-interface PlanCardProps {
+interface FlanCardProps {
   mode?: 'default' | 'small'
   onPress?: () => void
   title: string
@@ -25,7 +26,7 @@ interface PlanCardProps {
   illustration?: illustrationType
 }
 
-const PlanCard: React.FC<PlanCardProps> = (props) => {
+const FlanCard: React.FC<FlanCardProps> = (props) => {
   const { colors, spacing, themeConstants, shadows } = useTheme<Theme>()
   const renderIllustration = () => {
     return (
@@ -46,46 +47,55 @@ const PlanCard: React.FC<PlanCardProps> = (props) => {
   }
   const renderDefault = () => {
     return (
-      <TouchableOpacity
-        style={[
-          {
-            width: themeConstants.componentWidthXL,
-            height: themeConstants.componentHeightL,
-            backgroundColor: colors.lightColor,
-            borderRadius: 20,
-            padding: spacing.m,
-          },
-          props.style,
-        ]}
-        onPress={() => {
-          props.onPress && props.onPress()
-        }}>
-        {renderIllustration()}
-        <Box width="60%">
-          <Text variant="header3">{props.title}</Text>
-          {props.location && (
-            <Text variant="secondary" marginBottom="xs" color="darkSecondaryColor">
-              {props.location}
+      <>
+        <TouchableOpacity
+          style={[
+            {
+              width: themeConstants.componentWidthXL,
+              height: themeConstants.componentHeightL,
+              backgroundColor: colors.lightColor,
+              borderRadius: 20,
+              padding: spacing.m,
+            },
+            props.style,
+          ]}
+          onPress={() => {
+            props.onPress && props.onPress()
+          }}>
+          {renderIllustration()}
+          <Box width="60%">
+            <Text variant="header3">{props.title}</Text>
+            {props.location && (
+              <Text variant="secondary" marginBottom="xs" color="darkSecondaryColor">
+                {props.location}
+              </Text>
+            )}
+            <Text variant="secondary" marginBottom="xs">
+              Created by{props.author}
             </Text>
-          )}
-          <Text variant="secondary" marginBottom="xs">
-            Created by{props.author}
-          </Text>
-          <Box flexDirection="row" marginBottom="m">
-            <Icon
-              name="people-outline"
-              size={themeConstants.smallIconSize}
-              color={colors.tertiaryColor}
-              style={{ marginRight: spacing.s }}
-            />
-            <Text variant="tertiary" color="tertiaryColor">
-              {props.numPeople.attending}
-            </Text>
+            <Box flexDirection="row" marginBottom="m">
+              <Icon
+                name="people-outline"
+                size={themeConstants.smallIconSize}
+                color={colors.tertiaryColor}
+                style={{ marginRight: spacing.s }}
+              />
+              <Text variant="tertiary" color="tertiaryColor">
+                {props.numPeople.attending}
+              </Text>
+            </Box>
+            <View onStartShouldSetResponder={() => true}></View>
+            {/* <TagList tags={['Music', 'Fun', 'Animals', 'Gorillas', 'Zebras', 'Penguins']} /> */}
           </Box>
-          <View onStartShouldSetResponder={() => true}></View>
-          {/* <TagList tags={['Music', 'Fun', 'Animals', 'Gorillas', 'Zebras', 'Penguins']} /> */}
+        </TouchableOpacity>
+        <Box>
+          <AnimatedIcon
+            isToggled={false}
+            toggleOffIconProps={{ name: 'eye', size: themeConstants.iconSize }}
+            toggleOnIconProps={{ name: 'heart-outline', size: themeConstants.iconSize }}
+          />
         </Box>
-      </TouchableOpacity>
+      </>
     )
   }
   const renderSmallCard = () => {
@@ -126,4 +136,4 @@ const PlanCard: React.FC<PlanCardProps> = (props) => {
   return <>{props.mode === 'small' ? renderSmallCard() : renderDefault()}</>
 }
 
-export default PlanCard
+export default FlanCard

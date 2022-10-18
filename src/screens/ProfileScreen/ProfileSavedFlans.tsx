@@ -1,23 +1,22 @@
 import { useTheme } from '@shopify/restyle'
 import React from 'react'
 import { FlatList } from 'react-native'
-import { Box, PlanCard, StatusBarPadding, Text } from '../../components'
+import { Box, FlanCard, NavigationHeader, StatusBarPadding, Text } from '../../components'
 import { ProfileStackNavigationProps } from '../../types'
 import { Theme } from '../../theme'
-import NavigationHeader from '../../components/NavigationHeader'
 
 const ProfileSavedFlans = ({ route, navigation }: ProfileStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const renderPersonalFlans = () => {
     return (
-      <PlanCard
+      <FlanCard
         title="Go to the zoo"
         author="Joey Lo"
         location="Harrison's House, Taipei, Taiwan"
         numPeople={{ attending: 10 }}
         style={{ marginBottom: spacing.l }}
         onPress={() => {
-          navigation.navigate('PlanScreen')
+          navigation.navigate('FlanScreen')
         }}
       />
     )

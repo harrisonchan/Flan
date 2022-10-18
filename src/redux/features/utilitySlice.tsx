@@ -1,16 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useColorScheme } from 'react-native'
+import { AlertProps } from '../../components/Alert'
 
 type ColorSchemeType = 'light' | 'dark'
 
 interface UtilityState {
   colorScheme: ColorSchemeType
-  hasPassedIntroduction: boolean
+  alert: {
+    isShowing: boolean
+    alertProps: AlertProps
+  }
 }
 
 const initialState = {
   colorScheme: 'light',
-  hasPassedIntroduction: false,
+  alert: {
+    isShowing: false,
+    alertProps: {
+      title: '',
+      message: '',
+      positiveActionProps: { message: '', action: () => {} },
+      negativeActionProps: { message: '', action: () => {} },
+    },
+  },
 } as UtilityState
 
 const utilitySlice = createSlice({
@@ -20,8 +32,18 @@ const utilitySlice = createSlice({
     setColorScheme(state, action: PayloadAction<ColorSchemeType>) {
       state.colorScheme = action.payload
     },
-    setIntroductionPassageStatus(state, action: PayloadAction<boolean>) {
-      state.hasPassedIntroduction = action.payload
+    showAlert(state, action: PayloadAction<AlertProps>) {
+      state.alert.isShowing = true
+      state.alert.alertProps = action.payload
+    },
+    hideAlert(state) {
+      state.alert.isShowing = false
+      state.alert.alertProps = {
+        message: '',
+        title: '',
+        positiveActionProps: { message: '', action: () => {} },
+        negativeActionProps: { message: '', action: () => {} },
+      }
     },
   },
 })

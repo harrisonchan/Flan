@@ -4,8 +4,15 @@ import { View } from 'react-native'
 import { GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete'
 import MapView, { Marker, PROVIDER_GOOGLE, Region, Callout } from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Box, Button, GooglePlacesInput, SkeletonScreen, StatusBarPadding, Text } from '../../components'
-import NavigationHeader from '../../components/NavigationHeader'
+import {
+  Box,
+  Button,
+  GooglePlacesInput,
+  NavigationHeader,
+  SkeletonScreen,
+  StatusBarPadding,
+  Text,
+} from '../../components'
 import { Theme } from '../../theme'
 import { AddStackNavigationProps } from '../../types'
 import { getReverseGeocode } from '../../utilities'
@@ -120,8 +127,13 @@ const AddNewSelectLocationScreen = ({ route, navigation }: AddStackNavigationPro
       <Box width={themeConstants.containerWidth} position="absolute" bottom={spacing.xl} alignSelf="center">
         <Box backgroundColor="lightColor" borderRadius={20} padding="m">
           <Box flexDirection="row" alignItems="center" width="100%" justifyContent="space-between">
-            <Box width="57%">
+            <Box width={flanLocation ? '57%' : '100%'}>
               <Text variant="secondary">{flanLocation ? flanLocation : 'No Location Selected'}</Text>
+              {!flanLocation && (
+                <Text variant="tertiary" color="subduedText">
+                  Search for a Location or Double Tap to Select a Location
+                </Text>
+              )}
             </Box>
             <Box width="40%" justifyContent="center" alignItems="center">
               {flanLocation && (

@@ -1,7 +1,8 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { CompositeScreenProps } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import { ActivityType, FlanType, LocationType } from '../redux/features/userSlice'
+import { FlanType } from '../redux/features/flanSlice'
+// import { ActivityType, FlanType, LocationType } from '../redux/features/userSlice'
 
 export type RootTabsParamList = {
   HomeStack: undefined
@@ -27,7 +28,7 @@ export type PreLoginTabsNavigationProps = BottomTabScreenProps<
 >
 
 export type AuthenticationStackParamList = {
-  LoginScreen: undefined
+  LoginScreen: { showNavigationHeader?: boolean } | undefined
   SignUpScreen: undefined
   ForgotPasswordScreen: undefined
 }
@@ -36,44 +37,61 @@ export type AuthenticationStackNavigationProps = StackScreenProps<
   'LoginScreen' | 'SignUpScreen' | 'ForgotPasswordScreen'
 >
 
-export type PlanScreenParamsType = {
-  planId: string | number
-  planType: 'created' | 'saved' | 'attended'
+export type FlanScreenParamsType = {
+  flanId: string | number
+  flanType: 'created' | 'saved' | 'attended'
 }
 
 export type HomeStackParamList = {
   HomeScreen: undefined
-  PlanScreen: PlanScreenParamsType
+  FlanScreen: FlanScreenParamsType
 }
-export type HomeStackNavigationProps = StackScreenProps<HomeStackParamList, 'HomeScreen' | 'PlanScreen'>
+export type HomeStackNavigationProps = StackScreenProps<HomeStackParamList, 'HomeScreen' | 'FlanScreen'>
 
-export type ExploreStackParamList = {
+export type SearchStackParamList = {
+  SearchScreen: undefined
+  SearchResultsScreen: undefined
+}
+export type SearchStackNavigationProps = StackScreenProps<SearchStackParamList, 'SearchScreen' | 'SearchResultsScreen'>
+
+export type SettingsStackParamList = AuthenticationStackParamList & {
+  SettingsScreen: undefined
+}
+export type SettingsStackNavigationProps = StackScreenProps<
+  SettingsStackParamList,
+  'SettingsScreen' | 'LoginScreen' | 'ForgotPasswordScreen' | 'SignUpScreen'
+>
+
+export type ExploreStackParamList = SearchStackParamList & {
   ExploreScreen: undefined
-  PlanScreen: PlanScreenParamsType
+  FlanScreen: FlanScreenParamsType
 }
-export type ExploreStackNavigationProps = StackScreenProps<ExploreStackParamList, 'ExploreScreen' | 'PlanScreen'>
+export type ExploreStackNavigationProps = StackScreenProps<
+  ExploreStackParamList,
+  'ExploreScreen' | 'FlanScreen' | 'SearchScreen' | 'SearchResultsScreen'
+>
 
-//or PlanScreenNavigationProp? (without the s?)
-export type PlanScreenNavigationProps = CompositeScreenProps<
+//or FlanScreenNavigationProp? (without the s?)
+export type FlanScreenNavigationProps = CompositeScreenProps<
   CompositeScreenProps<HomeStackNavigationProps, ExploreStackNavigationProps>,
   ProfileStackNavigationProps
 >
 
-export type ProfileStackParamList = {
+export type ProfileStackParamList = SettingsStackParamList & {
   ProfileScreen: undefined
   ProfilePersonalFlans: undefined
   ProfileSavedFlans: undefined
-  PlanScreen: PlanScreenParamsType
+  FlanScreen: FlanScreenParamsType
 }
 export type ProfileStackNavigationProps = StackScreenProps<
   ProfileStackParamList,
   'ProfileScreen',
-  'ProfilePersonalFlans' | 'ProfileSavedFlans' | 'PlanScreen'
+  'ProfilePersonalFlans' | 'ProfileSavedFlans' | 'FlanScreen' | 'SettingsScreen'
 >
 
 export type AddStackParamList = {
   AddScreen: undefined
-  AddNewOriginalInputFieldsScreen: FlanType
+  AddNewOriginalInputFieldsScreen: Omit<FlanType, 'id'>
   AddNewOriginalPickIllustrationScreen: FlanType
   AddNewFromCommunityScreen: undefined
   AddNewSelectLocationScreen: undefined
@@ -87,17 +105,17 @@ export type AddStackNavigationProps = StackScreenProps<
   | 'AddNewSelectLocationScreen'
 >
 
-// export type PlanStackParamList = {
+// export type FlanStackParamList = {
 //   HomeScreen?: undefined
 //   ExploreScreen?: undefined
-//   PlanScreen: undefined
+//   FlanScreen: undefined
 // }
-// export type PlanStackNavigationProps = StackScreenProps<
-//   PlanStackParamList,
-//   'HomeScreen' | 'ExploreScreen' | 'PlanScreen'
+// export type FlanStackNavigationProps = StackScreenProps<
+//   FlanStackParamList,
+//   'HomeScreen' | 'ExploreScreen' | 'FlanScreen'
 // >
-// export type PlanStackNavigationProp = PlanStackNavigationProps['navigation']
-// export type PlanStackRouteProp = PlanStackNavigationProps['route']
+// export type FlanStackNavigationProp = FlanStackNavigationProps['navigation']
+// export type FlanStackRouteProp = FlanStackNavigationProps['route']
 
 export type IntrodutionStackParamList = AuthenticationStackParamList & {
   IntroductionScreen: undefined

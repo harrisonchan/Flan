@@ -207,7 +207,7 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
     )
   }
   return (
-    <Box overflow="hidden" style={props.containerStyle}>
+    <Box overflow="hidden" style={[{ flex: 1 }, props.containerStyle]}>
       {renderBackground()}
       <SectionList
         nestedScrollEnabled

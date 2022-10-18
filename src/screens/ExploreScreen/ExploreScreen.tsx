@@ -1,10 +1,11 @@
 import { useTheme } from '@shopify/restyle'
 import React from 'react'
-import { FlatList, ScrollView } from 'react-native'
-import { Box, PlanCard, StatusBarPadding, Text } from '../../components'
+import { FlatList, ScrollView, TouchableOpacity } from 'react-native'
+import { Box, FlanCard, SearchBar, StatusBarPadding, Text } from '../../components'
 import { Theme } from '../../theme'
+import { ExploreStackNavigationProps } from '../../types'
 
-const ExploreScreen = () => {
+const ExploreScreen = ({ route, navigation }: ExploreStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const TEST_DATA = [
     {
@@ -39,7 +40,7 @@ const ExploreScreen = () => {
   ) => {
     return (
       <Box marginRight="m" marginLeft={index == 0 ? 'containerInset' : 'none'}>
-        <PlanCard
+        <FlanCard
           mode="small"
           title={item.title}
           author={item.author}
@@ -54,10 +55,21 @@ const ExploreScreen = () => {
     <>
       <StatusBarPadding />
       <ScrollView style={{ backgroundColor: colors.mainBackground }}>
-        <Box alignSelf="center" marginTop="xl">
+        <Box alignSelf="center" marginTop="xl" marginBottom="l">
           <Text variant="header3" marginLeft="containerInset" marginBottom="s">
             Explore
           </Text>
+          <TouchableOpacity
+            style={{
+              width: themeConstants.componentWidthXL,
+              alignSelf: 'center',
+              borderRadius: 10,
+              backgroundColor: colors.lightColor,
+              padding: spacing.m,
+            }}
+            onPress={() => navigation.navigate('SearchScreen')}>
+            <Text variant="secondary">Search Here...</Text>
+          </TouchableOpacity>
           <Text marginLeft="containerInset" marginBottom="s" marginTop="m" color="primaryColor">
             Popular Near You
           </Text>
