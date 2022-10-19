@@ -1,14 +1,14 @@
 import { useTheme } from '@shopify/restyle'
 import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, View, Text } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import { FlatList, View, Text, TouchableOpacity, Animated } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { Button, Chat, StatusBarPadding } from '../components'
+import { AnimatedIcon, Button, Chat, StatusBarPadding } from '../components'
 import { RootTabsNavigationProps } from '../types'
 import { useAppSelector } from '../redux'
 import { appActions } from '../redux/features'
 import { Theme } from '../theme'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
   const dispatch = useDispatch()
@@ -22,6 +22,9 @@ const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
       </View>
     )
   }
+
+  const animVal = new Animated.Value(0)
+
   return (
     <View style={{ backgroundColor: colors.mainBackground, flex: 1 }}>
       <StatusBarPadding />
@@ -42,6 +45,9 @@ const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
         label="switch theme"
         onPress={() => dispatch(appActions.utilityActions.setColorScheme(colorScheme == 'light' ? 'dark' : 'light'))}
       />
+      <TouchableOpacity>
+        <Icon name="heart" style={{ fontSize: 40 }} />
+      </TouchableOpacity>
     </View>
   )
 }

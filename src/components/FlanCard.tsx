@@ -88,11 +88,19 @@ const FlanCard: React.FC<FlanCardProps> = (props) => {
             {/* <TagList tags={['Music', 'Fun', 'Animals', 'Gorillas', 'Zebras', 'Penguins']} /> */}
           </Box>
         </TouchableOpacity>
-        <Box>
+        <Box
+          position="absolute"
+          right={spacing.m}
+          top={spacing.m}
+          alignItems="center"
+          justifyContent="center"
+          overflow="hidden"
+          height={themeConstants.iconSize * 1.25}
+          width={themeConstants.iconSize * 1.25}>
           <AnimatedIcon
+            toggleOffIconProps={{ name: 'heart-outline', size: themeConstants.iconSize, color: colors.darkColor }}
+            toggleOnIconProps={{ name: 'heart', size: themeConstants.iconSize, color: colors.red }}
             isToggled={false}
-            toggleOffIconProps={{ name: 'eye', size: themeConstants.iconSize }}
-            toggleOnIconProps={{ name: 'heart-outline', size: themeConstants.iconSize }}
           />
         </Box>
       </>
