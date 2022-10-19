@@ -38,7 +38,7 @@ const AnimatedIcon: React.FC<AnimatedIconProps> = (props) => {
         ? [
             {
               translateX: withSequence(
-                withTiming(2, {
+                withTiming(1, {
                   duration: 100,
                   easing: Easing.elastic(0.9),
                 }),
@@ -46,7 +46,7 @@ const AnimatedIcon: React.FC<AnimatedIconProps> = (props) => {
                   duration: 100,
                   easing: Easing.elastic(1),
                 }),
-                withTiming(-2, {
+                withTiming(-1, {
                   duration: 100,
                   easing: Easing.elastic(1),
                 }),
