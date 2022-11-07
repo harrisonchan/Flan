@@ -11,6 +11,7 @@ import localeData from 'dayjs/plugin/localeData'
 import { HomeStackNavigationProps } from '../../types'
 import { SharedElement } from 'react-navigation-shared-element'
 import { illustrationTypeArray } from '../../components/Illustration'
+import { checkServer } from '../../api'
 
 dayjs.extend(localeData)
 
@@ -21,6 +22,7 @@ const HomeScreen = ({ route, navigation }: HomeStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const user = useAppSelector((state) => state.userReducer.user)
   const currentTime = dayjs()
+  checkServer()
   return (
     <>
       <StatusBarPadding />

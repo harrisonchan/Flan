@@ -53,7 +53,7 @@ const SettingsScreen = ({ route, navigation }: SettingsStackNavigationProps) => 
             mode: 'small',
             onPress: isLoggedIn
               ? () => dispatch(appActions.userActions.logoutUser())
-              : () => navigation.navigate('SignUpScreen'),
+              : () => navigation.navigate('SignUpScreenInitial'),
             style: { backgroundColor: isLoggedIn ? colors.red : colors.green },
           }}
         />

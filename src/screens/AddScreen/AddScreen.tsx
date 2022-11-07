@@ -71,16 +71,16 @@ const AddScreen = ({ route, navigation }: AddStackNavigationProps) => {
             title="Create Your Own"
             subtitle="Create Your Own Flan To Have Fun With Friends"
             onPress={() => {
-              navigation.navigate('AddNewOriginalInputFieldsScreen')
+              navigation.navigate('AddNewOriginalInputFieldsScreen', {})
             }}
             style={{ marginBottom: spacing.l }}
           />
-          <SelectNewFlanTypeButton
+          {/* <SelectNewFlanTypeButton
             iconName="earth"
             title="Choose From Community Flans"
             subtitle="Create A Flan Based On Community Flans"
             onPress={() => navigation.navigate('AddNewFromCommunityScreen')}
-          />
+          /> */}
         </Box>
       </Box>
     </>

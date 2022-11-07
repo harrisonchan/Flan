@@ -2,6 +2,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { CompositeScreenProps } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { FlanType } from '../redux/features/flanSlice'
+import { Formik, FormikProps } from 'formik'
 // import { ActivityType, FlanType, LocationType } from '../redux/features/userSlice'
 
 export type RootTabsParamList = {
@@ -29,17 +30,18 @@ export type PreLoginTabsNavigationProps = BottomTabScreenProps<
 
 export type AuthenticationStackParamList = {
   LoginScreen: { showNavigationHeader?: boolean } | undefined
-  SignUpScreen: undefined
+  SignUpScreenInitial: undefined
+  SignUpScreenDetails: { formik: {} }
   ForgotPasswordScreen: undefined
 }
 export type AuthenticationStackNavigationProps = StackScreenProps<
   AuthenticationStackParamList,
-  'LoginScreen' | 'SignUpScreen' | 'ForgotPasswordScreen'
+  'LoginScreen' | 'SignUpScreenInitial' | 'SignUpScreenDetails' | 'ForgotPasswordScreen'
 >
 
 export type FlanScreenParamsType = {
   flanId: string | number
-  flanType: 'created' | 'saved' | 'attended'
+  flanType?: 'created' | 'saved' | 'attended'
 }
 
 export type HomeStackParamList = {
@@ -59,7 +61,7 @@ export type SettingsStackParamList = AuthenticationStackParamList & {
 }
 export type SettingsStackNavigationProps = StackScreenProps<
   SettingsStackParamList,
-  'SettingsScreen' | 'LoginScreen' | 'ForgotPasswordScreen' | 'SignUpScreen'
+  'SettingsScreen' | 'LoginScreen' | 'ForgotPasswordScreen' | 'SignUpScreenInitial' | 'SignUpScreenDetails'
 >
 
 export type ExploreStackParamList = SearchStackParamList & {
@@ -122,5 +124,5 @@ export type IntrodutionStackParamList = AuthenticationStackParamList & {
 }
 export type IntrodutionStackNavigationProps = StackScreenProps<
   IntrodutionStackParamList,
-  'IntroductionScreen' | 'LoginScreen' | 'SignUpScreen' | 'ForgotPasswordScreen'
+  'IntroductionScreen' | 'LoginScreen' | 'SignUpScreenInitial' | 'SignUpScreenDetails' | 'ForgotPasswordScreen'
 >

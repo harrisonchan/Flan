@@ -18,7 +18,8 @@ import {
   ProfilePersonalFlans,
   ProfileSavedFlans,
   ProfileScreen,
-  SignUpScreen,
+  SignUpScreenInitial,
+  SignUpScreenDetails,
   TestScreen,
   SearchScreen,
   SearchResultsScreen,
@@ -105,7 +106,16 @@ const SettingsStackComponent = () => {
         component={ForgotPasswordScreen}
         options={{ headerShown: false }}
       />
-      <SettingsStack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }} />
+      <SettingsStack.Screen
+        name="SignUpScreenInitial"
+        component={SignUpScreenInitial}
+        options={{ headerShown: false }}
+      />
+      <SettingsStack.Screen
+        name="SignUpScreenDetails"
+        component={SignUpScreenDetails}
+        options={{ headerShown: false }}
+      />
     </SettingsStack.Navigator>
   )
 }
@@ -194,7 +204,16 @@ const AuthenticationStackComponent = () => {
         component={ForgotPasswordScreen}
         options={{ headerShown: false }}
       />
-      <AuthenticationStack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }} />
+      <AuthenticationStack.Screen
+        name="SignUpScreenInitial"
+        component={SignUpScreenInitial}
+        options={{ headerShown: false }}
+      />
+      <AuthenticationStack.Screen
+        name="SignUpScreenDetails"
+        component={SignUpScreenDetails}
+        options={{ headerShown: false }}
+      />
     </AuthenticationStack.Navigator>
   )
 }
@@ -213,7 +232,11 @@ const IntrouctionStackComponent = () => {
         component={ForgotPasswordScreen}
         options={{ headerShown: false }}
       />
-      <AuthenticationStack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }} />
+      <AuthenticationStack.Screen
+        name="SignUpScreenInitial"
+        component={SignUpScreenInitial}
+        options={{ headerShown: false }}
+      />
     </IntroductionStack.Navigator>
   )
 }

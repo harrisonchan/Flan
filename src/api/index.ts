@@ -1,4 +1,5 @@
 import Axios from 'axios'
+export * from './flanApi'
 
 // export const userApi = Axios.create({
 //   baseURL: 'http://http://localhost:3333/api/account',

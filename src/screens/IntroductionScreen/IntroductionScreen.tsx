@@ -69,7 +69,7 @@ const IntroductionScreen = ({ navigation }: IntrodutionStackNavigationProps) => 
                 </Text>
               </Box>
               {index == IntroductionGallery.length - 1 && (
-                <Button label="Get Started" onPress={() => navigation.navigate('SignUpScreen')} />
+                <Button label="Get Started" onPress={() => navigation.navigate('SignUpScreenInitial')} />
               )}
             </Box>
           )}

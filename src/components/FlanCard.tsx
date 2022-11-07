@@ -118,7 +118,10 @@ const FlanCard: React.FC<FlanCardProps> = (props) => {
             padding: spacing.m,
           },
           props.style,
-        ]}>
+        ]}
+        onPress={() => {
+          props.onPress && props.onPress()
+        }}>
         {renderIllustration()}
         <Text variant="secondary" color="neutralText">
           {props.title}

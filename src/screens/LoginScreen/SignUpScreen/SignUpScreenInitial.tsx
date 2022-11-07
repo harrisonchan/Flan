@@ -11,18 +11,19 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { Box, Button, StatusBarPadding, Text, TextInput } from '../../components'
-import { appActions } from '../../redux/features'
-import { Theme } from '../../theme'
-import { IntrodutionStackNavigationProps } from '../../types'
-import { signupValidationSchema } from '../../utilities'
+import { Box, Button, StatusBarPadding, Text, TextInput } from '../../../components'
+import { appActions } from '../../../redux/features'
+import { Theme } from '../../../theme'
+import { IntrodutionStackNavigationProps } from '../../../types'
+import { signupInitialValidationSchema } from '../../../utilities'
 
-const SignUpScreen = ({ navigation }: IntrodutionStackNavigationProps) => {
+const SignUpScreenInitial = ({ navigation }: IntrodutionStackNavigationProps) => {
   const [username, setUsername] = useState('')
   const dispatch = useDispatch()
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const handleSignUp = () => {
-    dispatch(appActions.userActions.registerUser(formik.values))
+    // navigation.navigate('SignUpScreenDetails', { formik: formik.values })
+    // dispatch(appActions.userActions.registerUser(formik.values))
   }
   const formik = useFormik({
     initialValues: {
@@ -30,7 +31,7 @@ const SignUpScreen = ({ navigation }: IntrodutionStackNavigationProps) => {
       username: '',
       password: '',
     },
-    validationSchema: signupValidationSchema,
+    validationSchema: signupInitialValidationSchema,
     onSubmit: () => handleSignUp(),
   })
   useEffect(() => {
@@ -118,4 +119,4 @@ const SignUpScreen = ({ navigation }: IntrodutionStackNavigationProps) => {
   )
 }
 
-export default SignUpScreen
+export default SignUpScreenInitial

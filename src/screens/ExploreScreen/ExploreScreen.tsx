@@ -46,6 +46,7 @@ const ExploreScreen = ({ route, navigation }: ExploreStackNavigationProps) => {
           author={item.author}
           location={item.location}
           numPeople={item.numPeople}
+          onPress={() => navigation.navigate('FlanScreen', { flanId: '1' })}
         />
       </Box>
     )

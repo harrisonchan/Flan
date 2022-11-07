@@ -29,6 +29,7 @@ const SearchScreen = ({ route, navigation }: SearchStackNavigationProps) => {
           />
           <>
             <SearchBar
+              containerStyle={{ marginBottom: spacing.m }}
               textInputProps={{
                 onChangeText: formik.handleChange('searchValue'),
                 onBlur: formik.handleBlur('searchValue'),
@@ -38,6 +39,7 @@ const SearchScreen = ({ route, navigation }: SearchStackNavigationProps) => {
                   invalidInputMessage: formik.touched.searchValue ? formik.errors.searchValue : undefined,
                 },
               }}
+              rNTextInputProps={{ autoFocus: true }}
             />
             <Button label="Search" onPress={() => formik.submitForm()} />
           </>

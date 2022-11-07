@@ -31,7 +31,7 @@ const AddNewOriginalInputFieldsScreen = ({ route, navigation }: AddStackNavigati
       id: (Math.random() * 100 * Math.PI).toString(),
       title: '',
       description: '',
-      // location: { address: '', coordinate: { latitude: 0, longitude: 0 } },
+      location: { address: '', coordinate: { latitude: 0, longitude: 0 } },
     },
     validationSchema: addNewOriginalValidationSchema,
     onSubmit: (values) => navigation.navigate('AddNewOriginalPickIllustrationScreen', { ...values }),
@@ -84,16 +84,17 @@ const AddNewOriginalInputFieldsScreen = ({ route, navigation }: AddStackNavigati
             <Text variant="secondary" color="primaryColor">
               Add A Location
             </Text>
-            <Text variant="secondary">Location skipped for now...</Text>
-            <Text variant="secondary">{route.params?.location?.address}</Text>
+            {/* <Text variant="secondary">Location skipped for now...</Text> */}
+            <Text variant="secondary">
+              {formik.values.location.address ? formik.values.location.address : 'No Location Added...'}
+            </Text>
             <Box flexDirection="row">
               <Button
-                label="Add Location"
+                label={formik.values.location.address ? 'Modify Location' : 'Add Location'}
                 mode="small"
                 onPress={() => navigation.navigate('AddNewSelectLocationScreen')}
                 style={{ backgroundColor: colors.lightGreen }}
               />
-              <Button label="Skip" mode="small" onPress={() => setLocation(undefined)} />
             </Box>
             <Text variant="secondary" color="primaryColor">
               Add Activities
