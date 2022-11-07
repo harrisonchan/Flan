@@ -5,9 +5,10 @@ const flanApi = Axios.create({
   baseURL: 'http://localhost:3333/api/flan',
 })
 
-export const addNewFlan = async (flan: FlanType) => {
+const addNewFlan = async (flan: FlanType) => {
   try {
-    const { title, description, illustration, location, activities, polls } = flan
+    const { title, description, illustration, location, activities, polls } =
+      flan
     const response = await flanApi.post('/', {
       title,
       description,
@@ -27,7 +28,7 @@ export const addNewFlan = async (flan: FlanType) => {
   }
 }
 
-export const getFlanById = async (flanId: string) => {
+const getFlanById = async (flanId: string) => {
   try {
     const response = await flanApi.get('/', {
       params: { id: flanId },
@@ -39,3 +40,10 @@ export const getFlanById = async (flanId: string) => {
     console.error(error)
   }
 }
+
+export const flanApiActions = {
+  addNewFlan,
+  getFlanById,
+}
+
+export default flanApi

@@ -3,6 +3,7 @@ import { CompositeScreenProps } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { FlanType } from '../redux/features/flanSlice'
 import { Formik, FormikProps } from 'formik'
+import { userType } from './apiTypes'
 // import { ActivityType, FlanType, LocationType } from '../redux/features/userSlice'
 
 export type RootTabsParamList = {
@@ -31,7 +32,7 @@ export type PreLoginTabsNavigationProps = BottomTabScreenProps<
 export type AuthenticationStackParamList = {
   LoginScreen: { showNavigationHeader?: boolean } | undefined
   SignUpScreenInitial: undefined
-  SignUpScreenDetails: { formik: {} }
+  SignUpScreenDetails: { user: Omit<userType, 'firstName'|'lastName'|'birthday'|'accountType'|'gender'>  | string}
   ForgotPasswordScreen: undefined
 }
 export type AuthenticationStackNavigationProps = StackScreenProps<

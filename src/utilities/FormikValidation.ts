@@ -6,7 +6,12 @@ export const signupInitialValidationSchema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 })
 
-export const signupDetailsValidationSchema = Yup.object().shape({})
+export const signupDetailsValidationSchema = Yup.object().shape({
+  firstName: Yup.string().required('First Name is required'),
+  lastName: Yup.string().required('Last Name is required'),
+  birthday: Yup.date(),
+  gender: Yup.string()
+})
 
 export const searchValidationSchema = Yup.object().shape({
   searchValue: Yup.string().required('Search field is required'),

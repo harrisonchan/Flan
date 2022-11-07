@@ -11,18 +11,26 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { Box, Button, StatusBarPadding, Text, TextInput } from '../../../components'
+import {
+  Box,
+  Button,
+  StatusBarPadding,
+  Text,
+  TextInput,
+} from '../../../components'
 import { appActions } from '../../../redux/features'
 import { Theme } from '../../../theme'
 import { IntrodutionStackNavigationProps } from '../../../types'
 import { signupInitialValidationSchema } from '../../../utilities'
 
-const SignUpScreenInitial = ({ navigation }: IntrodutionStackNavigationProps) => {
+const SignUpScreenInitial = ({
+  navigation,
+}: IntrodutionStackNavigationProps) => {
   const [username, setUsername] = useState('')
   const dispatch = useDispatch()
   const { colors, spacing, themeConstants } = useTheme<Theme>()
-  const handleSignUp = () => {
-    // navigation.navigate('SignUpScreenDetails', { formik: formik.values })
+  const handleSignUpNext = () => {
+    navigation.navigate('SignUpScreenDetails', { user: formik.values })
     // dispatch(appActions.userActions.registerUser(formik.values))
   }
   const formik = useFormik({
@@ -32,7 +40,7 @@ const SignUpScreenInitial = ({ navigation }: IntrodutionStackNavigationProps) =>
       password: '',
     },
     validationSchema: signupInitialValidationSchema,
-    onSubmit: () => handleSignUp(),
+    onSubmit: () => handleSignUpNext(),
   })
   useEffect(() => {
     console.log(formik.values)
@@ -44,10 +52,20 @@ const SignUpScreenInitial = ({ navigation }: IntrodutionStackNavigationProps) =>
       <Box width={themeConstants.containerWidth} flex={1} alignSelf="center">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <KeyboardAvoidingView
-            style={{ flex: 1, paddingBottom: spacing.xl, justifyContent: 'center' }}
-            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+            style={{
+              flex: 1,
+              paddingBottom: spacing.xl,
+              justifyContent: 'center',
+            }}
+            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+          >
             <Box>
-              <Text variant="header3" color="neutralText" marginBottom="l" style={{ alignSelf: 'center' }}>
+              <Text
+                variant="header3"
+                color="neutralText"
+                marginBottom="l"
+                style={{ alignSelf: 'center' }}
+              >
                 Sign Up
               </Text>
               <TextInput
@@ -60,7 +78,9 @@ const SignUpScreenInitial = ({ navigation }: IntrodutionStackNavigationProps) =>
                 useValidation={{
                   isValid: !isString(formik.errors.email),
                   showValidationIcon: formik.touched.email,
-                  invalidInputMessage: formik.touched.email ? formik.errors.email : undefined,
+                  invalidInputMessage: formik.touched.email
+                    ? formik.errors.email
+                    : undefined,
                 }}
                 containerStyle={{ marginBottom: spacing.l }}
                 textInputProps={{ autoCapitalize: 'none', spellCheck: false }}
@@ -76,7 +96,9 @@ const SignUpScreenInitial = ({ navigation }: IntrodutionStackNavigationProps) =>
                 useValidation={{
                   isValid: !isString(formik.errors.username),
                   showValidationIcon: formik.touched.username,
-                  invalidInputMessage: formik.touched.username ? formik.errors.username : undefined,
+                  invalidInputMessage: formik.touched.username
+                    ? formik.errors.username
+                    : undefined,
                 }}
                 textInputProps={{ autoCapitalize: 'none', spellCheck: false }}
               />
@@ -91,21 +113,29 @@ const SignUpScreenInitial = ({ navigation }: IntrodutionStackNavigationProps) =>
                 useValidation={{
                   isValid: !isString(formik.errors.password),
                   showValidationIcon: false,
-                  invalidInputMessage: formik.touched.password ? formik.errors.password : undefined,
+                  invalidInputMessage: formik.touched.password
+                    ? formik.errors.password
+                    : undefined,
                 }}
                 secureTextEntry
                 secureTextEntryShowHideIcon
                 textInputProps={{ autoCapitalize: 'none', spellCheck: false }}
               />
-              <Button label="Sign Up" onPress={formik.submitForm} />
-              <Box justifyContent="center" alignItems="center" flexDirection="row" marginTop="s">
+              <Button label="Next" onPress={formik.submitForm} />
+              <Box
+                justifyContent="center"
+                alignItems="center"
+                flexDirection="row"
+                marginTop="s"
+              >
                 <Text variant="tertiary">Already have an account? </Text>
                 <TouchableOpacity
                   style={{
                     alignItems: 'center',
                     alignSelf: 'center',
                   }}
-                  onPress={() => navigation.navigate('LoginScreen')}>
+                  onPress={() => navigation.navigate('LoginScreen')}
+                >
                   <Text variant="tertiary" color="tertiaryColor">
                     Login here
                   </Text>

@@ -13,7 +13,10 @@ const KEY = 'AIzaSyBjaM6Gy44QKIyYVgxJznJbvPtqbf1Z1Zc'
 //   //   }
 // })
 
-export const getReverseGeocode = async (latlng: { latitude: number; longitude: number }) => {
+export const getReverseGeocode = async (latlng: {
+  latitude: number
+  longitude: number
+}) => {
   const params = 'geocode/json'
   const { latitude, longitude } = latlng
   const url = `${MAPS_API_URL}/${params}?result_type=street_address&key=${KEY}&latlng=${latitude},${longitude}`

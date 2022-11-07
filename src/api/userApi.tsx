@@ -7,7 +7,16 @@ const userApi = Axios.create({
 
 const registerUser = async (user: userType) => {
   try {
-    const { email, password, firstName, lastName, birthday, accountType, gender, phone } = user
+    const {
+      email,
+      password,
+      firstName,
+      lastName,
+      birthday,
+      accountType,
+      gender,
+      // phone
+    } = user
     const response = await userApi.post('/', {
       email,
       password,
@@ -16,7 +25,7 @@ const registerUser = async (user: userType) => {
       birthday,
       accountType,
       gender,
-      phone,
+      // phone,
     })
     try {
       return response
