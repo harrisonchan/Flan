@@ -24,13 +24,11 @@ const TestScreenFlanApi: React.FC<TestScreenFlanApiProps> = (props) => {
             .addNewFlan({
               id: 'asdfasdf',
               title: 'Go to the zoo',
-              description:
-                'Go to the zoo to participate in really fun activities and events!',
+              description: 'Go to the zoo to participate in really fun activities and events!',
               activities: undefined,
               illustration: 1,
               location: {
-                address:
-                  'No. 45, City Hall Rd, Xinyi District, Taipei City, Taiwan 110',
+                address: 'No. 45, City Hall Rd, Xinyi District, Taipei City, Taiwan 110',
                 coordinate: {
                   latitude: 25.03405448948375,
                   longitude: 121.5639284989046,
@@ -40,7 +38,7 @@ const TestScreenFlanApi: React.FC<TestScreenFlanApiProps> = (props) => {
               polls: undefined,
             })
             .then((response) => {
-              console.log(response)
+              setResponse(response)
             })
             .catch((error) => {
               console.error(error)

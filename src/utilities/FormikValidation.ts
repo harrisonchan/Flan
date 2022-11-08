@@ -1,16 +1,30 @@
 import * as Yup from 'yup'
 
+// User Auth
+export const username = Yup.string().required('Username is required')
+export const email = Yup.string().email('Email is invalid').required('Email is required')
+export const password = Yup.string().required('Password is required')
+export const firstName = Yup.string().required('First Name is required')
+export const lastName = Yup.string().required('Last Name is required')
+export const birthday = Yup.date()
+export const gender = Yup.string()
+
 export const signupInitialValidationSchema = Yup.object().shape({
-  username: Yup.string().required('Username is required'),
-  email: Yup.string().email('Email is invalid').required('Email is required'),
-  password: Yup.string().required('Password is required'),
+  username,
+  email,
+  password,
 })
 
 export const signupDetailsValidationSchema = Yup.object().shape({
-  firstName: Yup.string().required('First Name is required'),
-  lastName: Yup.string().required('Last Name is required'),
-  birthday: Yup.date(),
-  gender: Yup.string()
+  firstName,
+  lastName,
+  birthday,
+  gender,
+})
+
+export const loginValidationSchema = Yup.object().shape({
+  email,
+  password,
 })
 
 export const searchValidationSchema = Yup.object().shape({

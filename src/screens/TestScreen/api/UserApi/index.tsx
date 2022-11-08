@@ -6,6 +6,8 @@ import TestScreenGroup from '../../TestScreenGroup'
 import TestScreenItem from '../../TestScreenItem'
 import { Theme } from '../../../../theme'
 import { userApiActions } from '../../../../api'
+import { useFormik } from 'formik'
+import { loginValidationSchema, signupDetailsValidationSchema, signupInitialValidationSchema } from '../../../../utilities'
 
 interface TestScreenUserApiProps {
   onResponse: (res: any) => void
@@ -19,43 +21,46 @@ const TestScreenUserApi: React.FC<TestScreenUserApiProps> = (props) => {
       props.onResponse(response)
     }
   }, [response])
+  const registerFormik = useFormik({
+    initialValues: {},
+    validationSchema: signupInitialValidationSchema.concat(signupDetailsValidationSchema),
+    onSubmit: () => {},
+  })
+  const loginFormik = useFormik({
+    initialValues: {},
+    validationSchema: loginValidationSchema,
+    onSubmit: () => {},
+  })
   return (
     <TestScreenGroup title="User">
       <Box marginTop="s">
-        <TextInput
-          placeholder="email"
-          style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }}
-          autoCapitalize="none"
-        />
-        <TextInput
-          placeholder="username"
-          style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }}
-          autoCapitalize="none"
-        />
-        <TextInput
-          placeholder="password"
-          style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }}
-          autoCapitalize="none"
-        />
+        <TextInput placeholder="email" style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }} autoCapitalize="none" />
+        <TextInput placeholder="username" style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }} autoCapitalize="none" />
+        <TextInput placeholder="password" style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }} autoCapitalize="none" />
+        <TextInput placeholder="firstName" style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }} autoCapitalize="none" />
+        <TextInput placeholder="lastName" style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }} autoCapitalize="none" />
+        <TextInput placeholder="birthday" style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }} autoCapitalize="none" />
+        <TextInput placeholder="accountType" style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }} autoCapitalize="none" />
+        <TextInput placeholder="gender" style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }} autoCapitalize="none" />
         <TestScreenItem
           label="Register"
           onPress={() => {
-            // userApiActions.registerUser({
-            // })
+            userApiActions.registerUser({
+              email: '',
+              username: '',
+              password: '',
+              firstName: '',
+              lastName: '',
+              birthday: '',
+              accountType: '',
+              gender: '',
+            })
           }}
         />
       </Box>
       <Box marginTop="s">
-        <TextInput
-          placeholder="email"
-          style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }}
-          autoCapitalize="none"
-        />
-        <TextInput
-          placeholder="password"
-          style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }}
-          autoCapitalize="none"
-        />
+        <TextInput placeholder="email" style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }} autoCapitalize="none" />
+        <TextInput placeholder="password" style={{ backgroundColor: 'white', padding: 10, marginTop: 5 }} autoCapitalize="none" />
         <TestScreenItem label="Login" onPress={() => console.log('adsfasf')} />
       </Box>
     </TestScreenGroup>
