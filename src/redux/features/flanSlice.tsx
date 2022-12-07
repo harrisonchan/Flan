@@ -6,9 +6,10 @@ export type LocationType = { address: string; coordinate: LatLng | undefined }
 export type ActivityType = { title: string; description?: string }
 
 export type FlanType = {
-  id: string
+  // id: string
   title?: string
   description?: string
+  author?: string
   illustration?: number
   peopleAttending?: { username: string; userFirstName: string; userLastName: string }[]
   location?: LocationType

@@ -35,3 +35,27 @@ export const addNewOriginalValidationSchema = Yup.object().shape({
   title: Yup.string().required('Flan name is required'),
   description: Yup.string().required('Flan description is required'),
 })
+
+//For test screen
+export const testScreenAddNewFlanValidationSchema = Yup.object().shape({
+  // id: Yup.string().required('flan id is required'),
+  title: Yup.string().required('Title is required'),
+  description: Yup.string().required('Description is required'),
+  author: Yup.string().required('Author is required'),
+  illustration: Yup.number().required('Illustration is required'),
+  locationAddress: Yup.string().required('Location is required'),
+  locationLatitude: Yup.number().required('Location latitude is required'),
+  locationLongitude: Yup.number().required('Location longitude is required'),
+  // activities: Yup.string().required('Activities is required'),
+  // polls: Yup.string().required('Polls is required'),
+})
+
+export const addNewFlanValidationSchema = Yup.object().shape({
+  title: Yup.string().required('Title is required'),
+  description: Yup.string().required('Description is required'),
+  author: Yup.string().required('Author is required'),
+  illustration: Yup.string().required('Illustration is required'),
+  location: Yup.string().required('Location is required'),
+  // activities: Yup.string().required('Activities is required'),
+  // polls: Yup.string().required('Polls is required'),
+})

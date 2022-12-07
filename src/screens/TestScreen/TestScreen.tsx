@@ -3,14 +3,14 @@ import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useState } from 'react'
 import { FlatList, View, TouchableOpacity, Animated, ScrollView } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { AnimatedIcon, Box, Text, Button, Chat, StatusBarPadding } from '../../components'
+import { AnimatedIcon, Box, Text, Button, Chat, StatusBarPadding, Collapsible } from '../../components'
 import { RootTabsNavigationProps } from '../../types'
 import { useAppSelector } from '../../redux'
 import { appActions } from '../../redux/features'
 import { Theme } from '../../theme'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { userApiActions } from '../../api/userApi'
-import { AxiosResponse, responseEncoding, ResponseType } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import TestScreenFlanApi from './api/FlanApi'
 import TestScreenUserApi from './api/UserApi'
 import TestScreeUtilities from './Utilities'
@@ -37,10 +37,20 @@ const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
 
   const animVal = new Animated.Value(0)
   const testFlan = useAppSelector((state) => state.userReducer.user.createdFlans[0])
-  const [response, setResponse] = useState('')
+  const [response, setResponse] = useState<AxiosResponse | {}>({})
   return (
     <View style={{ backgroundColor: colors.mainBackground, flex: 1 }}>
       <StatusBarPadding />
+      <TouchableOpacity
+        onPress={async () => {
+          axios
+            .get('http://localhost:3333/api/account', {
+              data: { email: 'hraychan@gmail.com', password: 'w1mP$btho' },
+            })
+            .then((res) => console.log(res.data))
+        }}>
+        <Text>Testing buzz buzz</Text>
+      </TouchableOpacity>
       <ScrollView>
         <TestScreenGroup title="API">
           <Box marginTop="s" minHeight={themeConstants.screenHeight * 0.05} maxHeight={themeConstants.screenHeight * 0.4} backgroundColor="violet" padding="s">
@@ -49,14 +59,12 @@ const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
             </Text>
             <ScrollView nestedScrollEnabled>
               {response !== undefined && (
-                <Text variant="tertiary" color={'lightColor'}>
+                <Text variant="tertiary" color={'light'}>
                   {(function () {
                     try {
-                      const jsonRes = JSON.parse(response)
-                      console.log(jsonRes.data)
-                      return JSON.stringify(jsonRes.data)
+                      return JSON.stringify(response.data)
                     } catch (error) {
-                      console.log(error)
+                      console.log('error parsing json: ', error)
                     }
                   })()}
                 </Text>

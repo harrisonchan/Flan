@@ -7,11 +7,11 @@ const flanApi = Axios.create({
 
 const addNewFlan = async (flan: FlanType) => {
   try {
-    const { title, description, illustration, location, activities, polls } =
-      flan
+    const { title, description, author, illustration, location, activities, polls } = flan
     const response = await flanApi.post('/', {
       title,
       description,
+      author,
       illustration,
       location,
       activities,
@@ -19,7 +19,7 @@ const addNewFlan = async (flan: FlanType) => {
     })
     console.log(response)
     try {
-      return JSON.stringify(response)
+      return response
     } catch (error) {
       console.error(error)
     }
@@ -30,11 +30,10 @@ const addNewFlan = async (flan: FlanType) => {
 
 const getFlanById = async (flanId: string) => {
   try {
-    const response = await flanApi.get('/', {
-      params: { id: flanId },
-    })
+    console.log('inside app - trying to find flan by id: ', flanId)
+    const response = await flanApi.post(`/${flanId}`)
     // console.log(response)
-    // console.log(response.data)
+    console.log('res from inside api', response.data)
     return response
   } catch (error) {
     console.error(error)

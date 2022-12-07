@@ -17,7 +17,7 @@ const registerUser = async (user: userType) => {
       gender,
       // phone
     } = user
-    const response = await userApi.post('/', {
+    const response = await userApi.post('/register', {
       email,
       password,
       firstName,
@@ -27,11 +27,7 @@ const registerUser = async (user: userType) => {
       gender,
       // phone,
     })
-    try {
-      return response
-    } catch (error) {
-      console.error(error)
-    }
+    return response
   } catch (error) {
     console.error(error)
   }
@@ -40,7 +36,9 @@ const registerUser = async (user: userType) => {
 const loginUser = async (user: { email: string; password: string }) => {
   try {
     const { email, password } = user
-    const response = await userApi.get('/', {
+    console.log(email)
+    console.log(password)
+    const response = await userApi.post('/', {
       email,
       password,
     })
