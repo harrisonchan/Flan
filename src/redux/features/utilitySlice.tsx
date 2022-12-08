@@ -21,6 +21,7 @@ const initialState = {
       message: '',
       positiveActionProps: { message: '', action: () => {} },
       negativeActionProps: { message: '', action: () => {} },
+      backgroundPressHidesAlert: false,
     },
   },
 } as UtilityState
@@ -43,6 +44,7 @@ const utilitySlice = createSlice({
         title: '',
         positiveActionProps: { message: '', action: () => {} },
         negativeActionProps: { message: '', action: () => {} },
+        backgroundPressHidesAlert: false,
       }
     },
   },

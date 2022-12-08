@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useState } from 'react'
 import { FlatList, View, TouchableOpacity, Animated, ScrollView } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { AnimatedIcon, Box, Text, Button, Chat, StatusBarPadding, Collapsible } from '../../components'
+import { AnimatedIcon, Box, Text, Button, Chat, StatusBarPadding, Collapsible, TextInput } from '../../components'
 import { RootTabsNavigationProps } from '../../types'
 import { useAppSelector } from '../../redux'
 import { appActions } from '../../redux/features'
@@ -15,6 +15,8 @@ import TestScreenFlanApi from './api/FlanApi'
 import TestScreenUserApi from './api/UserApi'
 import TestScreeUtilities from './Utilities'
 import TestScreenGroup from './TestScreenGroup'
+import { CalendarList } from 'react-native-calendars'
+import DropDownPicker from 'react-native-dropdown-picker'
 
 const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
   const dispatch = useDispatch()
@@ -38,20 +40,55 @@ const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
   const animVal = new Animated.Value(0)
   const testFlan = useAppSelector((state) => state.userReducer.user.createdFlans[0])
   const [response, setResponse] = useState<AxiosResponse | {}>({})
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState(null)
+  const [items, setItems] = useState([
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' },
+  ])
   return (
     <View style={{ backgroundColor: colors.mainBackground, flex: 1 }}>
       <StatusBarPadding />
-      <TouchableOpacity
-        onPress={async () => {
-          axios
-            .get('http://localhost:3333/api/account', {
-              data: { email: 'hraychan@gmail.com', password: 'w1mP$btho' },
-            })
-            .then((res) => console.log(res.data))
-        }}>
-        <Text>Testing buzz buzz</Text>
-      </TouchableOpacity>
+      <Text>Testing buzz buzz</Text>
       <ScrollView>
+        <TextInput
+          innerLabel
+          label="Birthday"
+          labelColor={colors.primaryColor}
+          // placeholder="Select your gender"
+          // onChangeText={formik.handleChange('gender')}
+          // onBlur={formik.handleBlur('gender')}
+          // useValidation={{
+          //   isValid: !isString(formik.errors.gender),
+          //   showValidationIcon: formik.touched.gender,
+          //   invalidInputMessage: formik.touched.gender ? formik.errors.gender : undefined,
+          // }}
+          // containerStyle={{ marginBottom: spacing.l }}
+          textInputProps={{ autoCapitalize: 'none', spellCheck: false }}
+          mode="birthday"
+          containerStyle={{ height: 500 }}
+        />
+        <Box width={320}>
+          <CalendarList
+            // Callback which gets executed when visible months change in scroll view. Default = undefined
+            onVisibleMonthsChange={(months) => {
+              console.log('now these months are visible', months)
+            }}
+            // Max amount of months allowed to scroll to the past. Default = 50
+            pastScrollRange={120}
+            // Max amount of months allowed to scroll to the future. Default = 50
+            futureScrollRange={0}
+            // Enable or disable scrolling of calendar list
+            scrollEnabled={true}
+            // Enable horizontal scrolling, default = false
+            horizontal={true}
+            // Enable paging on horizontal, default = false
+            pagingEnabled={true}
+            // Set custom calendarWidth.
+            calendarWidth={320}
+            // calendarStyle={{ width: 320 }}
+          />
+        </Box>
         <TestScreenGroup title="API">
           <Box marginTop="s" minHeight={themeConstants.screenHeight * 0.05} maxHeight={themeConstants.screenHeight * 0.4} backgroundColor="violet" padding="s">
             <Text variant="secondary" marginTop={'s'} marginBottom={response == '' ? 'none' : 's'}>

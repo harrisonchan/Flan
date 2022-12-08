@@ -101,21 +101,9 @@ const SettingsStackComponent = () => {
         options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
       />
       <SettingsStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
-      <SettingsStack.Screen
-        name="ForgotPasswordScreen"
-        component={ForgotPasswordScreen}
-        options={{ headerShown: false }}
-      />
-      <SettingsStack.Screen
-        name="SignUpScreenInitial"
-        component={SignUpScreenInitial}
-        options={{ headerShown: false }}
-      />
-      <SettingsStack.Screen
-        name="SignUpScreenDetails"
-        component={SignUpScreenDetails}
-        options={{ headerShown: false }}
-      />
+      <SettingsStack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+      <SettingsStack.Screen name="SignUpScreenInitial" component={SignUpScreenInitial} options={{ headerShown: false }} />
+      <SettingsStack.Screen name="SignUpScreenDetails" component={SignUpScreenDetails} options={{ headerShown: false }} />
     </SettingsStack.Navigator>
   )
 }
@@ -129,11 +117,7 @@ const ExploreStackComponent = () => {
         component={SearchScreen}
         options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
       />
-      <ExploreStack.Screen
-        name="SearchResultsScreen"
-        component={SearchResultsScreen}
-        options={{ headerShown: false }}
-      />
+      <ExploreStack.Screen name="SearchResultsScreen" component={SearchResultsScreen} options={{ headerShown: false }} />
       <ExploreStack.Screen
         name="FlanScreen"
         component={FlanScreen}
@@ -171,21 +155,9 @@ const AddStackComponent = () => {
   return (
     <AddStack.Navigator>
       <AddStack.Screen name="AddScreen" component={AddScreen} options={{ headerShown: false }} />
-      <AddStack.Screen
-        name="AddNewOriginalInputFieldsScreen"
-        component={AddNewOriginalInputFieldsScreen}
-        options={{ headerShown: false }}
-      />
-      <AddStack.Screen
-        name="AddNewOriginalPickIllustrationScreen"
-        component={AddNewOriginalPickIllustrationScreen}
-        options={{ headerShown: false }}
-      />
-      <AddStack.Screen
-        name="AddNewFromCommunityScreen"
-        component={AddNewFromCommunityScreen}
-        options={{ headerShown: false }}
-      />
+      <AddStack.Screen name="AddNewOriginalInputFieldsScreen" component={AddNewOriginalInputFieldsScreen} options={{ headerShown: false }} />
+      <AddStack.Screen name="AddNewOriginalPickIllustrationScreen" component={AddNewOriginalPickIllustrationScreen} options={{ headerShown: false }} />
+      <AddStack.Screen name="AddNewFromCommunityScreen" component={AddNewFromCommunityScreen} options={{ headerShown: false }} />
       <AddStack.Screen
         name="AddNewSelectLocationScreen"
         component={AddNewSelectLocationScreen}
@@ -199,21 +171,9 @@ const AuthenticationStackComponent = () => {
   return (
     <AuthenticationStack.Navigator>
       <AuthenticationStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
-      <AuthenticationStack.Screen
-        name="ForgotPasswordScreen"
-        component={ForgotPasswordScreen}
-        options={{ headerShown: false }}
-      />
-      <AuthenticationStack.Screen
-        name="SignUpScreenInitial"
-        component={SignUpScreenInitial}
-        options={{ headerShown: false }}
-      />
-      <AuthenticationStack.Screen
-        name="SignUpScreenDetails"
-        component={SignUpScreenDetails}
-        options={{ headerShown: false }}
-      />
+      <AuthenticationStack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+      <AuthenticationStack.Screen name="SignUpScreenInitial" component={SignUpScreenInitial} options={{ headerShown: false }} />
+      <AuthenticationStack.Screen name="SignUpScreenDetails" component={SignUpScreenDetails} options={{ headerShown: false }} />
     </AuthenticationStack.Navigator>
   )
 }
@@ -221,22 +181,10 @@ const AuthenticationStackComponent = () => {
 const IntrouctionStackComponent = () => {
   return (
     <IntroductionStack.Navigator>
-      <IntroductionStack.Screen
-        name="IntroductionScreen"
-        component={IntroductionScreen}
-        options={{ headerShown: false }}
-      />
+      <IntroductionStack.Screen name="IntroductionScreen" component={IntroductionScreen} options={{ headerShown: false }} />
       <AuthenticationStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
-      <AuthenticationStack.Screen
-        name="ForgotPasswordScreen"
-        component={ForgotPasswordScreen}
-        options={{ headerShown: false }}
-      />
-      <AuthenticationStack.Screen
-        name="SignUpScreenInitial"
-        component={SignUpScreenInitial}
-        options={{ headerShown: false }}
-      />
+      <AuthenticationStack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+      <AuthenticationStack.Screen name="SignUpScreenInitial" component={SignUpScreenInitial} options={{ headerShown: false }} />
     </IntroductionStack.Navigator>
   )
 }
@@ -266,8 +214,7 @@ const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'ligh
       {!isLoggedIn && !hasPassedIntroduction ? (
         <IntrouctionStackComponent />
       ) : isLoggedIn ? (
-        <RootTabs.Navigator
-          screenOptions={{ tabBarStyle: { backgroundColor: colors.lightColor }, tabBarShowLabel: false }}>
+        <RootTabs.Navigator screenOptions={{ tabBarStyle: { backgroundColor: colors.lightColor }, tabBarShowLabel: false }}>
           <RootTabs.Screen
             name="HomeStack"
             component={HomeStackComponent}
@@ -373,6 +320,8 @@ const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'ligh
           message={alert.alertProps.message}
           positiveActionProps={alert.alertProps.positiveActionProps}
           negativeActionProps={alert.alertProps.negativeActionProps}
+          customAlert={alert.alertProps.customAlert}
+          backgroundPressHidesAlert={alert.alertProps.backgroundPressHidesAlert}
         />
       )}
     </NavigationContainer>
