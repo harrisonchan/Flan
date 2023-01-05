@@ -13,10 +13,7 @@ export type RootTabsParamList = {
   ProfileStack: undefined
   AddStack: undefined
 }
-export type RootTabsNavigationProps = BottomTabScreenProps<
-  RootTabsParamList,
-  'HomeStack' | 'ExploreStack' | 'ProfileStack' | 'AddStack' | 'Test'
->
+export type RootTabsNavigationProps = BottomTabScreenProps<RootTabsParamList, 'HomeStack' | 'ExploreStack' | 'ProfileStack' | 'AddStack' | 'Test'>
 
 export type PreLoginTabsParamList = {
   ExploreStack: undefined
@@ -24,15 +21,12 @@ export type PreLoginTabsParamList = {
   Test: { testProp: any }
   AuthenticationStack: undefined
 }
-export type PreLoginTabsNavigationProps = BottomTabScreenProps<
-  PreLoginTabsParamList,
-  'ExploreStack' | 'SettingsStack' | 'AuthenticationStack' | 'Test'
->
+export type PreLoginTabsNavigationProps = BottomTabScreenProps<PreLoginTabsParamList, 'ExploreStack' | 'SettingsStack' | 'AuthenticationStack' | 'Test'>
 
 export type AuthenticationStackParamList = {
   LoginScreen: { showNavigationHeader?: boolean } | undefined
   SignUpScreenInitial: undefined
-  SignUpScreenDetails: { user: Omit<userType, 'firstName'|'lastName'|'birthday'|'accountType'|'gender'>  | string}
+  SignUpScreenDetails: { user: Omit<userType, 'firstName' | 'lastName' | 'birthday' | 'accountType' | 'gender'> | string }
   ForgotPasswordScreen: undefined
 }
 export type AuthenticationStackNavigationProps = StackScreenProps<
@@ -69,10 +63,7 @@ export type ExploreStackParamList = SearchStackParamList & {
   ExploreScreen: undefined
   FlanScreen: FlanScreenParamsType
 }
-export type ExploreStackNavigationProps = StackScreenProps<
-  ExploreStackParamList,
-  'ExploreScreen' | 'FlanScreen' | 'SearchScreen' | 'SearchResultsScreen'
->
+export type ExploreStackNavigationProps = StackScreenProps<ExploreStackParamList, 'ExploreScreen' | 'FlanScreen' | 'SearchScreen' | 'SearchResultsScreen'>
 
 //or FlanScreenNavigationProp? (without the s?)
 export type FlanScreenNavigationProps = CompositeScreenProps<
@@ -80,16 +71,22 @@ export type FlanScreenNavigationProps = CompositeScreenProps<
   ProfileStackNavigationProps
 >
 
-export type ProfileStackParamList = SettingsStackParamList & {
-  ProfileScreen: undefined
-  ProfilePersonalFlans: undefined
-  ProfileSavedFlans: undefined
-  FlanScreen: FlanScreenParamsType
+export type ChatStackParamList = {
+  ChatInboxScreen: undefined
+  ChatScreen: { chatId: string }
 }
-export type ProfileStackNavigationProps = StackScreenProps<
-  ProfileStackParamList,
-  'ProfileScreen',
-  'ProfilePersonalFlans' | 'ProfileSavedFlans' | 'FlanScreen' | 'SettingsScreen'
+export type ChatStackNavigationProps = StackScreenProps<ChatStackParamList, 'ChatInboxScreen' | 'ChatScreen'>
+
+export type ProfileStackParamList = SettingsStackParamList &
+  ChatStackParamList & {
+    ProfileScreen: undefined
+    ProfilePersonalFlans: undefined
+    ProfileSavedFlans: undefined
+    FlanScreen: FlanScreenParamsType
+  }
+export type ProfileStackNavigationProps = CompositeScreenProps<
+  StackScreenProps<ProfileStackParamList, 'ProfileScreen' | 'ProfilePersonalFlans' | 'ProfileSavedFlans' | 'FlanScreen' | 'SettingsScreen'>,
+  ChatStackNavigationProps
 >
 
 export type AddStackParamList = {
@@ -101,11 +98,7 @@ export type AddStackParamList = {
 }
 export type AddStackNavigationProps = StackScreenProps<
   AddStackParamList,
-  | 'AddScreen'
-  | 'AddNewOriginalInputFieldsScreen'
-  | 'AddNewOriginalPickIllustrationScreen'
-  | 'AddNewFromCommunityScreen'
-  | 'AddNewSelectLocationScreen'
+  'AddScreen' | 'AddNewOriginalInputFieldsScreen' | 'AddNewOriginalPickIllustrationScreen' | 'AddNewFromCommunityScreen' | 'AddNewSelectLocationScreen'
 >
 
 // export type FlanStackParamList = {

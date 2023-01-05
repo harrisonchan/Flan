@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { ViewStyleType } from '../types'
 
 interface NavigationHeaderProps {
+  leftComponent?: React.ReactNode
+  rightComponent?: React.ReactNode
   leftIconProps?: IconProps
   rightIconProps?: IconProps
   leftIconOnPress?: () => void
@@ -22,19 +24,25 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = (props) => {
       onLayout={(e) => {
         props.onLayout && props.onLayout(e)
       }}>
-      <View style={{ width: '20%', alignItems: 'flex-start' }}>
-        <TouchableOpacity onPress={() => props.leftIconOnPress && props.leftIconOnPress()}>
-          {props.leftIconProps && <Icon {...props.leftIconProps} />}
-        </TouchableOpacity>
-      </View>
-      <View style={{ width: '60%', alignItems: 'center' }}>
-        {props.title && <Text {...props.titleProps}>{props.title}</Text>}
-      </View>
-      <View style={{ width: '20%', alignItems: 'flex-end' }}>
-        <TouchableOpacity onPress={() => props.rightIconOnPress && props.rightIconOnPress()}>
-          {props.rightIconProps && <Icon {...props.rightIconProps} />}
-        </TouchableOpacity>
-      </View>
+      {props.leftComponent ? (
+        props.leftComponent
+      ) : (
+        <View style={{ width: '20%', alignItems: 'flex-start' }}>
+          <TouchableOpacity onPress={() => props.leftIconOnPress && props.leftIconOnPress()}>
+            {props.leftIconProps && <Icon {...props.leftIconProps} />}
+          </TouchableOpacity>
+        </View>
+      )}
+      <View style={{ width: '60%', alignItems: 'center' }}>{props.title && <Text {...props.titleProps}>{props.title}</Text>}</View>
+      {props.rightComponent ? (
+        props.rightComponent
+      ) : (
+        <View style={{ width: '20%', alignItems: 'flex-end' }}>
+          <TouchableOpacity onPress={() => props.rightIconOnPress && props.rightIconOnPress()}>
+            {props.rightIconProps && <Icon {...props.rightIconProps} />}
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   )
 }

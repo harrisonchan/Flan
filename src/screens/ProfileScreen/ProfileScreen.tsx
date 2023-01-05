@@ -1,6 +1,6 @@
 import { useTheme } from '@shopify/restyle'
 import React from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, FlatList } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Box, Illustration, FlanCard, StatusBarPadding, Text } from '../../components'
 import { useAppSelector } from '../../redux'
@@ -22,6 +22,13 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
           <NavigationHeader
             leftIconProps={{ name: 'settings-outline', size: themeConstants.iconSize, color: colors.primaryColor }}
             leftIconOnPress={() => navigation.navigate('SettingsScreen')}
+            rightComponent={
+              <>
+                <TouchableOpacity onPress={() => navigation.navigate('ChatInboxScreen')}>
+                  <Icon name="mail-outline" size={themeConstants.iconSize} color={colors.primaryColor} />
+                </TouchableOpacity>
+              </>
+            }
           />
           <Box flexDirection="row" alignItems="center" marginTop="m">
             <Box borderRadius={100} backgroundColor="primaryColor" overflow="hidden" marginRight="m">
@@ -35,45 +42,82 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
               {user.userFirstName} {user.userLastName}
             </Text>
           </Box>
-          {/* <Box flexDirection="row" justifyContent="space-between" marginTop="l">
-            <Box
-              width="30%"
-              justifyContent="center"
-              alignItems="center"
-              backgroundColor="lightColor"
-              borderRadius={20}
-              padding="s">
-              <Text>5</Text>
-              <Text>Awards</Text>
+          <TouchableOpacity>
+            <Box>
+              <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
+                <Text color="primaryColor">Friends</Text>
+                <Text variant="secondary">See All</Text>
+              </Box>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={['Harrison', 'Joey', 'Mark', 'Jason', 'Kathy', 'Kevin', 'Caroline', 'Janice']}
+                renderItem={({ item }) => (
+                  <Box flexDirection="row" marginRight="s">
+                    <Box marginRight="xs">
+                      <Illustration
+                        illustration="illustration-wear-a-mask"
+                        height={themeConstants.iconSize}
+                        width={themeConstants.iconSize}
+                        fill={colors.primaryColor}
+                      />
+                    </Box>
+                    <Text variant="secondary" color="neutralText">
+                      {item}
+                    </Text>
+                  </Box>
+                )}
+              />
             </Box>
-            <Box
-              width="30%"
-              justifyContent="center"
-              alignItems="center"
-              backgroundColor="lightColor"
-              borderRadius={20}
-              padding="s"
-              marginLeft="m"
-              marginRight="m">
-              <Text>4</Text>
-              <Text>Flans</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Box>
+              <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
+                <Text color="primaryColor">Achievements</Text>
+                <Text variant="secondary">See All</Text>
+              </Box>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={['Harrison', 'Joey', 'Mark', 'Jason', 'Kathy', 'Kevin', 'Caroline', 'Janice']}
+                renderItem={({ item }) => (
+                  <Box flexDirection="row" marginRight="s">
+                    <Box marginRight="xs">
+                      <Icon name="trophy-outline" size={themeConstants.iconSize} color={colors.primaryColor} />
+                    </Box>
+                    <Text variant="secondary" color="neutralText">
+                      {item}
+                    </Text>
+                  </Box>
+                )}
+              />
             </Box>
-            <Box width="30%">
-              <TouchableOpacity
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  // width: '100%',
-                  // height: '100%',
-                  borderRadius: 20,
-                  padding: spacing.s,
-                  backgroundColor: colors.secondaryColor,
-                }}>
-                <Text>30</Text>
-                <Text>Friends</Text>
-              </TouchableOpacity>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Box>
+              <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
+                <Text color="primaryColor">Flan Tokens</Text>
+                <Text variant="secondary">See All</Text>
+              </Box>
+              <Box flexDirection="row">
+                <Icon name="logo-bitcoin" size={themeConstants.iconSize} color={colors.gold} />
+                <Text>1002</Text>
+              </Box>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={['Harrison', 'Joey', 'Mark', 'Jason', 'Kathy', 'Kevin', 'Caroline', 'Janice']}
+                renderItem={({ item }) => (
+                  <Box flexDirection="row" marginRight="s">
+                    <Box marginRight="xs">{/* <Icon name="trophy-outline" size={themeConstants.iconSize} color={colors.primaryColor} /> */}</Box>
+                    <Text variant="secondary" color="neutralText">
+                      {item}
+                    </Text>
+                  </Box>
+                )}
+              />
             </Box>
-          </Box> */}
+          </TouchableOpacity>
           <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
             <Text color="primaryColor">My Flans</Text>
             {createdFlans.length > 1 && (
@@ -100,24 +144,14 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
               <Text variant="secondary">See All</Text>
             </TouchableOpacity>
           </Box>
-          <FlanCard
-            title="Go to the zoo"
-            author="Joey Lo"
-            location="Harrison's House, Taipei, Taiwan"
-            numPeople={{ attending: 10 }}
-          />
+          <FlanCard title="Go to the zoo" author="Joey Lo" location="Harrison's House, Taipei, Taiwan" numPeople={{ attending: 10 }} />
           <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
             <Text color="primaryColor">Previous Flans</Text>
             <TouchableOpacity onPress={() => navigation.navigate('ProfileSavedFlans')}>
               <Text variant="secondary">See All</Text>
             </TouchableOpacity>
           </Box>
-          <FlanCard
-            title="Go to the zoo"
-            author="Joey Lo"
-            location="Harrison's House, Taipei, Taiwan"
-            numPeople={{ attending: 10 }}
-          />
+          <FlanCard title="Go to the zoo" author="Joey Lo" location="Harrison's House, Taipei, Taiwan" numPeople={{ attending: 10 }} />
         </Box>
       </ScrollView>
     </>

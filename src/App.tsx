@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Provider } from 'react-redux'
-import { NavigationContainer } from '@react-navigation/native'
+import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack'
 import { store, useAppSelector } from './redux'
@@ -23,12 +23,15 @@ import {
   TestScreen,
   SearchScreen,
   SearchResultsScreen,
+  ChatInboxScreen,
+  ChatScreen,
 } from './screens'
 // //Put this in '../index.js' as well???
 import 'react-native-gesture-handler'
 import {
   AddStackParamList,
   AuthenticationStackParamList,
+  ChatStackParamList,
   ExploreStackParamList,
   HomeStackParamList,
   IntrodutionStackParamList,
@@ -53,6 +56,7 @@ export const AuthenticationStack = createStackNavigator<AuthenticationStackParam
 export const HomeStack = createStackNavigator<HomeStackParamList>()
 export const SettingsStack = createStackNavigator<SettingsStackParamList>()
 export const ExploreStack = createSharedElementStackNavigator<ExploreStackParamList>()
+export const ChatStack = createStackNavigator<ChatStackParamList>()
 export const ProfileStack = createStackNavigator<ProfileStackParamList>()
 export const AddStack = createStackNavigator<AddStackParamList>()
 export const IntroductionStack = createStackNavigator<IntrodutionStackParamList>()
@@ -127,6 +131,23 @@ const ExploreStackComponent = () => {
   )
 }
 
+const ChatStackComponent = () => {
+  return (
+    <ChatStack.Navigator>
+      <ChatStack.Screen
+        name="ChatInboxScreen"
+        component={ChatInboxScreen}
+        options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
+      />
+      <ChatStack.Screen
+        name="ChatScreen"
+        component={ChatScreen}
+        options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
+      />
+    </ChatStack.Navigator>
+  )
+}
+
 const ProfileStackComponent = () => {
   return (
     <ProfileStack.Navigator>
@@ -142,9 +163,14 @@ const ProfileStackComponent = () => {
         component={FlanScreen}
         options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
       />
-      <SettingsStack.Screen
+      <ProfileStack.Screen
         name="SettingsScreen"
         component={SettingsScreen}
+        options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
+      />
+      <ProfileStack.Screen
+        name="ChatInboxScreen"
+        component={ChatStackComponent}
         options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
       />
     </ProfileStack.Navigator>
@@ -234,10 +260,17 @@ const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'ligh
           <RootTabs.Screen
             name="ProfileStack"
             component={ProfileStackComponent}
-            options={{
+            options={({ route }) => ({
               headerShown: false,
               tabBarIcon: ({ color }) => <Icon name="person" size={themeConstants.iconSize} color={color} />,
-            }}
+              tabBarStyle: ((route) => {
+                const routeName = getFocusedRouteNameFromRoute(route) ?? ''
+                if (routeName === 'ChatInboxScreen') {
+                  return { display: 'none' }
+                }
+                return
+              })(route),
+            })}
           />
           <RootTabs.Screen
             name="AddStack"
@@ -279,6 +312,14 @@ const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'ligh
             options={{
               headerShown: false,
               tabBarIcon: ({ color }) => <Icon name="cog" size={themeConstants.iconSize} color={color} />,
+            }}
+          />
+          <RootTabs.Screen
+            name="Chat"
+            component={ChatScreen}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color }) => <Icon name="chatbox-outline" size={themeConstants.iconSize} color={color} />,
             }}
           />
         </RootTabs.Navigator>

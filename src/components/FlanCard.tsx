@@ -32,11 +32,7 @@ const FlanCard: React.FC<FlanCardProps> = (props) => {
     return (
       <Box position="absolute" right={moderateScale(10)} bottom={moderateScale(10)} opacity={0.5}>
         <Illustration
-          illustration={
-            props.illustration
-              ? props.illustration
-              : illustrationTypeArray[Math.floor(Math.random() * illustrationTypeArray.length)]
-          }
+          illustration={props.illustration ? props.illustration : illustrationTypeArray[Math.floor(Math.random() * illustrationTypeArray.length)]}
           height={props.mode == 'small' ? themeConstants.smallIllustrationSize : themeConstants.illustrationSize}
           width={props.mode == 'small' ? themeConstants.smallIllustrationSize : themeConstants.illustrationSize}
           // fill={Object.keys(colors)[Math.floor(Math.random() * Object.keys(colors).length)]}
@@ -47,7 +43,7 @@ const FlanCard: React.FC<FlanCardProps> = (props) => {
   }
   const renderDefault = () => {
     return (
-      <>
+      <Box>
         <TouchableOpacity
           style={[
             {
@@ -74,12 +70,7 @@ const FlanCard: React.FC<FlanCardProps> = (props) => {
               Created by{props.author}
             </Text>
             <Box flexDirection="row" marginBottom="m">
-              <Icon
-                name="people-outline"
-                size={themeConstants.smallIconSize}
-                color={colors.tertiaryColor}
-                style={{ marginRight: spacing.s }}
-              />
+              <Icon name="people-outline" size={themeConstants.smallIconSize} color={colors.tertiaryColor} style={{ marginRight: spacing.s }} />
               <Text variant="tertiary" color="tertiaryColor">
                 {props.numPeople.attending}
               </Text>
@@ -103,34 +94,35 @@ const FlanCard: React.FC<FlanCardProps> = (props) => {
             isToggled={false}
           />
         </Box>
-      </>
+      </Box>
     )
   }
   const renderSmallCard = () => {
     return (
-      <TouchableOpacity
-        style={[
-          {
-            width: themeConstants.componentWidthM,
-            height: themeConstants.componentHeightM,
-            backgroundColor: colors.lightColor,
-            borderRadius: 20,
-            padding: spacing.m,
-          },
-          props.style,
-        ]}
-        onPress={() => {
-          props.onPress && props.onPress()
-        }}>
-        {renderIllustration()}
-        <Text variant="secondary" color="neutralText">
-          {props.title}
-        </Text>
-        <Text variant="secondary">{props.author}</Text>
-        <Text variant="tertiary" color="darkSecondaryColor">
-          {props.location}
-        </Text>
-        {/* <Box flexDirection="row" marginBottom="m">
+      <Box>
+        <TouchableOpacity
+          style={[
+            {
+              width: themeConstants.componentWidthM,
+              height: themeConstants.componentHeightM,
+              backgroundColor: colors.lightColor,
+              borderRadius: 20,
+              padding: spacing.m,
+            },
+            props.style,
+          ]}
+          onPress={() => {
+            props.onPress && props.onPress()
+          }}>
+          {renderIllustration()}
+          <Text variant="secondary" color="neutralText">
+            {props.title}
+          </Text>
+          <Text variant="secondary">{props.author}</Text>
+          <Text variant="tertiary" color="darkSecondaryColor">
+            {props.location}
+          </Text>
+          {/* <Box flexDirection="row" marginBottom="m">
           <Icon
             name="people-outline"
             size={themeConstants.smallIconSize}
@@ -141,7 +133,23 @@ const FlanCard: React.FC<FlanCardProps> = (props) => {
             {props.numPeople.attending}
           </Text>
         </Box> */}
-      </TouchableOpacity>
+        </TouchableOpacity>
+        <Box
+          position="absolute"
+          right={spacing.s}
+          top={spacing.m}
+          alignItems="center"
+          justifyContent="center"
+          overflow="hidden"
+          height={themeConstants.iconSize * 1.25}
+          width={themeConstants.iconSize * 1.25}>
+          <AnimatedIcon
+            toggleOffIconProps={{ name: 'heart-outline', size: themeConstants.iconSize, color: colors.darkColor }}
+            toggleOnIconProps={{ name: 'heart', size: themeConstants.iconSize, color: colors.red }}
+            isToggled={false}
+          />
+        </Box>
+      </Box>
     )
   }
   return <>{props.mode === 'small' ? renderSmallCard() : renderDefault()}</>
