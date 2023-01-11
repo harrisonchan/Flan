@@ -25,6 +25,7 @@ interface PollListItemProps {
     datePosted: dayjs.Dayjs
     chat: string[]
   }
+  onLongPress?: () => void
 }
 
 const COLLAPSED_HEIGHT = theme.themeConstants.componentHeightM
@@ -70,7 +71,9 @@ const PollListItem: React.FC<PollListItemProps> = (props) => {
         onContentHeightChange={(contentHeight) => {
           chatOptionsBarSharedAnimatedValue.value = contentHeight
         }}
-        style={{ overflow: 'hidden', backgroundColor: colors.lightColor }}>
+        style={{ overflow: 'hidden', backgroundColor: colors.lightColor }}
+        onLongPress={props.onLongPress}
+        touchableOpacityProps={{ activeOpacity: 0.7 }}>
         <AnimatedBox
           flexDirection="row"
           bottom={0}

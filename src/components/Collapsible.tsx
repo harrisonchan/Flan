@@ -1,6 +1,6 @@
 import { useTheme } from '@shopify/restyle'
 import React, { useEffect, useRef, useState } from 'react'
-import { NativeEventEmitter, NativeSyntheticEvent, TouchableOpacity } from 'react-native'
+import { NativeEventEmitter, NativeSyntheticEvent, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withSpring, withTiming, onChange, useDerivedValue, runOnJS } from 'react-native-reanimated'
 import { theme, Theme } from '../theme'
 import { ViewStyleType } from '../types'
@@ -11,10 +11,13 @@ interface CollapsibleProps {
   isCollapsed?: boolean
   onCollapseChange?: (collapsed: boolean) => void
   onContentHeightChange?: (contentHeight: number) => void
+  onPress?: () => void
+  onLongPress?: () => void
   collapsedHeight?: number
   uncollapsedHeight?: number
   style?: ViewStyleType
   collapseTime?: number
+  touchableOpacityProps?: TouchableOpacityProps
 }
 
 const DEFAULT_COLLAPSED_HEIGHT = theme.themeConstants.componentHeightM
@@ -63,7 +66,14 @@ const Collapsible: React.FC<CollapsibleProps> = (props) => {
           animatedHeightStyle,
           props.style,
         ]}
-        onPress={() => toggleCollapse()}>
+        onPress={() => {
+          toggleCollapse()
+          props.onPress && props.onPress()
+        }}
+        onLongPress={() => {
+          props.onLongPress && props.onLongPress()
+        }}
+        {...props.touchableOpacityProps}>
         {props.children}
       </AnimatedTouchableOpacity>
     </>

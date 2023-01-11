@@ -10,7 +10,7 @@ import Animated, { interpolate, useAnimatedStyle, useSharedValue, withDelay, wit
 import { generateRandomColorFromPalette } from '../../../utilities'
 import { random } from 'lodash'
 import { useDispatch } from 'react-redux'
-import { appActions } from '../../../redux/features'
+import { appActions } from 'redux/features'
 
 const AddNewOriginalPickIllustrationScreen = ({ route, navigation }: AddStackNavigationProps) => {
   console.log('AddNewOriginalPickIllustrationScreen route params: ', route.params)

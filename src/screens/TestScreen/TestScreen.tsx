@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { FlatList, View, TouchableOpacity, Animated, ScrollView } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { AnimatedIcon, Box, Text, Button, Chat, StatusBarPadding, Collapsible, TextInput } from '../../components'
-import { RootTabsNavigationProps } from '../../types'
+import { RootTabsNavigationProps, TestStackNavigationProps } from '../../types'
 import { useAppSelector } from '../../redux'
 import { appActions } from '../../redux/features'
 import { Theme } from '../../theme'
@@ -19,7 +19,7 @@ import { CalendarList } from 'react-native-calendars'
 import DropDownPicker from 'react-native-dropdown-picker'
 import PollListItem from '../../components/PollListItem'
 
-const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
+const TestScreen = ({ route, navigation }: TestStackNavigationProps) => {
   const dispatch = useDispatch()
   const colorScheme = useAppSelector((state) => state.utilityReducer.colorScheme)
   const { colors, themeConstants } = useTheme<Theme>()
@@ -71,6 +71,7 @@ const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
         }}
         poster={{ avatar: 1, name: 'name', username: 'uname' }}
         user={{ selectedPollOption: '3' }}
+        onLongPress={() => navigation.navigate('PollStack', { screen: 'PollScreen' })}
       />
       <Text>Testing buzz buzz</Text>
       <ScrollView>

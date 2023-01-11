@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { SharedElement } from 'react-navigation-shared-element'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Box, Button, Illustration, ParallaxScrollView, StatusBarPadding, Text } from '../../components'
+import { Box, Button, Illustration, illustrationTypeArray, ParallaxScrollView, StatusBarPadding, Text } from '../../components'
 import { useTheme } from '@shopify/restyle'
-import { theme, Theme } from '../../theme'
+import { theme, Theme } from '@theme'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FlatList, View } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import dayjs from 'dayjs'
-import { FlanScreenNavigationProps } from '../../types'
-import { useAppSelector } from '../../redux'
+import { FlanStackNavigationProps } from '@types'
+import { useAppSelector, appActions, FlanType } from '@redux'
 import { useDispatch } from 'react-redux'
-import { appActions } from '../../redux/features'
-import { illustrationTypeArray } from '../../components/Illustration'
-import { FlanType } from '../../redux/features/flanSlice'
+import { StackScreenProps } from '@react-navigation/stack'
 
-const FlanScreen = ({ route, navigation }: FlanScreenNavigationProps) => {
+const FlanScreen = ({ route, navigation }: FlanStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const [flan, setFlan] = useState<FlanType | undefined>(undefined)
   const user = useAppSelector((state) => state.userReducer.user)
@@ -83,12 +81,7 @@ const FlanScreen = ({ route, navigation }: FlanScreenNavigationProps) => {
             <Text variant="secondary" marginBottom="m">
               {flan?.description}
             </Text>
-            <Box
-              width={themeConstants.containerWidth}
-              alignSelf="center"
-              backgroundColor="mainBackground"
-              padding="m"
-              borderRadius={20}>
+            <Box width={themeConstants.containerWidth} alignSelf="center" backgroundColor="mainBackground" padding="m" borderRadius={20}>
               <Text>People Attending This Event</Text>
               <Text variant="secondary" color="darkSecondaryColor" marginBottom="s">
                 8 People Attending
@@ -149,12 +142,7 @@ const FlanScreen = ({ route, navigation }: FlanScreenNavigationProps) => {
                 flan?.activities
               }
               renderItem={({ item }) => (
-                <Box
-                  width={themeConstants.componentWidthXL}
-                  padding="m"
-                  borderRadius={10}
-                  backgroundColor="mainBackground"
-                  marginBottom="s">
+                <Box width={themeConstants.componentWidthXL} padding="m" borderRadius={10} backgroundColor="mainBackground" marginBottom="s">
                   <Text variant="secondary" color="neutralText">
                     {item.title}
                   </Text>
@@ -167,7 +155,7 @@ const FlanScreen = ({ route, navigation }: FlanScreenNavigationProps) => {
             <Text marginTop="m" marginBottom="s">
               Polls
             </Text>
-            <FlatList
+            {/* <FlatList
               listKey="PollsList"
               data={
                 // ['Drink Coffee or Not?', 'Eat Ice Cream?', 'BYOB?']
@@ -191,7 +179,8 @@ const FlanScreen = ({ route, navigation }: FlanScreenNavigationProps) => {
                   <Icon name="chevron-forward" size={themeConstants.iconSize} />
                 </TouchableOpacity>
               )}
-            />
+            /> */}
+
             <Text marginTop="m" marginBottom="m">
               Chat
             </Text>

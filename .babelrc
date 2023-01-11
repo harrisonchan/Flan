@@ -1,0 +1,21 @@
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "@api": "./src/api/index",
+          "@assets": "./src/assets/index",
+          "@components": "./src/components/index",
+          "@redux": "./src/redux/index",
+          "@screens": "./src/screens/index",
+          "@theme": "./src/theme/index",
+          "@types": "./src/types/index",
+          "@utilities": "./src/utilities/index"
+        },
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    ]
+  ]
+}

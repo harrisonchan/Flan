@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, StatusBarPadding, Text, TextInput } from '../../../components'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ScrollView, TouchableOpacity } from 'react-native'
 import { useTheme } from '@shopify/restyle'
 import { Theme } from '../../../theme'
-import { AddStackNavigationProps } from '../../../types'
 import NavigationHeader from '../../../components/NavigationHeader'
-import { ActivityType, LocationType } from '../../../redux/features/userSlice'
 import { useFormik } from 'formik'
-import { addNewOriginalValidationSchema } from '../../../utilities'
 import { isString } from 'lodash'
+import { addNewOriginalValidationSchema } from '@utilities'
+import { Box, Button, StatusBarPadding, Text, TextInput } from '@components'
+import { AddStackNavigationProps } from '@types'
+import { ActivityType, LocationType } from 'redux/features/flanSlice'
 
 const AddNewOriginalInputFieldsScreen = ({ route, navigation }: AddStackNavigationProps) => {
   const [title, setTitle] = useState('')
@@ -85,9 +85,7 @@ const AddNewOriginalInputFieldsScreen = ({ route, navigation }: AddStackNavigati
               Add A Location
             </Text>
             {/* <Text variant="secondary">Location skipped for now...</Text> */}
-            <Text variant="secondary">
-              {formik.values.location.address ? formik.values.location.address : 'No Location Added...'}
-            </Text>
+            <Text variant="secondary">{formik.values.location.address ? formik.values.location.address : 'No Location Added...'}</Text>
             <Box flexDirection="row">
               <Button
                 label={formik.values.location.address ? 'Modify Location' : 'Add Location'}

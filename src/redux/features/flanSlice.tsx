@@ -35,3 +35,5 @@ const flanSlice = createSlice({
     //clear state
   },
 })
+
+export default flanSlice

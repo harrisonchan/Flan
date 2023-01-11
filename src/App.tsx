@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { getFocusedRouteNameFromRoute, NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack'
-import { store, useAppSelector } from './redux'
+import { store, useAppSelector } from '@redux'
 import {
   AddNewFromCommunityScreen,
   AddNewOriginalInputFieldsScreen,
@@ -25,7 +25,11 @@ import {
   SearchResultsScreen,
   ChatInboxScreen,
   ChatScreen,
-} from './screens'
+  PollScreen,
+  PollCreateScreen,
+  SettingsScreen,
+  IntroductionScreen,
+} from '@screens'
 // //Put this in '../index.js' as well???
 import 'react-native-gesture-handler'
 import {
@@ -39,27 +43,46 @@ import {
   ProfileStackParamList,
   RootTabsParamList,
   SettingsStackParamList,
-} from './types'
+  FlanStackParamList,
+  PollStackParamList,
+  SearchStackParamList,
+  TestStackParamList,
+} from '@types'
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import { ThemeProvider, useTheme } from '@shopify/restyle'
 import { darkTheme, Theme, theme } from './theme'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Alert, Box, Text, TextInput } from './components'
-import { SettingsScreen } from './screens/SettingsScreen'
-import { IntroductionScreen } from './screens/IntroductionScreen'
+import { Alert, Box } from '@components'
 
 export const RootTabs = createBottomTabNavigator<RootTabsParamList>()
+export const TestStack = createStackNavigator<TestStackParamList>()
 export const PreLoginTabs = createBottomTabNavigator<PreLoginTabsParamList>()
 
 export const AuthenticationStack = createStackNavigator<AuthenticationStackParamList>()
 // export const HomeStack = createSharedElementStackNavigator<HomeStackParamList>()
 export const HomeStack = createStackNavigator<HomeStackParamList>()
+export const FlanStack = createStackNavigator<FlanStackParamList>()
+export const PollStack = createStackNavigator<PollStackParamList>()
 export const SettingsStack = createStackNavigator<SettingsStackParamList>()
 export const ExploreStack = createSharedElementStackNavigator<ExploreStackParamList>()
+export const SearchStack = createStackNavigator<SearchStackParamList>()
 export const ChatStack = createStackNavigator<ChatStackParamList>()
 export const ProfileStack = createStackNavigator<ProfileStackParamList>()
 export const AddStack = createStackNavigator<AddStackParamList>()
 export const IntroductionStack = createStackNavigator<IntrodutionStackParamList>()
+
+const TestStackComponent = () => {
+  return (
+    <TestStack.Navigator>
+      <TestStack.Screen name="TestScreen" component={TestScreen} options={{ headerShown: false }} />
+      <TestStack.Screen
+        name="PollStack"
+        component={PollStackComponent}
+        options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
+      />
+    </TestStack.Navigator>
+  )
+}
 
 const HomeStackComponent = () => {
   return (
@@ -70,8 +93,8 @@ const HomeStackComponent = () => {
       }}>
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen
-        name="FlanScreen"
-        component={FlanScreen}
+        name="FlanStack"
+        component={FlanStackComponent}
         options={{
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid,
@@ -86,13 +109,31 @@ const HomeStackComponent = () => {
         //     },
         //     // {
         //     //   id: route.params.title,
-        //     //   animation: 'fad',
+        //     //   animation: 'fade',
         //     //   resize: 'none',
         //     // },
         //   ]
         // }}
       />
     </HomeStack.Navigator>
+  )
+}
+
+const FlanStackComponent = () => {
+  return (
+    <FlanStack.Navigator>
+      <FlanStack.Screen name="FlanScreen" component={FlanScreen} options={{ headerShown: false }} />
+      <FlanStack.Screen name="PollStack" component={PollStackComponent} options={{ headerShown: false }} />
+    </FlanStack.Navigator>
+  )
+}
+
+const PollStackComponent = () => {
+  return (
+    <PollStack.Navigator>
+      <PollStack.Screen name="PollScreen" component={PollScreen} options={{ headerShown: false }} />
+      <PollStack.Screen name="PollCreateScreen" component={PollCreateScreen} options={{ headerShown: false }} />
+    </PollStack.Navigator>
   )
 }
 
@@ -117,17 +158,25 @@ const ExploreStackComponent = () => {
     <ExploreStack.Navigator>
       <ExploreStack.Screen name="ExploreScreen" component={ExploreScreen} options={{ headerShown: false }} />
       <ExploreStack.Screen
-        name="SearchScreen"
-        component={SearchScreen}
+        name="SearchStack"
+        component={SearchStackComponent}
         options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
       />
-      <ExploreStack.Screen name="SearchResultsScreen" component={SearchResultsScreen} options={{ headerShown: false }} />
       <ExploreStack.Screen
-        name="FlanScreen"
-        component={FlanScreen}
+        name="FlanStack"
+        component={FlanStackComponent}
         options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
       />
     </ExploreStack.Navigator>
+  )
+}
+
+const SearchStackComponent = () => {
+  return (
+    <SearchStack.Navigator>
+      <SearchStack.Screen name="SearchScreen" component={SearchScreen} options={{ headerShown: false }} />
+      <SearchStack.Screen name="SearchResultsScreen" component={SearchResultsScreen} options={{ headerShown: false }} />
+    </SearchStack.Navigator>
   )
 }
 
@@ -159,8 +208,8 @@ const ProfileStackComponent = () => {
       />
       <ProfileStack.Screen name="ProfileSavedFlans" component={ProfileSavedFlans} options={{ headerShown: false }} />
       <ProfileStack.Screen
-        name="FlanScreen"
-        component={FlanScreen}
+        name="FlanStack"
+        component={FlanStackComponent}
         options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
       />
       <ProfileStack.Screen
@@ -308,7 +357,7 @@ const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'ligh
           />
           <RootTabs.Screen
             name="Test"
-            component={TestScreen}
+            component={TestStackComponent}
             options={{
               headerShown: false,
               tabBarIcon: ({ color }) => <Icon name="cog" size={themeConstants.iconSize} color={color} />,
@@ -316,7 +365,7 @@ const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'ligh
           />
           <RootTabs.Screen
             name="Chat"
-            component={ChatScreen}
+            component={ChatStackComponent}
             options={{
               headerShown: false,
               tabBarIcon: ({ color }) => <Icon name="chatbox-outline" size={themeConstants.iconSize} color={color} />,

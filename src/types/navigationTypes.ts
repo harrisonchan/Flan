@@ -1,5 +1,5 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
-import { CompositeScreenProps } from '@react-navigation/native'
+import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import { FlanType } from '../redux/features/flanSlice'
 import { Formik, FormikProps } from 'formik'
@@ -14,6 +14,13 @@ export type RootTabsParamList = {
   AddStack: undefined
 }
 export type RootTabsNavigationProps = BottomTabScreenProps<RootTabsParamList, 'HomeStack' | 'ExploreStack' | 'ProfileStack' | 'AddStack' | 'Test'>
+
+export type TestStackParamList = {
+  TestScreen: undefined
+  PollStack: NavigatorScreenParams<PollStackParamList>
+}
+
+export type TestStackNavigationProps = StackScreenProps<TestStackParamList, 'TestScreen', 'PollStack'>
 
 export type PreLoginTabsParamList = {
   ExploreStack: undefined
@@ -34,16 +41,11 @@ export type AuthenticationStackNavigationProps = StackScreenProps<
   'LoginScreen' | 'SignUpScreenInitial' | 'SignUpScreenDetails' | 'ForgotPasswordScreen'
 >
 
-export type FlanScreenParamsType = {
-  flanId: string | number
-  flanType?: 'created' | 'saved' | 'attended'
-}
-
 export type HomeStackParamList = {
   HomeScreen: undefined
-  FlanScreen: FlanScreenParamsType
+  FlanStack: NavigatorScreenParams<FlanStackParamList>
 }
-export type HomeStackNavigationProps = StackScreenProps<HomeStackParamList, 'HomeScreen' | 'FlanScreen'>
+export type HomeStackNavigationProps = StackScreenProps<HomeStackParamList, 'HomeScreen' | 'FlanStack'>
 
 export type SearchStackParamList = {
   SearchScreen: undefined
@@ -59,17 +61,30 @@ export type SettingsStackNavigationProps = StackScreenProps<
   'SettingsScreen' | 'LoginScreen' | 'ForgotPasswordScreen' | 'SignUpScreenInitial' | 'SignUpScreenDetails'
 >
 
-export type ExploreStackParamList = SearchStackParamList & {
+export type ExploreStackParamList = {
   ExploreScreen: undefined
-  FlanScreen: FlanScreenParamsType
+  FlanStack: NavigatorScreenParams<FlanStackParamList>
+  SearchStack: NavigatorScreenParams<SearchStackParamList>
 }
-export type ExploreStackNavigationProps = StackScreenProps<ExploreStackParamList, 'ExploreScreen' | 'FlanScreen' | 'SearchScreen' | 'SearchResultsScreen'>
+export type ExploreStackNavigationProps = StackScreenProps<ExploreStackParamList, 'ExploreScreen' | 'FlanStack' | 'SearchStack'>
+
+export type FlanStackParamList = {
+  FlanScreen: {
+    flanId: string | number
+    flanType?: 'created' | 'saved' | 'attended'
+  }
+  PollStack: PollStackParamList
+}
 
 //or FlanScreenNavigationProp? (without the s?)
-export type FlanScreenNavigationProps = CompositeScreenProps<
-  CompositeScreenProps<HomeStackNavigationProps, ExploreStackNavigationProps>,
-  ProfileStackNavigationProps
->
+export type FlanStackNavigationProps = StackScreenProps<FlanStackParamList, 'FlanScreen' | 'PollStack'>
+
+export type PollStackParamList = {
+  PollScreen: undefined
+  PollCreateScreen: undefined
+}
+
+export type PollStackNavigationProps = StackScreenProps<PollStackParamList, 'PollScreen' | 'PollCreateScreen'>
 
 export type ChatStackParamList = {
   ChatInboxScreen: undefined
@@ -82,10 +97,10 @@ export type ProfileStackParamList = SettingsStackParamList &
     ProfileScreen: undefined
     ProfilePersonalFlans: undefined
     ProfileSavedFlans: undefined
-    FlanScreen: FlanScreenParamsType
+    FlanStack: NavigatorScreenParams<FlanStackParamList>
   }
 export type ProfileStackNavigationProps = CompositeScreenProps<
-  StackScreenProps<ProfileStackParamList, 'ProfileScreen' | 'ProfilePersonalFlans' | 'ProfileSavedFlans' | 'FlanScreen' | 'SettingsScreen'>,
+  StackScreenProps<ProfileStackParamList, 'ProfileScreen' | 'ProfilePersonalFlans' | 'ProfileSavedFlans' | 'FlanStack' | 'SettingsScreen'>,
   ChatStackNavigationProps
 >
 

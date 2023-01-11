@@ -16,9 +16,7 @@ import { checkServer } from '../../api'
 dayjs.extend(localeData)
 
 const HomeScreen = ({ route, navigation }: HomeStackNavigationProps) => {
-  const [isDaytime, setIsDaytime] = useState(
-    dayjs().isAfter(dayjs().set('hour', 5)) && dayjs().isBefore(dayjs().set('hour', 18)) ? true : false
-  )
+  const [isDaytime, setIsDaytime] = useState(dayjs().isAfter(dayjs().set('hour', 5)) && dayjs().isBefore(dayjs().set('hour', 18)) ? true : false)
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const user = useAppSelector((state) => state.userReducer.user)
   const currentTime = dayjs()
@@ -57,19 +55,14 @@ const HomeScreen = ({ route, navigation }: HomeStackNavigationProps) => {
               numPeople={{ attending: 10 }}
               style={{ marginBottom: spacing.l }}
               onPress={() => {
-                navigation.navigate('FlanScreen', { flanId: '0' })
+                navigation.navigate('FlanStack', { screen: 'FlanScreen', params: { flanId: '0' } })
               }}
             />
           </SharedElement>
           <Text variant="body" marginBottom="s" color="primaryColor">
             Upcoming
           </Text>
-          <FlanCard
-            title="Go to the zoo"
-            author="Joey Lo"
-            location="Harrison's House, Taipei, Taiwan"
-            numPeople={{ attending: 10 }}
-          />
+          <FlanCard title="Go to the zoo" author="Joey Lo" location="Harrison's House, Taipei, Taiwan" numPeople={{ attending: 10 }} />
         </Box>
       </ScrollView>
     </>

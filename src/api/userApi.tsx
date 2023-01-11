@@ -1,5 +1,5 @@
+import { userType } from '@types'
 import Axios from 'axios'
-import { userType } from '../types'
 
 const userApi = Axios.create({
   baseURL: 'http://localhost:3333/api/account',

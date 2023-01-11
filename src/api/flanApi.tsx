@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import { FlanType } from '../redux/features/flanSlice'
+import { FlanType } from 'redux/features/flanSlice'
 
 const flanApi = Axios.create({
   baseURL: 'http://localhost:3333/api/flan',
