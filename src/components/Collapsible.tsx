@@ -1,55 +1,71 @@
+import { useTheme } from '@shopify/restyle'
 import React, { useEffect, useRef, useState } from 'react'
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated'
+import { NativeEventEmitter, NativeSyntheticEvent, TouchableOpacity } from 'react-native'
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withSpring, withTiming, onChange, useDerivedValue, runOnJS } from 'react-native-reanimated'
+import { theme, Theme } from '../theme'
+import { ViewStyleType } from '../types'
 import Box from './Box'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { TouchableOpacity } from 'react-native'
-import Text from './Text'
+import Button from './Button'
 
-interface CollapsibleProps {}
+interface CollapsibleProps {
+  isCollapsed?: boolean
+  onCollapseChange?: (collapsed: boolean) => void
+  onContentHeightChange?: (contentHeight: number) => void
+  collapsedHeight?: number
+  uncollapsedHeight?: number
+  style?: ViewStyleType
+  collapseTime?: number
+}
+
+const DEFAULT_COLLAPSED_HEIGHT = theme.themeConstants.componentHeightM
+const DEFAULT_UNCOLLAPSED_HEIGHT = theme.themeConstants.componentHeightXXL
 
 const Collapsible: React.FC<CollapsibleProps> = (props) => {
-  const [layoutHeight, setLayoutHeight] = useState(0)
-  const AnimatedBox = Animated.createAnimatedComponent(Box)
-  const AnimatedBoxRef = useRef(Box)
-  const animVal = useSharedValue(1)
-  const animatedStyle = useAnimatedStyle(() => {
+  //A Collapsible Card Component using React Native Reanimated 2 with a <TouchableOpacity/>
+  //that animates the height of the card to a specified height from CollapsibleProps
+  const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
+  const [isCollapsed, setIsCollapsed] = useState(props.isCollapsed ?? false)
+  const collapsedHeight = props.collapsedHeight ?? DEFAULT_COLLAPSED_HEIGHT
+  const heightAnimatedSharedValue = useSharedValue(collapsedHeight)
+  const animatedHeightStyle = useAnimatedStyle(() => {
+    'worklet'
     return {
-      height: animVal.value * layoutHeight,
+      height: heightAnimatedSharedValue.value,
     }
+  })
+  const { colors, themeConstants } = useTheme<Theme>()
+  const toggleCollapse = () => {
+    props.onCollapseChange && props.onCollapseChange(!isCollapsed)
+    setIsCollapsed(!isCollapsed)
+    if (isCollapsed) {
+      heightAnimatedSharedValue.value = withTiming(props.uncollapsedHeight ?? DEFAULT_UNCOLLAPSED_HEIGHT, {
+        duration: props.collapseTime ?? 250,
+        easing: Easing.inOut(Easing.ease),
+      })
+    } else {
+      heightAnimatedSharedValue.value = withTiming(collapsedHeight, { duration: props.collapseTime ?? 250, easing: Easing.inOut(Easing.ease) })
+    }
+  }
+  useDerivedValue(() => {
+    props.onContentHeightChange && runOnJS(props.onContentHeightChange)(heightAnimatedSharedValue.value)
+    // setContentHeight(heightAnimatedSharedValue.value)
   })
   return (
     <>
-      <Box flexDirection="row">
-        <TouchableOpacity onPress={() => {}}>
-          <Icon name="add-circle-outline" size={40} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            console.log(layoutHeight)
-          }}
-        >
-          <Icon name="remove-circle-outline" size={40} />
-        </TouchableOpacity>
-      </Box>
-      <AnimatedBox
-        backgroundColor="aqua"
-        onLayout={(e) => {
-          setLayoutHeight(e.nativeEvent.layout.height)
-          // animVal.value = e.nativeEvent.layout.height
-          // console.log('lh', e.nativeEvent.layout.height)
-        }}
-        ref={AnimatedBoxRef}
-        height={animVal.value * layoutHeight}
-        overflow="hidden"
-        // style={[layoutHeight != 0 ? animatedStyle : {}]}
-      >
-        <Text>{layoutHeight}</Text>
-        <Text>{animVal.value}</Text>
+      <AnimatedTouchableOpacity
+        style={[
+          {
+            backgroundColor: colors.light,
+            borderRadius: 10,
+            width: themeConstants.componentWidthXL,
+            alignSelf: 'center',
+          },
+          animatedHeightStyle,
+          props.style,
+        ]}
+        onPress={() => toggleCollapse()}>
         {props.children}
-      </AnimatedBox>
+      </AnimatedTouchableOpacity>
     </>
   )
 }

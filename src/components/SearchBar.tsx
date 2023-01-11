@@ -2,13 +2,14 @@ import { useTheme } from '@shopify/restyle'
 import React from 'react'
 import { RegisteredStyle, TouchableOpacity, ViewStyle, TextInputProps as RNTextInputProps } from 'react-native'
 import { Theme } from '../theme'
+import { ViewStyleType } from '../types'
 import Box from './Box'
 import TextInput, { TextInputProps } from './TextInput'
 
 interface SearchBarProps {
   textInputProps?: TextInputProps
   rNTextInputProps?: RNTextInputProps
-  containerStyle?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
+  containerStyle?: ViewStyleType
 }
 
 const SearchBar: React.FC<SearchBarProps> = (props) => {

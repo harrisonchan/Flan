@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { moderateScale } from 'react-native-size-matters'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Theme } from '../theme'
+import { ViewStyleType } from '../types'
 import { generateRandomColorFromPalette } from '../utilities/Colors'
 import AnimatedIcon from './AnimatedIcon'
 import Box from './Box'
@@ -15,13 +16,13 @@ import Text from './Text'
 interface FlanCardProps {
   mode?: 'default' | 'small'
   onPress?: () => void
-  title: string
-  author: string
+  title?: string
+  author?: string
   numPeople: { attending: number; total?: number }
   location?: string
   categories?: string[]
   progress?: { current: number; total: number }
-  style?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
+  style?: ViewStyleType
   //   randomColoredCategories?: boolean
   illustration?: illustrationType
 }

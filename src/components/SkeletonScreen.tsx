@@ -1,21 +1,14 @@
 import React, { useEffect } from 'react'
 import { ColorValue, Dimensions, RegisteredStyle, View, ViewProps, ViewStyle } from 'react-native'
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withDelay,
-  withRepeat,
-  withTiming,
-} from 'react-native-reanimated'
-import { ColorType } from '../types'
+import Animated, { interpolate, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withTiming } from 'react-native-reanimated'
+import { ColorType, ViewStyleType } from '../types'
 
 const SCREEN_WIDTH = Dimensions.get('screen').width
 const SCREEN_HEIGHT = Dimensions.get('screen').height
 
 interface SkeletonItemProps extends ViewProps {
   color?: ColorValue
-  style?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
+  style?: ViewStyleType
   //Animation enabled by default
   enableAnimation?: boolean
 }
@@ -34,12 +27,7 @@ const SkeletonItem: React.FC<SkeletonItemProps> = (props) => {
       true
     )
   }, [])
-  return (
-    <Animated.View
-      {...props}
-      style={[{ backgroundColor: props.color }, props.enableAnimation !== false && animatedStyle, props.style]}
-    />
-  )
+  return <Animated.View {...props} style={[{ backgroundColor: props.color }, props.enableAnimation !== false && animatedStyle, props.style]} />
 }
 
 interface SkeletonScreenProps {

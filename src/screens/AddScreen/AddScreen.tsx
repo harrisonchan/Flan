@@ -4,14 +4,14 @@ import { ColorValue, RegisteredStyle, TouchableOpacity, View, ViewStyle } from '
 import { Box, Button, Illustration, StatusBarPadding, Text } from '../../components'
 import { Theme } from '../../theme'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { AddStackNavigationProps } from '../../types'
+import { AddStackNavigationProps, ViewStyleType } from '../../types'
 
 interface SelectNewFlanTypeButtonProps {
   onPress: () => void
   title: string
   subtitle: string
   iconName: string
-  style?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
+  style?: ViewStyleType
 }
 
 const SelectNewFlanTypeButton: React.FC<SelectNewFlanTypeButtonProps> = (props) => {
@@ -54,12 +54,7 @@ const AddScreen = ({ route, navigation }: AddStackNavigationProps) => {
         width="100%"
         overflow="hidden"
         backgroundColor="mainBackground">
-        <Illustration
-          illustration="illustration-hangout"
-          height={themeConstants.componentHeightL}
-          width="100%"
-          fill={colors.secondaryColor}
-        />
+        <Illustration illustration="illustration-hangout" height={themeConstants.componentHeightL} width="100%" fill={colors.secondaryColor} />
       </Box>
       <Box backgroundColor="mainBackground" flex={1}>
         <Box width={themeConstants.containerWidth} marginTop="xl" alignSelf="center" backgroundColor="mainBackground">

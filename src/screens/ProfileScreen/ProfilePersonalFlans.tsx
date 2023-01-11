@@ -20,7 +20,7 @@ const ProfilePersonalFlans = ({ route, navigation }: ProfileStackNavigationProps
         author="Joey Lo"
         location={flan.location?.address}
         numPeople={{ attending: 10 }}
-        illustration={illustrationTypeArray[flan.illustration]}
+        illustration={illustrationTypeArray[flan.illustration ?? 0]}
         style={{ marginBottom: spacing.l }}
         onPress={() => {
           navigation.navigate('FlanScreen', { flanId: flan.id, flanType: 'created' })

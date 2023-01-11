@@ -17,6 +17,7 @@ import TestScreeUtilities from './Utilities'
 import TestScreenGroup from './TestScreenGroup'
 import { CalendarList } from 'react-native-calendars'
 import DropDownPicker from 'react-native-dropdown-picker'
+import PollListItem from '../../components/PollListItem'
 
 const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
   const dispatch = useDispatch()
@@ -49,6 +50,28 @@ const TestScreen = ({ route, navigation }: RootTabsNavigationProps) => {
   return (
     <View style={{ backgroundColor: colors.mainBackground, flex: 1 }}>
       <StatusBarPadding />
+      {/* <Collapsible isCollapsed={false} collapsedHeight={200} uncollapsedHeight={500} /> */}
+      <PollListItem
+        poll={{
+          title: 'poll',
+          description: 'desc',
+          options: [
+            { id: '1', title: 'option title', votes: 1 },
+            { id: '2', title: 'option title', votes: 1 },
+            { id: '3', title: 'option title', votes: 1 },
+            { id: '4', title: 'option title', votes: 1 },
+            { id: '5', title: 'option title', votes: 1 },
+            { id: '6', title: 'option title', votes: 1 },
+            { id: '7', title: 'option title', votes: 1 },
+            { id: '8', title: 'option title', votes: 1 },
+            { id: '9', title: 'option title', votes: 1 },
+          ],
+          datePosted: dayjs(),
+          chat: ['asdfsadfsdf'],
+        }}
+        poster={{ avatar: 1, name: 'name', username: 'uname' }}
+        user={{ selectedPollOption: '3' }}
+      />
       <Text>Testing buzz buzz</Text>
       <ScrollView>
         <TextInput

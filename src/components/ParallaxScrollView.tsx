@@ -1,14 +1,6 @@
 import { useTheme } from '@shopify/restyle'
 import { transform } from 'lodash'
-import React, {
-  ComponentType,
-  JSXElementConstructor,
-  ReactElement,
-  SyntheticEvent,
-  useEffect,
-  useState,
-  VoidFunctionComponent,
-} from 'react'
+import React, { ComponentType, JSXElementConstructor, ReactElement, SyntheticEvent, useEffect, useState, VoidFunctionComponent } from 'react'
 import { ColorValue, FlatList, RegisteredStyle, TouchableOpacity, View, ViewStyle, SectionList } from 'react-native'
 import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import { Theme } from '../theme'
@@ -19,15 +11,16 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import dayjs from 'dayjs'
 import SkeletonScreen from './SkeletonScreen'
 import { IconProps } from 'react-native-vector-icons/Icon'
+import { ViewStyleType } from '../types'
 
 interface ParallaxScrollViewProps {
-  containerStyle?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
+  containerStyle?: ViewStyleType
   background: ComponentType<any> | ReactElement<any, string | JSXElementConstructor<any>> | null | undefined
   foreground: ComponentType<any> | ReactElement<any, string | JSXElementConstructor<any>> | null | undefined
   mainContent: ComponentType<any> | ReactElement<any, string | JSXElementConstructor<any>> | null | undefined
-  backgroundStyle?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
-  foregroundStyle?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
-  mainContentStyle?: ViewStyle | RegisteredStyle<ViewStyle> | (RegisteredStyle<ViewStyle> | ViewStyle)[]
+  backgroundStyle?: ViewStyleTypetyleType
+  foregroundStyle?: ViewStyleType
+  mainContentStyle?: ViewStyleType
   backgroundParallaxAnimationTranslateYForegroundPercentage?: number
   showsVerticalScrollIndicator?: boolean
   bounces?: boolean
@@ -61,30 +54,16 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
         translateY: interpolate(
           scrollYSharedValue.value,
           [-1, 0, 1],
-          [
-            0,
-            0,
-            props.backgroundParallaxAnimationTranslateYForegroundPercentage
-              ? props.backgroundParallaxAnimationTranslateYForegroundPercentage
-              : -0.5,
-          ]
+          [0, 0, props.backgroundParallaxAnimationTranslateYForegroundPercentage ? props.backgroundParallaxAnimationTranslateYForegroundPercentage : -0.5]
         ),
       },
     ],
   }))
   const backgroundOpacityAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      scrollYSharedValue.value,
-      [0, foregroundHeight - headerHeight * 1.1, foregroundHeight - headerHeight],
-      [1, 1, props.header ? 0 : 1]
-    ),
+    opacity: interpolate(scrollYSharedValue.value, [0, foregroundHeight - headerHeight * 1.1, foregroundHeight - headerHeight], [1, 1, props.header ? 0 : 1]),
   }))
   const foregroundAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      scrollYSharedValue.value,
-      [0, foregroundHeight - headerHeight * 1.1, foregroundHeight - headerHeight],
-      [1, 1, props.header ? 0 : 1]
-    ),
+    opacity: interpolate(scrollYSharedValue.value, [0, foregroundHeight - headerHeight * 1.1, foregroundHeight - headerHeight], [1, 1, props.header ? 0 : 1]),
   }))
   const mainContentBorderRadiusAnimatedStyle = useAnimatedStyle(() => {
     const borderRadius = interpolate(
@@ -100,11 +79,7 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
     }
   })
   const headerDelayedOpacityAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      scrollYSharedValue.value,
-      [foregroundHeight - headerHeight * 1.25, foregroundHeight - headerHeight * 1.05],
-      [0, 1]
-    ),
+    opacity: interpolate(scrollYSharedValue.value, [foregroundHeight - headerHeight * 1.25, foregroundHeight - headerHeight * 1.05], [0, 1]),
   }))
   const renderBackground = () => {
     return (
@@ -145,10 +120,7 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
     return (
       <Animated.View
         onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}
-        style={[
-          { position: 'absolute', width: '100%' },
-          !props.headerShownOnScroll0 && !props.disableAnimation && headerDelayedOpacityAnimatedStyle,
-        ]}>
+        style={[{ position: 'absolute', width: '100%' }, !props.headerShownOnScroll0 && !props.disableAnimation && headerDelayedOpacityAnimatedStyle]}>
         <Animated.View
           style={[
             {
@@ -177,11 +149,7 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
             )}
           </View>
           <View style={{ width: '60%', alignItems: 'center' }}>
-            {props.headerTitle && (
-              <AnimatedText style={[!props.disableAnimation && headerDelayedOpacityAnimatedStyle]}>
-                {props.headerTitle}
-              </AnimatedText>
-            )}
+            {props.headerTitle && <AnimatedText style={[!props.disableAnimation && headerDelayedOpacityAnimatedStyle]}>{props.headerTitle}</AnimatedText>}
           </View>
           <View style={{ width: '20%', alignItems: 'flex-end' }}>
             {props.headerRightIconProps && (
@@ -202,9 +170,7 @@ const ParallaxScrollView: React.FC<ParallaxScrollViewProps> = (props) => {
     }
   }, [])
   if (isLoading && props.skeletonLoadingTime) {
-    return (
-      <SkeletonScreen type="ParallaxScrollView" backgroundColor={colors.lightColor} color={colors.mainBackground} />
-    )
+    return <SkeletonScreen type="ParallaxScrollView" backgroundColor={colors.lightColor} color={colors.mainBackground} />
   }
   return (
     <Box overflow="hidden" style={[{ flex: 1 }, props.containerStyle]}>

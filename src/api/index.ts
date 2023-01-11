@@ -7,7 +7,7 @@ export * from './userApi'
 // })
 
 export const test = Axios.create({
-  baseURL: 'http://localhost:3333/api/test',
+  baseURL: 'http://localhost:3333/test',
 })
 
 export const checkServer = async () => {
