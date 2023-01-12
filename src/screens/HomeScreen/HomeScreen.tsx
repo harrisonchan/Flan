@@ -55,7 +55,7 @@ const HomeScreen = ({ route, navigation }: HomeStackNavigationProps) => {
               numPeople={{ attending: 10 }}
               style={{ marginBottom: spacing.l }}
               onPress={() => {
-                navigation.navigate('FlanStack', { screen: 'FlanScreen', params: { flanId: '0' } })
+                navigation.navigate('FlanStack', { screen: 'FlanScreen' })
               }}
             />
           </SharedElement>

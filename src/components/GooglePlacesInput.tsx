@@ -1,11 +1,6 @@
 import React, { useRef } from 'react'
 import { useEffect } from 'react'
-import {
-  GooglePlaceData,
-  GooglePlaceDetail,
-  GooglePlacesAutocomplete,
-  GooglePlacesAutocompleteRef,
-} from 'react-native-google-places-autocomplete'
+import { GooglePlaceData, GooglePlaceDetail, GooglePlacesAutocomplete, GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete'
 
 interface GooglePlacesInputProps {
   onPress?: (data: GooglePlaceData, details?: GooglePlaceDetail | undefined | null) => void

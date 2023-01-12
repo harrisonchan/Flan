@@ -3,7 +3,7 @@ import React, { ReactElement, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { appActions } from '../redux/features'
 import { Theme } from '../theme'
-import Box from './Box'
+import Box from './Box/Box'
 import Button from './Button'
 import Text from './Text'
 
@@ -52,7 +52,7 @@ const Alert: React.FC<AlertProps> = (props) => {
             {props.positiveActionProps && (
               <Button
                 mode="small"
-                style={{ backgroundColor: colors.lightGreen }}
+                containerStyle={{ backgroundColor: colors.lightGreen }}
                 label={props.positiveActionProps.message}
                 onPress={() => {
                   props.positiveActionProps?.action && props.positiveActionProps.action()

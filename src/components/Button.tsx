@@ -54,9 +54,9 @@ const Button: React.FC<ButtonProps> = (props) => {
               borderRadius: 10,
               backgroundColor: colors.buttonBackground,
             },
-        props.style,
+        props.containerStyle,
       ]}>
-      <View style={[{ justifyContent: 'center', alignItems: 'center' }, props.containerStyle]}>
+      <View style={[{ justifyContent: 'center', alignItems: 'center' }, props.style]}>
         {props.icon ? (
           <Icon size={themeConstants.iconSize} color={colors.primaryColor} {...props.icon} />
         ) : (

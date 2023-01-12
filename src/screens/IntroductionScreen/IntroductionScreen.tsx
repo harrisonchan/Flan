@@ -3,24 +3,22 @@ import React from 'react'
 import { FlatList } from 'react-native'
 import { Box, Illustration, StatusBarPadding, Text, Button } from '../../components'
 import { Theme } from '../../theme'
-import { IntrodutionStackNavigationProps } from '../../types'
+import { IntroductionStackNavigationProps } from '../../types'
 
-const IntroductionScreen = ({ navigation }: IntrodutionStackNavigationProps) => {
+const IntroductionScreen = ({ navigation }: IntroductionStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const IntroductionGallery = [
     {
       illustration: 'illustration-bored',
       title: 'Welcome to Flan',
-      description:
-        'Kei Kurono was caught up in a situation where a homeless man has fallen into the tracks of the subway',
+      description: 'Kei Kurono was caught up in a situation where a homeless man has fallen into the tracks of the subway',
       color: colors.lightPrimaryColor,
       illustrationFill: colors.primaryColor,
     },
     {
       illustration: 'illustration-business-travel',
       title: 'Flan Events with Friends',
-      description:
-        'A childhood friend of his suddenly appears at the same subway stop and has chosen to help this homeless man',
+      description: 'A childhood friend of his suddenly appears at the same subway stop and has chosen to help this homeless man',
       color: colors.lightSecondaryColor,
       illustrationFill: colors.secondaryColor,
     },
@@ -53,12 +51,7 @@ const IntroductionScreen = ({ navigation }: IntrodutionStackNavigationProps) => 
               style={{ backgroundColor: item.color }}>
               <StatusBarPadding backgroundColor={item.color} />
               <Box position="absolute" width="100%" height="50%" bottom={spacing.xxxxl}>
-                <Illustration
-                  illustration={item.illustration}
-                  width="100%"
-                  height="100%"
-                  fill={item.illustrationFill}
-                />
+                <Illustration illustration={item.illustration} width="100%" height="100%" fill={item.illustrationFill} />
               </Box>
               <Box justifyContent="center" alignItems="center" padding="l">
                 <Text variant="header3" marginTop="xxxxl">
@@ -68,9 +61,7 @@ const IntroductionScreen = ({ navigation }: IntrodutionStackNavigationProps) => 
                   {item.description}
                 </Text>
               </Box>
-              {index == IntroductionGallery.length - 1 && (
-                <Button label="Get Started" onPress={() => navigation.navigate('SignUpScreenInitial')} />
-              )}
+              {index == IntroductionGallery.length - 1 && <Button label="Get Started" onPress={() => navigation.navigate('SignUpScreenInitial')} />}
             </Box>
           )}
         />

@@ -1,11 +1,11 @@
-import { userType } from '@types'
+import { UserApiType } from '@types'
 import Axios from 'axios'
 
 const userApi = Axios.create({
   baseURL: 'http://localhost:3333/api/account',
 })
 
-const registerUser = async (user: userType) => {
+const registerUser = async (user: UserApiType) => {
   try {
     const {
       email,

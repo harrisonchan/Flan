@@ -2,9 +2,9 @@ import { useTheme } from '@shopify/restyle'
 import React from 'react'
 import { ColorValue, Falsy, RecursiveArray, RegisteredStyle, View, ViewStyle } from 'react-native'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
-import { colorPalette, Theme } from '../theme'
+import { colorPalette, Theme } from '@theme'
 
-interface StatusBarPaddingProps {
+export interface StatusBarPaddingProps {
   backgroundColor?: ColorValue
 }
 

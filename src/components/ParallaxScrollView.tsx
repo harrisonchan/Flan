@@ -4,7 +4,7 @@ import React, { ComponentType, JSXElementConstructor, ReactElement, SyntheticEve
 import { ColorValue, FlatList, RegisteredStyle, TouchableOpacity, View, ViewStyle, SectionList } from 'react-native'
 import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import { Theme } from '../theme'
-import Box from './Box'
+import Box from './Box/Box'
 import Text from './Text'
 import StatusBarPadding from './StatusBarPadding'
 import Icon from 'react-native-vector-icons/Ionicons'

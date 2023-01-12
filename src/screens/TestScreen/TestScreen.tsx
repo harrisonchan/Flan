@@ -52,26 +52,43 @@ const TestScreen = ({ route, navigation }: TestStackNavigationProps) => {
       <StatusBarPadding />
       {/* <Collapsible isCollapsed={false} collapsedHeight={200} uncollapsedHeight={500} /> */}
       <PollListItem
+        mode="touchableCollapsedViewOnly"
+        useLongPressActionOnPress
         poll={{
           title: 'poll',
           description: 'desc',
           options: [
-            { id: '1', title: 'option title', votes: 1 },
-            { id: '2', title: 'option title', votes: 1 },
-            { id: '3', title: 'option title', votes: 1 },
-            { id: '4', title: 'option title', votes: 1 },
-            { id: '5', title: 'option title', votes: 1 },
-            { id: '6', title: 'option title', votes: 1 },
-            { id: '7', title: 'option title', votes: 1 },
-            { id: '8', title: 'option title', votes: 1 },
-            { id: '9', title: 'option title', votes: 1 },
+            { id: '1', title: 'option title', voteAmount: 1 },
+            { id: '2', title: 'option title', voteAmount: 1 },
+            { id: '3', title: 'option title', voteAmount: 1 },
+            { id: '4', title: 'option title', voteAmount: 1 },
+            { id: '5', title: 'option title', voteAmount: 1 },
+            { id: '6', title: 'option title', voteAmount: 1 },
+            { id: '7', title: 'option title', voteAmount: 1 },
+            { id: '8', title: 'option title', voteAmount: 1 },
+            { id: '9', title: 'option title', voteAmount: 1 },
           ],
-          datePosted: dayjs(),
+          datePosted: dayjs().toString(),
           chat: ['asdfsadfsdf'],
         }}
         poster={{ avatar: 1, name: 'name', username: 'uname' }}
         user={{ selectedPollOption: '3' }}
-        onLongPress={() => navigation.navigate('PollStack', { screen: 'PollScreen' })}
+        onLongPress={() =>
+          navigation.navigate('PollStack', {
+            screen: 'PollScreen',
+            params: {
+              id: '123',
+              chatId: '1',
+              datePosted: dayjs(),
+              description: 'Yes or nah?',
+              options: [
+                { id: '1', title: 'HELL YAH', voteAmount: 1 },
+                { id: '2', title: 'nahh', voteAmount: 1 },
+              ],
+              title: 'Go to Paris',
+            },
+          })
+        }
       />
       <Text>Testing buzz buzz</Text>
       <ScrollView>

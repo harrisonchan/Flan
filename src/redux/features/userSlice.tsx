@@ -3,17 +3,7 @@ import { LatLng } from 'react-native-maps'
 import { useAppDispatch } from '../hooks'
 import { appActions } from './index'
 import { remove } from 'lodash'
-import { FlanType } from './flanSlice'
-
-export type UserType = {
-  userId: number | string // uses numbers or strings??? idk
-  username: string
-  userFirstName: string
-  userLastName: string
-  createdFlans: FlanType[]
-  savedFlans: FlanType[]
-  attendedFlans: FlanType[]
-}
+import { FlanType, UserType } from '@types'
 
 interface UserState {
   user: UserType
@@ -22,10 +12,10 @@ interface UserState {
 }
 
 const initialUser = {
-  userId: 0,
+  id: '123',
   username: 'Harrison',
-  userFirstName: 'Harrison',
-  userLastName: 'Chan',
+  firstName: 'Harrison',
+  lastName: 'Chan',
   createdFlans: [],
   savedFlans: [],
   attendedFlans: [],

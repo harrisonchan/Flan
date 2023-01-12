@@ -1,9 +1,9 @@
 import { useTheme } from '@shopify/restyle'
 import React from 'react'
 import { FlatList } from 'react-native'
-import { Box, FlanCard, NavigationHeader, StatusBarPadding, Text } from '../../components'
-import { ProfileStackNavigationProps } from '../../types'
-import { Theme } from '../../theme'
+import { Box, FlanCard, NavigationHeader, StatusBarPadding, Text } from '@components'
+import { ProfileStackNavigationProps } from '@types'
+import { Theme } from '@theme'
 
 const ProfileSavedFlans = ({ route, navigation }: ProfileStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
@@ -24,15 +24,17 @@ const ProfileSavedFlans = ({ route, navigation }: ProfileStackNavigationProps) =
   return (
     <>
       <StatusBarPadding />
-      <Box width={themeConstants.containerWidth} alignSelf="center" marginTop="xl" flex={1}>
+      <Box width={themeConstants.containerWidth} alignSelf="center" marginTop="m" flex={1}>
         <NavigationHeader
           leftIconProps={{ name: 'chevron-back', size: themeConstants.headerIconSize, color: colors.darkColor }}
           leftIconOnPress={() => navigation.goBack()}
         />
-        <Text variant="header3" marginTop="m">
-          Saved Flans
-        </Text>
         <FlatList
+          ListHeaderComponent={
+            <Text variant="header3" marginTop="m">
+              Saved Flans
+            </Text>
+          }
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingTop: spacing.s }}
           data={[{}, {}, {}]}

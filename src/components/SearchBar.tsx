@@ -3,7 +3,7 @@ import React from 'react'
 import { RegisteredStyle, TouchableOpacity, ViewStyle, TextInputProps as RNTextInputProps } from 'react-native'
 import { Theme } from '../theme'
 import { ViewStyleType } from '../types'
-import Box from './Box'
+import Box from './Box/Box'
 import TextInput, { TextInputProps } from './TextInput'
 
 interface SearchBarProps {

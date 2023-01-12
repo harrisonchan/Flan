@@ -47,7 +47,7 @@ const ChatInboxScreen = ({ route, navigation }: ChatStackNavigationProps) => {
         leftIconProps={{ name: 'chevron-back', size: themeConstants.headerIconSize, color: colors.darkColor }}
         leftIconOnPress={() => navigation.goBack()}
       />
-      <Box alignSelf="center" width={themeConstants.containerWidth} marginTop="xl" marginBottom="xl" flex={1}>
+      <Box alignSelf="center" width={themeConstants.containerWidth} marginTop="l" marginBottom="xl" flex={1}>
         <FlatList
           ListHeaderComponent={renderChatInboxHeader}
           data={DUMMY_DATA}

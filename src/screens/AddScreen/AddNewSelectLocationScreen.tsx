@@ -4,15 +4,7 @@ import { View } from 'react-native'
 import { GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete'
 import MapView, { Marker, PROVIDER_GOOGLE, Region, Callout } from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import {
-  Box,
-  Button,
-  GooglePlacesInput,
-  NavigationHeader,
-  SkeletonScreen,
-  StatusBarPadding,
-  Text,
-} from '../../components'
+import { Box, Button, GooglePlacesInput, NavigationHeader, SkeletonScreen, StatusBarPadding, Text } from '../../components'
 import { Theme } from '../../theme'
 import { AddStackNavigationProps } from '../../types'
 import { getReverseGeocode } from '../../utilities'
@@ -91,11 +83,7 @@ const AddNewSelectLocationScreen = ({ route, navigation }: AddStackNavigationPro
           <Marker
             ref={MarkerRef}
             draggable
-            coordinate={
-              markerCoordinate
-                ? markerCoordinate
-                : { latitude: CAMERA_DEFAULTS.center.latitude, longitude: CAMERA_DEFAULTS.center.longitude }
-            }>
+            coordinate={markerCoordinate ? markerCoordinate : { latitude: CAMERA_DEFAULTS.center.latitude, longitude: CAMERA_DEFAULTS.center.longitude }}>
             <Callout style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
               <Box maxWidth={themeConstants.componentWidthS} justifyContent="center" alignItems="center">
                 <Text variant="secondary">{flanLocation}</Text>
@@ -141,7 +129,7 @@ const AddNewSelectLocationScreen = ({ route, navigation }: AddStackNavigationPro
                   <Button
                     mode="small"
                     label="Select Location"
-                    style={{ backgroundColor: colors.lightGreen, marginBottom: spacing.s }}
+                    containerStyle={{ backgroundColor: colors.lightGreen, marginBottom: spacing.s }}
                     onPress={() => {
                       navigation.navigate('AddNewOriginalInputFieldsScreen', {
                         location: { address: flanLocation, coordinate: markerCoordinate },

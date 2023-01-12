@@ -4,38 +4,13 @@ import { FlatList, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Box, Text, Button } from '@components'
 import { Theme } from '@theme'
+import { PollStackNavigationProps } from '@types'
 
-const PollScreen = () => {
+const PollScreen = ({ route, navigation }: PollStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
+  console.log(route.params)
   return (
     <>
-      <Box
-        flexDirection="row"
-        bottom={0}
-        left={0}
-        paddingLeft="m"
-        paddingRight="m"
-        paddingBottom="xs"
-        position="absolute"
-        alignItems={'center'}
-        backgroundColor="lightColor"
-        zIndex={100}>
-        <Box flexDirection="row" alignItems="center">
-          <Icon name="checkbox-outline" size={themeConstants.smallIconSize} color={colors.subduedText} />
-          <Text variant="secondary" marginLeft="xs">
-            {/* {props.poll.options.length} */}
-          </Text>
-        </Box>
-        <Box flexDirection="row" alignItems="center" marginLeft="s" flex={1}>
-          <Icon name="chatbox-outline" size={themeConstants.smallIconSize} color={colors.subduedText} />
-          <Text variant="secondary" marginLeft="xs">
-            {/* {props.poll.chat.length} */}
-          </Text>
-        </Box>
-        <Box>
-          <Icon name={'chevron-down-outline'} size={themeConstants.largeIconSize} color={colors.secondaryColor} />
-        </Box>
-      </Box>
       <Box padding="m" overflow="hidden">
         <Box flexDirection="row" alignItems="center">
           {/* <Avatar source={props.poster.avatar} /> */}

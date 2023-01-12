@@ -1,16 +1,18 @@
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { LayoutChangeEvent, Text, TextProps, TouchableOpacity, View } from 'react-native'
 import { IconProps } from 'react-native-vector-icons/Icon'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { ViewStyleType } from '../types'
+import { RootTabsNavigationProps, ViewStyleType } from '../types'
 
-interface NavigationHeaderProps {
+export interface NavigationHeaderProps {
   leftComponent?: React.ReactNode
   rightComponent?: React.ReactNode
   leftIconProps?: IconProps
   rightIconProps?: IconProps
   leftIconOnPress?: () => void
   rightIconOnPress?: () => void
+  useLeftGoBackNavigationButton?: boolean
   title?: string
   titleProps?: TextProps
   style?: ViewStyleType
@@ -18,6 +20,7 @@ interface NavigationHeaderProps {
 }
 
 const NavigationHeader: React.FC<NavigationHeaderProps> = (props) => {
+  const navigation = useNavigation()
   return (
     <View
       style={[{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, props.style]}
@@ -28,9 +31,15 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = (props) => {
         props.leftComponent
       ) : (
         <View style={{ width: '20%', alignItems: 'flex-start' }}>
-          <TouchableOpacity onPress={() => props.leftIconOnPress && props.leftIconOnPress()}>
-            {props.leftIconProps && <Icon {...props.leftIconProps} />}
-          </TouchableOpacity>
+          {props.useLeftGoBackNavigationButton ? (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon name="chevron-back" size={30} color="black" />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => props.leftIconOnPress && props.leftIconOnPress()}>
+              {props.leftIconProps && <Icon {...props.leftIconProps} />}
+            </TouchableOpacity>
+          )}
         </View>
       )}
       <View style={{ width: '60%', alignItems: 'center' }}>{props.title && <Text {...props.titleProps}>{props.title}</Text>}</View>

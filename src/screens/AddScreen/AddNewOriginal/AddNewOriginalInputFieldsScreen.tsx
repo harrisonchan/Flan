@@ -91,7 +91,7 @@ const AddNewOriginalInputFieldsScreen = ({ route, navigation }: AddStackNavigati
                 label={formik.values.location.address ? 'Modify Location' : 'Add Location'}
                 mode="small"
                 onPress={() => navigation.navigate('AddNewSelectLocationScreen')}
-                style={{ backgroundColor: colors.lightGreen }}
+                containerStyle={{ backgroundColor: colors.lightGreen }}
               />
             </Box>
             <Text variant="secondary" color="primaryColor">

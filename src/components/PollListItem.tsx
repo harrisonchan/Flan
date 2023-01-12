@@ -1,16 +1,14 @@
 import { useTheme } from '@shopify/restyle'
+import { PollType } from '@types'
 import dayjs from 'dayjs'
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { FlatList, TouchableOpacity, View } from 'react-native'
 import Animated, { concat, interpolate, useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { theme, Theme } from '../theme'
-import Avatar from './Avatar'
-import Box from './Box'
-import Button from './Button'
-import Collapsible from './Collapsible'
-import Text from './Text'
+import { theme, Theme } from '@theme'
+import { Avatar, Box, Button, Collapsible, CollapsibleProps, Text } from '@components'
+// import Box from './Box/Box'
 
 // TODO
 // Implement Logic to allow revote if poster allows it
@@ -18,17 +16,14 @@ import Text from './Text'
 interface PollListItemProps {
   poster: { avatar: string | number; name: string; username: string }
   user: { selectedPollOption: string }
-  poll: {
-    title: string
-    description: string
-    options: { id: string; title: string; votes: number; image?: { uri: string } }[]
-    datePosted: dayjs.Dayjs
-    chat: string[]
-  }
+  poll: PollType
   onLongPress?: () => void
+  mode?: 'default' | 'touchableCollapsedViewOnly'
+  useLongPressActionOnPress?: boolean
+  collapsibleProps?: CollapsibleProps
 }
 
-const COLLAPSED_HEIGHT = theme.themeConstants.componentHeightM
+const COLLAPSED_HEIGHT = theme.themeConstants.componentHeightM * 1.05
 const UNCOLLAPSED_HEIGHT = theme.themeConstants.componentHeightXL * 1.1
 
 const PollListItem: React.FC<PollListItemProps> = (props) => {
@@ -62,18 +57,23 @@ const PollListItem: React.FC<PollListItemProps> = (props) => {
       formik.setFieldValue('selectedPollOption', formik.values.selectedPollOption == option ? '' : option)
     }
   }
+  const renderDefault = () => {}
   return (
     <>
       <Collapsible
         isCollapsed
         collapsedHeight={COLLAPSED_HEIGHT}
-        uncollapsedHeight={UNCOLLAPSED_HEIGHT}
+        uncollapsedHeight={props.mode == 'touchableCollapsedViewOnly' ? COLLAPSED_HEIGHT : UNCOLLAPSED_HEIGHT}
         onContentHeightChange={(contentHeight) => {
           chatOptionsBarSharedAnimatedValue.value = contentHeight
         }}
         style={{ overflow: 'hidden', backgroundColor: colors.lightColor }}
+        onPress={() => {
+          props.mode == 'touchableCollapsedViewOnly' && props.useLongPressActionOnPress && props.onLongPress && props.onLongPress()
+        }}
         onLongPress={props.onLongPress}
-        touchableOpacityProps={{ activeOpacity: 0.7 }}>
+        touchableOpacityProps={{ activeOpacity: 0.7 }}
+        {...props.collapsibleProps}>
         <AnimatedBox
           flexDirection="row"
           bottom={0}
@@ -84,6 +84,7 @@ const PollListItem: React.FC<PollListItemProps> = (props) => {
           position="absolute"
           alignItems={'center'}
           backgroundColor="lightColor"
+          minHeight={themeConstants.componentHeightXS}
           zIndex={100}>
           <AnimatedBox flexDirection="row" alignItems="center">
             <Icon name="checkbox-outline" size={themeConstants.smallIconSize} color={colors.subduedText} />
@@ -97,9 +98,11 @@ const PollListItem: React.FC<PollListItemProps> = (props) => {
               {props.poll.chat.length}
             </Text>
           </AnimatedBox>
-          <AnimatedBox style={[chatOptionsBarChevronAnimatedStyle]}>
-            <Icon name={'chevron-down-outline'} size={themeConstants.largeIconSize} color={colors.secondaryColor} />
-          </AnimatedBox>
+          {props.mode != 'touchableCollapsedViewOnly' && (
+            <AnimatedBox style={[chatOptionsBarChevronAnimatedStyle]}>
+              <Icon name={'chevron-down-outline'} size={themeConstants.largeIconSize} color={colors.secondaryColor} />
+            </AnimatedBox>
+          )}
         </AnimatedBox>
         <Box padding="m" overflow="hidden">
           <Box flexDirection="row" alignItems="center">
@@ -114,43 +117,44 @@ const PollListItem: React.FC<PollListItemProps> = (props) => {
             <Text variant="tertiary">{props.poll.description}</Text>
           </Box>
         </Box>
-        <Box maxHeight={themeConstants.componentHeightM * 0.9}>
-          <FlatList
-            data={props.poll.options}
-            // // style={{ marginBottom: spacing.xxl }}
-            showsVerticalScrollIndicator={false}
-            // style={{ height: 10, backgroundColor: 'red' }}
-            // refreshing={false}
-            // collapsable
-            renderItem={({ item }) => {
-              return (
-                <TouchableOpacity onPress={() => handleSelectOption(item.id)}>
-                  <Box
-                    flexDirection="row"
-                    backgroundColor={
-                      formik.values.alreadyVoted && formik.values.selectedPollOption == item.id
-                        ? 'secondaryColor'
-                        : formik.values.selectedPollOption == item.id
-                        ? 'primaryColor'
-                        : 'subduedText'
-                    }
-                    alignItems="center"
-                    marginLeft="m"
-                    marginRight="m"
-                    marginBottom="s"
-                    padding="s"
-                    borderRadius={5}>
-                    <Box flex={1}>
-                      <Text variant="tertiary">{item.title}</Text>
+        {props.mode != 'touchableCollapsedViewOnly' && (
+          <Box maxHeight={themeConstants.componentHeightM * 0.9}>
+            <FlatList
+              data={props.poll.options}
+              // // style={{ marginBottom: spacing.xxl }}
+              showsVerticalScrollIndicator={false}
+              // style={{ height: 10, backgroundColor: 'red' }}
+              // refreshing={false}
+              // collapsable
+              renderItem={({ item }) => {
+                return (
+                  <TouchableOpacity onPress={() => handleSelectOption(item.id)}>
+                    <Box
+                      flexDirection="row"
+                      backgroundColor={
+                        formik.values.alreadyVoted && formik.values.selectedPollOption == item.id
+                          ? 'secondaryColor'
+                          : formik.values.selectedPollOption == item.id
+                          ? 'primaryColor'
+                          : 'subduedText'
+                      }
+                      alignItems="center"
+                      marginLeft="m"
+                      marginRight="m"
+                      marginBottom="s"
+                      padding="s"
+                      borderRadius={5}>
+                      <Box flex={1}>
+                        <Text variant="tertiary">{item.title}</Text>
+                      </Box>
+                      <Text variant="tertiary">{item.votes}</Text>
                     </Box>
-                    <Text variant="tertiary">{item.votes}</Text>
-                  </Box>
-                </TouchableOpacity>
-              )
-            }}
-          />
-        </Box>
-        {/* Box containing two buttons in a single row with margins themeConstants.m on both sides, one of thhe button contains a <Text> saying "Vote" while the other says "Comment" */}
+                  </TouchableOpacity>
+                )
+              }}
+            />
+          </Box>
+        )}
         <AnimatedBox flexDirection="row" padding="m" style={[voteCommentSectionOpacity]}>
           <Button mode="small" label="Vote" />
           <Button mode="small" label="Comment" style={{ marginLeft: spacing.m }} />

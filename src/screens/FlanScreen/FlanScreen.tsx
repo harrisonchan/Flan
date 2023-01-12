@@ -186,7 +186,7 @@ const FlanScreen = ({ route, navigation }: FlanStackNavigationProps) => {
             </Text>
             <Button
               label="Delete Flan"
-              style={{ marginBottom: spacing.m }}
+              containerStyle={{ marginBottom: spacing.m }}
               onPress={() =>
                 dispatch(
                   appActions.utilityActions.showAlert({

@@ -1,4 +1,5 @@
-export type userType = {
+export type UserApiType = {
+  id: string
   email: string
   username: string
   password: string

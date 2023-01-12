@@ -1,109 +1,118 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import { FlanType } from '../redux/features/flanSlice'
-import { Formik, FormikProps } from 'formik'
-import { userType } from './apiTypes'
+import { UserApiType, FlanType, PollType } from '@types'
 // import { ActivityType, FlanType, LocationType } from '../redux/features/userSlice'
 
-export type RootTabsParamList = {
-  HomeStack: undefined
-  ExploreStack: undefined
-  Test: { testProp: any }
-  ProfileStack: undefined
-  AddStack: undefined
-}
-export type RootTabsNavigationProps = BottomTabScreenProps<RootTabsParamList, 'HomeStack' | 'ExploreStack' | 'ProfileStack' | 'AddStack' | 'Test'>
+// THIS IS ALL WRONG GODDAMNIT
 
+export type RootTabsParamList = {
+  HomeStack: HomeStackNavigatorScreenParams
+  ExploreStack: ExploreStackNavigatorScreenParams
+  ProfileStack: ProfileStackNavigatorScreenParams
+  AddStack: AddStackNavigatorScreenParams
+  Test: TestStackNavigatorScreenParams
+}
+export type RootTabsNavigationProps = BottomTabScreenProps<RootTabsParamList>
+
+/* Test */
 export type TestStackParamList = {
   TestScreen: undefined
-  PollStack: NavigatorScreenParams<PollStackParamList>
+  PollStack: PollStackNavigatorScreenParams
 }
+export type TestStackNavigationProps = StackScreenProps<TestStackParamList>
+export type TestStackNavigatorScreenParams = NavigatorScreenParams<TestStackParamList>
 
-export type TestStackNavigationProps = StackScreenProps<TestStackParamList, 'TestScreen', 'PollStack'>
-
+/* PreLogin */
 export type PreLoginTabsParamList = {
-  ExploreStack: undefined
-  SettingsStack: undefined
-  Test: { testProp: any }
-  AuthenticationStack: undefined
+  ExploreStack: ExploreStackNavigatorScreenParams
+  SettingsStack: SettingsStackNavigatorScreenParams
+  AuthenticationStack: AuthenticationStackNavigatorScreenParams
+  Test: TestStackNavigatorScreenParams
 }
-export type PreLoginTabsNavigationProps = BottomTabScreenProps<PreLoginTabsParamList, 'ExploreStack' | 'SettingsStack' | 'AuthenticationStack' | 'Test'>
+export type PreLoginTabsNavigationProps = BottomTabScreenProps<PreLoginTabsParamList>
+export type PreLoginTabsScreenParams = NavigatorScreenParams<PreLoginTabsParamList>
 
+/* Authentication */
 export type AuthenticationStackParamList = {
   LoginScreen: { showNavigationHeader?: boolean } | undefined
   SignUpScreenInitial: undefined
-  SignUpScreenDetails: { user: Omit<userType, 'firstName' | 'lastName' | 'birthday' | 'accountType' | 'gender'> | string }
+  SignUpScreenDetails: { user: Omit<UserApiType, 'firstName' | 'lastName' | 'birthday' | 'accountType' | 'gender'> | string }
   ForgotPasswordScreen: undefined
 }
-export type AuthenticationStackNavigationProps = StackScreenProps<
-  AuthenticationStackParamList,
-  'LoginScreen' | 'SignUpScreenInitial' | 'SignUpScreenDetails' | 'ForgotPasswordScreen'
->
+export type AuthenticationStackNavigationProps = StackScreenProps<AuthenticationStackParamList>
+export type AuthenticationStackNavigatorScreenParams = NavigatorScreenParams<AuthenticationStackParamList>
 
+/* Home */
 export type HomeStackParamList = {
   HomeScreen: undefined
-  FlanStack: NavigatorScreenParams<FlanStackParamList>
+  FlanStack: FlanStackNavigatorScreenParams
 }
-export type HomeStackNavigationProps = StackScreenProps<HomeStackParamList, 'HomeScreen' | 'FlanStack'>
+export type HomeStackNavigationProps = StackScreenProps<HomeStackParamList>
+export type HomeStackNavigatorScreenParams = NavigatorScreenParams<HomeStackParamList>
 
+/* Search */
 export type SearchStackParamList = {
   SearchScreen: undefined
   SearchResultsScreen: undefined
 }
-export type SearchStackNavigationProps = StackScreenProps<SearchStackParamList, 'SearchScreen' | 'SearchResultsScreen'>
+export type SearchStackNavigationProps = StackScreenProps<SearchStackParamList>
+export type SearchStackNavigatorScreenParams = NavigatorScreenParams<SearchStackParamList>
 
+/* Settings */
 export type SettingsStackParamList = AuthenticationStackParamList & {
   SettingsScreen: undefined
 }
-export type SettingsStackNavigationProps = StackScreenProps<
-  SettingsStackParamList,
-  'SettingsScreen' | 'LoginScreen' | 'ForgotPasswordScreen' | 'SignUpScreenInitial' | 'SignUpScreenDetails'
->
+export type SettingsStackNavigationProps = StackScreenProps<SettingsStackParamList>
+export type SettingsStackNavigatorScreenParams = NavigatorScreenParams<SettingsStackParamList>
 
+/* Explore */
 export type ExploreStackParamList = {
   ExploreScreen: undefined
-  FlanStack: NavigatorScreenParams<FlanStackParamList>
-  SearchStack: NavigatorScreenParams<SearchStackParamList>
+  FlanStack: FlanStackNavigatorScreenParams
+  SearchStack: SearchStackNavigatorScreenParams
 }
-export type ExploreStackNavigationProps = StackScreenProps<ExploreStackParamList, 'ExploreScreen' | 'FlanStack' | 'SearchStack'>
+export type ExploreStackNavigationProps = StackScreenProps<ExploreStackParamList>
+export type ExploreStackNavigatorScreenParams = NavigatorScreenParams<ExploreStackParamList>
 
+/* Flan */
 export type FlanStackParamList = {
-  FlanScreen: {
-    flanId: string | number
-    flanType?: 'created' | 'saved' | 'attended'
-  }
-  PollStack: PollStackParamList
+  FlanScreen: FlanType
+  PollStack: PollStackNavigatorScreenParams
 }
+export type FlanStackNavigationProps = StackScreenProps<FlanStackParamList>
+export type FlanStackNavigatorScreenParams = NavigatorScreenParams<FlanStackParamList>
 
-//or FlanScreenNavigationProp? (without the s?)
-export type FlanStackNavigationProps = StackScreenProps<FlanStackParamList, 'FlanScreen' | 'PollStack'>
-
+/* Poll */
 export type PollStackParamList = {
-  PollScreen: undefined
+  PollScreen: PollType
   PollCreateScreen: undefined
 }
+export type PollStackNavigationProps = StackScreenProps<PollStackParamList>
+export type PollStackNavigatorScreenParams = NavigatorScreenParams<PollStackParamList>
 
-export type PollStackNavigationProps = StackScreenProps<PollStackParamList, 'PollScreen' | 'PollCreateScreen'>
-
+/* Chat */
 export type ChatStackParamList = {
   ChatInboxScreen: undefined
   ChatScreen: { chatId: string }
 }
-export type ChatStackNavigationProps = StackScreenProps<ChatStackParamList, 'ChatInboxScreen' | 'ChatScreen'>
+export type ChatStackNavigationProps = StackScreenProps<ChatStackParamList>
+export type ChatStackNavigatorScreenParams = NavigatorScreenParams<ChatStackParamList>
 
-export type ProfileStackParamList = SettingsStackParamList &
-  ChatStackParamList & {
-    ProfileScreen: undefined
-    ProfilePersonalFlans: undefined
-    ProfileSavedFlans: undefined
-    FlanStack: NavigatorScreenParams<FlanStackParamList>
-  }
-export type ProfileStackNavigationProps = CompositeScreenProps<
-  StackScreenProps<ProfileStackParamList, 'ProfileScreen' | 'ProfilePersonalFlans' | 'ProfileSavedFlans' | 'FlanStack' | 'SettingsScreen'>,
-  ChatStackNavigationProps
->
+/* Profile */
+export type ProfileStackParamList = {
+  ProfileScreen: undefined
+  ProfileFlanListScreen: { title?: string; flanData: FlanType[] }
+  ProfilePersonalFlans: undefined
+  ProfileSavedFlans: undefined
+  FlanStack: FlanStackNavigatorScreenParams
+  SettingsStack: SettingsStackNavigatorScreenParams
+}
+export type ProfileStackNavigationProps = StackScreenProps<ProfileStackParamList>
+export type ProfileStackNavigatorScreenParams = NavigatorScreenParams<ProfileStackParamList>
+export type ProfileFlanListScreenNavigationProps = StackScreenProps<ProfileStackParamList, 'ProfileFlanListScreen'>
 
+/* Add */
 export type AddStackParamList = {
   AddScreen: undefined
   AddNewOriginalInputFieldsScreen: Omit<FlanType, 'id'>
@@ -111,27 +120,12 @@ export type AddStackParamList = {
   AddNewFromCommunityScreen: undefined
   AddNewSelectLocationScreen: undefined
 }
-export type AddStackNavigationProps = StackScreenProps<
-  AddStackParamList,
-  'AddScreen' | 'AddNewOriginalInputFieldsScreen' | 'AddNewOriginalPickIllustrationScreen' | 'AddNewFromCommunityScreen' | 'AddNewSelectLocationScreen'
->
+export type AddStackNavigationProps = StackScreenProps<AddStackParamList>
+export type AddStackNavigatorScreenParams = NavigatorScreenParams<AddStackParamList>
 
-// export type FlanStackParamList = {
-//   HomeScreen?: undefined
-//   ExploreScreen?: undefined
-//   FlanScreen: undefined
-// }
-// export type FlanStackNavigationProps = StackScreenProps<
-//   FlanStackParamList,
-//   'HomeScreen' | 'ExploreScreen' | 'FlanScreen'
-// >
-// export type FlanStackNavigationProp = FlanStackNavigationProps['navigation']
-// export type FlanStackRouteProp = FlanStackNavigationProps['route']
-
-export type IntrodutionStackParamList = AuthenticationStackParamList & {
+/* Introduction */
+export type IntroductionStackParamList = AuthenticationStackParamList & {
   IntroductionScreen: undefined
 }
-export type IntrodutionStackNavigationProps = StackScreenProps<
-  IntrodutionStackParamList,
-  'IntroductionScreen' | 'LoginScreen' | 'SignUpScreenInitial' | 'SignUpScreenDetails' | 'ForgotPasswordScreen'
->
+export type IntroductionStackNavigationProps = StackScreenProps<IntroductionStackParamList>
+export type IntroductionNavigatorStackScreenParams = NavigatorScreenParams<IntroductionStackParamList>

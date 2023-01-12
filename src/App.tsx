@@ -29,6 +29,7 @@ import {
   PollCreateScreen,
   SettingsScreen,
   IntroductionScreen,
+  ProfileFlanListScreen,
 } from '@screens'
 // //Put this in '../index.js' as well???
 import 'react-native-gesture-handler'
@@ -38,7 +39,7 @@ import {
   ChatStackParamList,
   ExploreStackParamList,
   HomeStackParamList,
-  IntrodutionStackParamList,
+  IntroductionStackParamList,
   PreLoginTabsParamList,
   ProfileStackParamList,
   RootTabsParamList,
@@ -63,13 +64,13 @@ export const AuthenticationStack = createStackNavigator<AuthenticationStackParam
 export const HomeStack = createStackNavigator<HomeStackParamList>()
 export const FlanStack = createStackNavigator<FlanStackParamList>()
 export const PollStack = createStackNavigator<PollStackParamList>()
-export const SettingsStack = createStackNavigator<SettingsStackParamList>()
 export const ExploreStack = createSharedElementStackNavigator<ExploreStackParamList>()
 export const SearchStack = createStackNavigator<SearchStackParamList>()
 export const ChatStack = createStackNavigator<ChatStackParamList>()
 export const ProfileStack = createStackNavigator<ProfileStackParamList>()
 export const AddStack = createStackNavigator<AddStackParamList>()
-export const IntroductionStack = createStackNavigator<IntrodutionStackParamList>()
+export const IntroductionStack = createStackNavigator<IntroductionStackParamList>()
+export const SettingsStack = createStackNavigator<SettingsStackParamList>()
 
 const TestStackComponent = () => {
   return (
@@ -81,6 +82,14 @@ const TestStackComponent = () => {
         options={{ headerShown: false, cardStyleInterpolator: CardStyleInterpolators.forScaleFromCenterAndroid }}
       />
     </TestStack.Navigator>
+  )
+}
+
+const SettingsStackComponent = () => {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen name="SettingsScreen" component={SettingsScreen} options={{ headerShown: false }} />
+    </SettingsStack.Navigator>
   )
 }
 
@@ -137,7 +146,7 @@ const PollStackComponent = () => {
   )
 }
 
-const SettingsStackComponent = () => {
+const SettingsStackComponent1 = () => {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen
@@ -365,11 +374,12 @@ const App = ({ onChangeColorScheme }: { onChangeColorScheme: (colorScheme: 'ligh
           />
           <RootTabs.Screen
             name="Chat"
-            component={ChatStackComponent}
+            component={ProfileFlanListScreen}
             options={{
               headerShown: false,
               tabBarIcon: ({ color }) => <Icon name="chatbox-outline" size={themeConstants.iconSize} color={color} />,
             }}
+            initialParams={{ screen: 'ProfileFlanListScreen', params: { title: 'hello world' } }}
           />
         </RootTabs.Navigator>
       ) : (

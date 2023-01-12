@@ -4,10 +4,10 @@ import { NativeEventEmitter, NativeSyntheticEvent, TouchableOpacity, TouchableOp
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withSpring, withTiming, onChange, useDerivedValue, runOnJS } from 'react-native-reanimated'
 import { theme, Theme } from '../theme'
 import { ViewStyleType } from '../types'
-import Box from './Box'
+import Box from './Box/Box'
 import Button from './Button'
 
-interface CollapsibleProps {
+export interface CollapsibleProps {
   isCollapsed?: boolean
   onCollapseChange?: (collapsed: boolean) => void
   onContentHeightChange?: (contentHeight: number) => void

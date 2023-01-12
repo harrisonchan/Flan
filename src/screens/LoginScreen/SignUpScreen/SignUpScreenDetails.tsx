@@ -2,7 +2,7 @@ import React from 'react'
 import { useFormik } from 'formik'
 import { KeyboardAvoidingView, Keyboard, Text, Platform, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
 import { Box, Button, NavigationHeader, StatusBarPadding, TextInput } from '../../../components'
-import { IntrodutionStackNavigationProps, userType } from '../../../types'
+import { IntroductionStackNavigationProps, UserType } from '@types'
 import { Theme } from '../../../theme'
 import { signupDetailsValidationSchema } from '../../../utilities'
 import { isString } from 'lodash'
@@ -10,10 +10,9 @@ import { useTheme } from '@shopify/restyle'
 import { useDispatch } from 'react-redux'
 import { userApiActions } from '../../../api'
 import { appActions } from '../../../redux/features'
-import { UserType } from '../../../redux/features/userSlice'
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars'
 
-const SignUpScreenDetails = ({ route, navigation }: IntrodutionStackNavigationProps) => {
+const SignUpScreenDetails = ({ route, navigation }: IntroductionStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const dispatch = useDispatch()
   const formik = useFormik({

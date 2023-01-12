@@ -3,7 +3,7 @@ import React from 'react'
 import { View, FlatList } from 'react-native'
 import {} from 'react-native-gesture-handler'
 import { Theme } from '../theme'
-import Box from './Box'
+import Box from './Box/Box'
 import Text from './Text'
 
 // type Tag = { label: string }

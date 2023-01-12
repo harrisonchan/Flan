@@ -2,30 +2,15 @@ import { useTheme } from '@shopify/restyle'
 import { useFormik } from 'formik'
 import { isString } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import {
-  TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  View,
-  TouchableOpacity,
-} from 'react-native'
+import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, View, TouchableOpacity } from 'react-native'
 import { useDispatch } from 'react-redux'
-import {
-  Box,
-  Button,
-  StatusBarPadding,
-  Text,
-  TextInput,
-} from '../../../components'
+import { Box, Button, StatusBarPadding, Text, TextInput } from '../../../components'
 import { appActions } from '../../../redux/features'
 import { Theme } from '../../../theme'
-import { IntrodutionStackNavigationProps } from '../../../types'
+import { IntroductionStackNavigationProps } from '../../../types'
 import { signupInitialValidationSchema } from '../../../utilities'
 
-const SignUpScreenInitial = ({
-  navigation,
-}: IntrodutionStackNavigationProps) => {
+const SignUpScreenInitial = ({ navigation }: IntroductionStackNavigationProps) => {
   const [username, setUsername] = useState('')
   const dispatch = useDispatch()
   const { colors, spacing, themeConstants } = useTheme<Theme>()
@@ -57,15 +42,9 @@ const SignUpScreenInitial = ({
               paddingBottom: spacing.xl,
               justifyContent: 'center',
             }}
-            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-          >
+            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
             <Box>
-              <Text
-                variant="header3"
-                color="neutralText"
-                marginBottom="l"
-                style={{ alignSelf: 'center' }}
-              >
+              <Text variant="header3" color="neutralText" marginBottom="l" style={{ alignSelf: 'center' }}>
                 Sign Up
               </Text>
               <TextInput
@@ -78,9 +57,7 @@ const SignUpScreenInitial = ({
                 useValidation={{
                   isValid: !isString(formik.errors.email),
                   showValidationIcon: formik.touched.email,
-                  invalidInputMessage: formik.touched.email
-                    ? formik.errors.email
-                    : undefined,
+                  invalidInputMessage: formik.touched.email ? formik.errors.email : undefined,
                 }}
                 containerStyle={{ marginBottom: spacing.l }}
                 textInputProps={{ autoCapitalize: 'none', spellCheck: false }}
@@ -96,9 +73,7 @@ const SignUpScreenInitial = ({
                 useValidation={{
                   isValid: !isString(formik.errors.username),
                   showValidationIcon: formik.touched.username,
-                  invalidInputMessage: formik.touched.username
-                    ? formik.errors.username
-                    : undefined,
+                  invalidInputMessage: formik.touched.username ? formik.errors.username : undefined,
                 }}
                 textInputProps={{ autoCapitalize: 'none', spellCheck: false }}
               />
@@ -113,29 +88,21 @@ const SignUpScreenInitial = ({
                 useValidation={{
                   isValid: !isString(formik.errors.password),
                   showValidationIcon: false,
-                  invalidInputMessage: formik.touched.password
-                    ? formik.errors.password
-                    : undefined,
+                  invalidInputMessage: formik.touched.password ? formik.errors.password : undefined,
                 }}
                 secureTextEntry
                 secureTextEntryShowHideIcon
                 textInputProps={{ autoCapitalize: 'none', spellCheck: false }}
               />
               <Button label="Next" onPress={formik.submitForm} />
-              <Box
-                justifyContent="center"
-                alignItems="center"
-                flexDirection="row"
-                marginTop="s"
-              >
+              <Box justifyContent="center" alignItems="center" flexDirection="row" marginTop="s">
                 <Text variant="tertiary">Already have an account? </Text>
                 <TouchableOpacity
                   style={{
                     alignItems: 'center',
                     alignSelf: 'center',
                   }}
-                  onPress={() => navigation.navigate('LoginScreen')}
-                >
+                  onPress={() => navigation.navigate('LoginScreen')}>
                   <Text variant="tertiary" color="tertiaryColor">
                     Login here
                   </Text>
