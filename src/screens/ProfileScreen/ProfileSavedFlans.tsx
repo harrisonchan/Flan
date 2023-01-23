@@ -9,16 +9,17 @@ const ProfileSavedFlans = ({ route, navigation }: ProfileStackNavigationProps) =
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   const renderPersonalFlans = () => {
     return (
-      <FlanCard
-        title="Go to the zoo"
-        author="Joey Lo"
-        location="Harrison's House, Taipei, Taiwan"
-        numPeople={{ attending: 10 }}
-        style={{ marginBottom: spacing.l }}
-        onPress={() => {
-          navigation.navigate('FlanScreen')
-        }}
-      />
+      <></>
+      // <FlanCard
+      //   title="Go to the zoo"
+      //   author="Joey Lo"
+      //   location="Harrison's House, Taipei, Taiwan"
+      //   numPeople={{ attending: 10 }}
+      //   style={{ marginBottom: spacing.l }}
+      //   onPress={() => {
+      //     navigation.navigate('FlanScreen')
+      //   }}
+      // />
     )
   }
   return (

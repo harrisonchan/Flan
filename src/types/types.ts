@@ -18,10 +18,11 @@ export type FlanType = {
   id: string
   title: string
   description: string
-  authorId: string
+  author: UserTypeShort
   illustration: illustrationType
-  peopleAttending: { username: string; userFirstName: string; userLastName: string }[]
+  peopleAttending: UserTypeShort[]
   location: LocationType
+  date: string //dayjs().toString()
   activities: ActivityType[]
   polls: PollType[]
   chatId: string
@@ -32,7 +33,7 @@ export type PollType = {
   authorId: string
   title: string
   description: string
-  datePosted: string //dayjs().toString()
+  date: string //dayjs().toString()
   options: PollOptionType[]
   chatId: string
 }
@@ -53,3 +54,4 @@ export type UserType = {
   savedFlans: FlanType[]
   attendedFlans: FlanType[]
 }
+export type UserTypeShort = Omit<UserType, 'createdFlans' | 'savedFlans' | 'attendedFlans'>

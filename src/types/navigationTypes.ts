@@ -19,6 +19,7 @@ export type RootTabsNavigationProps = BottomTabScreenProps<RootTabsParamList>
 export type TestStackParamList = {
   TestScreen: undefined
   PollStack: PollStackNavigatorScreenParams
+  ProfileStack: ProfileStackNavigatorScreenParams
 }
 export type TestStackNavigationProps = StackScreenProps<TestStackParamList>
 export type TestStackNavigatorScreenParams = NavigatorScreenParams<TestStackParamList>
@@ -82,6 +83,7 @@ export type FlanStackParamList = {
 }
 export type FlanStackNavigationProps = StackScreenProps<FlanStackParamList>
 export type FlanStackNavigatorScreenParams = NavigatorScreenParams<FlanStackParamList>
+export type FlanScreenNavigationProps = StackScreenProps<FlanStackParamList, 'FlanScreen'>
 
 /* Poll */
 export type PollStackParamList = {
@@ -102,7 +104,7 @@ export type ChatStackNavigatorScreenParams = NavigatorScreenParams<ChatStackPara
 /* Profile */
 export type ProfileStackParamList = {
   ProfileScreen: undefined
-  ProfileFlanListScreen: { title?: string; flanData: FlanType[] }
+  ProfileFlanListScreen: { title?: string; flanData?: FlanType[] }
   ProfilePersonalFlans: undefined
   ProfileSavedFlans: undefined
   FlanStack: FlanStackNavigatorScreenParams

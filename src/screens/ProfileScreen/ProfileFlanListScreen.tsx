@@ -2,26 +2,40 @@ import React from 'react'
 import { BoxContainer, FlanCard, StatusBarPadding, Text } from '@components'
 import { useTheme } from '@shopify/restyle'
 import { Theme } from '@theme'
-import { ProfileFlanListScreenNavigationProps } from '@types'
+import { FlanType, ProfileFlanListScreenNavigationProps } from '@types'
+import { FlatList } from 'react-native'
 
 const ProfileFlanListScreen = ({ route, navigation }: ProfileFlanListScreenNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
   // console.log(route.params.)
   //   const renderPersonalFlans = () => {
   //     return (
-  //       <FlanCard
-  //         title="Go to the zoo"
-  //         author="Joey Lo"
-  //         location="Harrison's House, Taipei, Taiwan"
-  //         numPeople={{ attending: 10 }}
-  //         style={{ marginBottom: spacing.l }}
-  //         onPress={() => {
-  //           navigation.navigate('FlanScreen')
-  //         }}
-  //       />
+
   //     )
   //   }
-  return <BoxContainer>{<Text>{route.params.title}</Text>}</BoxContainer>
+  return (
+    <BoxContainer
+      navigationHeaderProps={{
+        title: route.params.title,
+      }}>
+      <FlatList
+        ListHeaderComponent={<Text>{route.params.title}</Text>}
+        data={route.params.flanData ?? []}
+        renderItem={({ item }) => (
+          <FlanCard
+            title={item.title}
+            author={item.author}
+            address={item.location.address}
+            numPeople={item.peopleAttending.length}
+            style={{ marginBottom: spacing.l }}
+            onPress={() => {
+              navigation.navigate('FlanStack', { screen: 'FlanScreen', params: item })
+            }}
+          />
+        )}
+      />
+    </BoxContainer>
+  )
 }
 
 export default ProfileFlanListScreen

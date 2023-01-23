@@ -2,13 +2,14 @@ import { useTheme } from '@shopify/restyle'
 import React from 'react'
 import { ScrollView, FlatList } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Box, Illustration, FlanCard, StatusBarPadding, Text } from '../../components'
-import { useAppSelector } from '../../redux'
+import { Box, Illustration, FlanCard, StatusBarPadding, Text, Button } from '@components'
+import { useAppSelector } from '../../reduxComponents'
 import { Theme } from '../../theme'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { ProfileStackNavigationProps } from '../../types'
 import NavigationHeader from '../../components/NavigationHeader'
 import { illustrationTypeArray } from '../../components/Illustration'
+import { createFlanList } from 'utilities/DummyData'
 
 const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
   const { colors, spacing, themeConstants } = useTheme<Theme>()
@@ -18,6 +19,7 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
     <>
       <StatusBarPadding />
       <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: colors.mainBackground }}>
+        <Button label="asdf" onPress={() => navigation.navigate('ProfileFlanListScreen', { title: 'hello', flanData: createFlanList(5) })} />
         <Box width={themeConstants.containerWidth} alignSelf="center" marginTop="xl" marginBottom="xl">
           <NavigationHeader
             leftIconProps={{ name: 'settings-outline', size: themeConstants.iconSize, color: colors.primaryColor }}
@@ -127,15 +129,16 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
             )}
           </Box>
           {createdFlans.length > 0 ? (
-            <FlanCard
-              title={createdFlans[0].title}
-              author="Joey Lo"
-              location={createdFlans[0].location?.address}
-              numPeople={{ attending: 10 }}
-              onPress={() => navigation.navigate('FlanScreen', { flanId: createdFlans[0].id, flanType: 'created' })}
-              illustration={illustrationTypeArray[createdFlans[0].illustration]}
-            />
+            <></>
           ) : (
+            // <FlanCard
+            //   title={createdFlans[0].title}
+            //   author="Joey Lo"
+            //   location={createdFlans[0].location?.address}
+            //   numPeople={{ attending: 10 }}
+            //   onPress={() => navigation.navigate('FlanScreen', { flanId: createdFlans[0].id, flanType: 'created' })}
+            //   illustration={illustrationTypeArray[createdFlans[0].illustration]}
+            // />
             <Text variant="secondary">Looks Like There Are No Flans Here Yet :(</Text>
           )}
           <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
@@ -144,14 +147,14 @@ const ProfileScreen = ({ route, navigation }: ProfileStackNavigationProps) => {
               <Text variant="secondary">See All</Text>
             </TouchableOpacity>
           </Box>
-          <FlanCard title="Go to the zoo" author="Joey Lo" location="Harrison's House, Taipei, Taiwan" numPeople={{ attending: 10 }} />
+          {/* <FlanCard title="Go to the zoo" author="Joey Lo" location="Harrison's House, Taipei, Taiwan" numPeople={{ attending: 10 }} /> */}
           <Box flexDirection="row" justifyContent="space-between" marginTop="l" marginBottom="s">
             <Text color="primaryColor">Previous Flans</Text>
             <TouchableOpacity onPress={() => navigation.navigate('ProfileSavedFlans')}>
               <Text variant="secondary">See All</Text>
             </TouchableOpacity>
           </Box>
-          <FlanCard title="Go to the zoo" author="Joey Lo" location="Harrison's House, Taipei, Taiwan" numPeople={{ attending: 10 }} />
+          {/* <FlanCard title="Go to the zoo" author="Joey Lo" location="Harrison's House, Taipei, Taiwan" numPeople={{ attending: 10 }} /> */}
         </Box>
       </ScrollView>
     </>

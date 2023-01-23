@@ -1,7 +1,9 @@
 import React from 'react'
 import { BoxProps, useTheme } from '@shopify/restyle'
 import { Theme } from '@theme'
-import { Box, NavigationHeader, NavigationHeaderProps, StatusBarPadding, StatusBarPaddingProps } from '@components'
+import StatusBarPadding, { StatusBarPaddingProps } from 'components/StatusBarPadding'
+import NavigationHeader, { NavigationHeaderProps } from 'components/NavigationHeader'
+import Box from './Box'
 
 interface BoxContainerProps {
   boxContainerProps?: BoxProps<Theme>

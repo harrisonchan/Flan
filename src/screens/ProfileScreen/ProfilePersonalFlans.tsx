@@ -5,8 +5,8 @@ import { Box, FlanCard, StatusBarPadding, Text } from '../../components'
 import { ProfileStackNavigationProps } from '../../types'
 import { Theme } from '../../theme'
 import NavigationHeader from '../../components/NavigationHeader'
-import { useAppSelector } from '../../redux'
-import { FlanType } from '../../redux/features/flanSlice'
+import { useAppSelector } from '../../reduxComponents'
+import { FlanType } from '../../reduxComponents/features/flanSlice'
 import { illustrationTypeArray } from '../../components/Illustration'
 
 const ProfilePersonalFlans = ({ route, navigation }: ProfileStackNavigationProps) => {
@@ -15,17 +15,18 @@ const ProfilePersonalFlans = ({ route, navigation }: ProfileStackNavigationProps
   const createdFlans = useAppSelector((state) => state.userReducer.user.createdFlans)
   const renderPersonalFlans = (flan: FlanType) => {
     return (
-      <FlanCard
-        title={flan.title}
-        author="Joey Lo"
-        location={flan.location?.address}
-        numPeople={{ attending: 10 }}
-        illustration={illustrationTypeArray[flan.illustration ?? 0]}
-        style={{ marginBottom: spacing.l }}
-        onPress={() => {
-          navigation.navigate('FlanScreen', { flanId: flan.id, flanType: 'created' })
-        }}
-      />
+      <></>
+      // <FlanCard
+      //   title={flan.title}
+      //   author="Joey Lo"
+      //   location={flan.location?.address}
+      //   numPeople={{ attending: 10 }}
+      //   illustration={illustrationTypeArray[flan.illustration ?? 0]}
+      //   style={{ marginBottom: spacing.l }}
+      //   onPress={() => {
+      //     navigation.navigate('FlanScreen', { flanId: flan.id, flanType: 'created' })
+      //   }}
+      // />
     )
   }
   return (
